@@ -1,0 +1,35 @@
+baseline: tests pass on unmodified code
+control (no-op) mutant: survived - harness can report survivors
+  caught   detect.py: stress sign flipped
+  caught   detect.py: MAD not scaled to a standard deviation
+  caught   detect.py: persistence off by one
+  caught   detect.py: breach values leak into the baseline
+  caught   detect.py: baseline gap ignored
+  caught   detect.py: oldest values used instead of latest
+  caught   detect.py: alarm closes one observation late
+  caught   detect.py: old regime kept after re-baselining
+  caught   detect.py: threshold made exclusive
+  caught   detect.py: absolute scale floor dropped
+  caught   detect.py: minimum history off by one
+  caught   detect.py: zero scale not guarded
+  caught   detect.py: GSCPI threshold made exclusive
+  caught   detect.py: sustain length off by one
+  caught   indicators.py: partial weeks summed
+  caught   indicators.py: year-on-year lag of 11 months
+  caught   indicators.py: incomplete months kept in call totals
+  caught   indicators.py: Cape diversion direction wrong
+  caught   indicators.py: TEU per call off by 1000
+  caught   indicators.py: container volume drops exports
+  caught   backtest.py: pre-onset boundary exclusive
+  caught   backtest.py: expected-indicator list ignored
+  caught   backtest.py: pre-2020 alarms counted
+  caught   backtest.py: publication lag ignored
+  caught   backtest.py: alert needs three route alarms
+  caught   backtest.py: daily posture ignores lag
+  caught   backtest.py: selection prefers more false alarms
+  caught   backtest.py: known lag computed from raise date
+  caught   backtest.py: monthly alarms dated at month start
+  caught   backtest.py: lead sign flipped
+  caught   backtest.py: activate review without alert
+31/31 planted bugs caught
+exit=0

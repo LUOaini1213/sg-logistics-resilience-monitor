@@ -1,0 +1,18 @@
+indicator,label,family,direction,dev_false_alarms,dev_years,dev_per_year,holdout_false_alarms,holdout_years,holdout_per_year
+cp_suez,Suez Canal transits,route,drop,2,3.0,0.67,1,3.68,0.27
+cp_bab,Bab el-Mandeb transits,route,drop,1,3.0,0.33,3,3.68,0.81
+cp_cape,Cape of Good Hope transits,route,rise,3,3.0,1.0,11,3.68,2.99
+cp_panama,Panama Canal transits,route,drop,4,3.0,1.33,1,3.68,0.27
+cp_hormuz,Strait of Hormuz transits,route,drop,0,3.0,0.0,1,3.68,0.27
+cp_malacca,Malacca Strait transits,route,drop,3,3.0,1.0,3,3.76,0.8
+cp_taiwan,Taiwan Strait transits,route,drop,6,3.0,2.0,11,3.76,2.93
+sg_calls_container,Singapore container-ship port calls,singapore,drop,0,3.0,0.0,3,3.75,0.8
+sg_box_volume,Singapore container trade volume (estimate),singapore,drop,0,3.0,0.0,2,3.75,0.53
+klang_calls_container,Port Klang container-ship port calls,regional,drop,11,3.0,3.67,3,3.75,0.8
+tpp_calls_container,Tanjung Pelepas container-ship port calls,regional,drop,5,3.0,1.67,8,3.75,2.13
+mpa_teu,Singapore container throughput (TEU),singapore,drop,1,3.0,0.33,0,3.67,0.0
+mpa_vessel_arrivals,Singapore vessel arrivals,singapore,drop,1,3.0,0.33,0,3.67,0.0
+mpa_cargo,Singapore cargo throughput (tonnes),singapore,drop,4,3.0,1.33,0,3.67,0.0
+changi_air_cargo,Changi air cargo (tonnes),singapore,drop,0,3.0,0.0,0,3.67,0.0
+sg_teu_per_call,Singapore TEU per container-ship call,singapore,rise,0,3.0,0.0,1,3.67,0.27
+gscpi,NY Fed Global Supply Chain Pressure Index,global,rise,1,3.0,0.33,2,3.75,0.53

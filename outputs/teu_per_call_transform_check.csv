@@ -1,0 +1,5 @@
+version,event,detected,known,lag_known_days,false_alarms_2020_2026
+level (used),pandemic_congestion,True,2020-10-15,14.0,1
+level (used),sg_congestion_2024,True,2024-06-15,106.0,1
+year-on-year (first version),pandemic_congestion,True,2021-06-15,257.0,0
+year-on-year (first version),sg_congestion_2024,False,,,0

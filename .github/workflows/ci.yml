@@ -1,0 +1,19 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - name: Tests
+        run: python -m pytest -q tests
+      - name: Mutation check (control must survive; every planted bug must be caught)
+        run: python tests/mutate.py
+      - name: Rebuild outputs from the committed raw data and compare
+        run: |
+          python run_all.py
+          git diff --stat --exit-code -- outputs/summary.json outputs/detections.csv outputs/alarms.csv outputs/tuning_grid.csv outputs/sg_lead.csv

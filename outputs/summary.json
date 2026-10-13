@@ -1,0 +1,291 @@
+{
+ "selected": {
+  "k": 2.5,
+  "persist_days": 3
+ },
+ "dev": {
+  "pairs": 11,
+  "detected": 11,
+  "recall": 1.0,
+  "false_alarms": 42,
+  "indicator_years": 51.0,
+  "fa_per_indicator_year": 0.823
+ },
+ "holdout": {
+  "pairs": 8,
+  "detected": 8,
+  "recall": 1.0,
+  "false_alarms": 50,
+  "indicator_years": 63.0,
+  "fa_per_indicator_year": 0.793
+ },
+ "n_indicators": 17,
+ "n_events": 8,
+ "data_end": {
+  "portwatch": "2026-10-04",
+  "mpa": "2026-08",
+  "changi": "2026-08",
+  "gscpi": "2026-09"
+ },
+ "detections": [
+  {
+   "event": "covid_china",
+   "split": "dev",
+   "indicator": "cp_malacca",
+   "detected": true,
+   "raised": "2020-02-29T00:00:00.000",
+   "known": "2020-03-07T00:00:00.000",
+   "lag_raised_days": 37,
+   "lag_known_days": 44,
+   "peak_z": 3.3
+  },
+  {
+   "event": "covid_china",
+   "split": "dev",
+   "indicator": "cp_taiwan",
+   "detected": true,
+   "raised": "2020-01-20T00:00:00.000",
+   "known": "2020-01-27T00:00:00.000",
+   "lag_raised_days": -3,
+   "lag_known_days": 4,
+   "peak_z": 3.3
+  },
+  {
+   "event": "covid_china",
+   "split": "dev",
+   "indicator": "sg_calls_container",
+   "detected": true,
+   "raised": "2020-05-06T00:00:00.000",
+   "known": "2020-05-13T00:00:00.000",
+   "lag_raised_days": 104,
+   "lag_known_days": 111,
+   "peak_z": 2.5
+  },
+  {
+   "event": "covid_china",
+   "split": "dev",
+   "indicator": "sg_box_volume",
+   "detected": true,
+   "raised": "2020-05-15T00:00:00.000",
+   "known": "2020-05-22T00:00:00.000",
+   "lag_raised_days": 113,
+   "lag_known_days": 120,
+   "peak_z": 3.3
+  },
+  {
+   "event": "covid_china",
+   "split": "dev",
+   "indicator": "mpa_teu",
+   "detected": true,
+   "raised": "2020-04-30T00:00:00.000",
+   "known": "2020-05-15T00:00:00.000",
+   "lag_raised_days": 98,
+   "lag_known_days": 113,
+   "peak_z": 4.0
+  },
+  {
+   "event": "covid_china",
+   "split": "dev",
+   "indicator": "changi_air_cargo",
+   "detected": true,
+   "raised": "2020-03-31T00:00:00.000",
+   "known": "2020-04-30T00:00:00.000",
+   "lag_raised_days": 68,
+   "lag_known_days": 98,
+   "peak_z": 6.5
+  },
+  {
+   "event": "pandemic_congestion",
+   "split": "dev",
+   "indicator": "gscpi",
+   "detected": true,
+   "raised": "2021-01-31T00:00:00.000",
+   "known": "2021-02-05T00:00:00.000",
+   "lag_raised_days": 122,
+   "lag_known_days": 127,
+   "peak_z": 4.4
+  },
+  {
+   "event": "pandemic_congestion",
+   "split": "dev",
+   "indicator": "sg_teu_per_call",
+   "detected": true,
+   "raised": "2020-09-30T00:00:00.000",
+   "known": "2020-10-15T00:00:00.000",
+   "lag_raised_days": -1,
+   "lag_known_days": 14,
+   "peak_z": 11.4
+  },
+  {
+   "event": "pandemic_congestion",
+   "split": "dev",
+   "indicator": "sg_calls_container",
+   "detected": true,
+   "raised": "2020-11-11T00:00:00.000",
+   "known": "2020-11-18T00:00:00.000",
+   "lag_raised_days": 41,
+   "lag_known_days": 48,
+   "peak_z": 3.1
+  },
+  {
+   "event": "ever_given",
+   "split": "dev",
+   "indicator": "cp_suez",
+   "detected": true,
+   "raised": "2021-03-27T00:00:00.000",
+   "known": "2021-04-03T00:00:00.000",
+   "lag_raised_days": 4,
+   "lag_known_days": 11,
+   "peak_z": 11.1
+  },
+  {
+   "event": "ever_given",
+   "split": "dev",
+   "indicator": "cp_bab",
+   "detected": true,
+   "raised": "2021-03-29T00:00:00.000",
+   "known": "2021-04-05T00:00:00.000",
+   "lag_raised_days": 6,
+   "lag_known_days": 13,
+   "peak_z": 6.5
+  },
+  {
+   "event": "panama_drought",
+   "split": "holdout",
+   "indicator": "cp_panama",
+   "detected": true,
+   "raised": "2023-11-06T00:00:00.000",
+   "known": "2023-11-13T00:00:00.000",
+   "lag_raised_days": 99,
+   "lag_known_days": 106,
+   "peak_z": 9.0
+  },
+  {
+   "event": "red_sea_2023",
+   "split": "holdout",
+   "indicator": "cp_bab",
+   "detected": true,
+   "raised": "2023-12-23T00:00:00.000",
+   "known": "2023-12-30T00:00:00.000",
+   "lag_raised_days": 8,
+   "lag_known_days": 15,
+   "peak_z": 12.1
+  },
+  {
+   "event": "red_sea_2023",
+   "split": "holdout",
+   "indicator": "cp_suez",
+   "detected": true,
+   "raised": "2023-12-29T00:00:00.000",
+   "known": "2024-01-05T00:00:00.000",
+   "lag_raised_days": 14,
+   "lag_known_days": 21,
+   "peak_z": 9.5
+  },
+  {
+   "event": "red_sea_2023",
+   "split": "holdout",
+   "indicator": "cp_cape",
+   "detected": true,
+   "raised": "2024-01-03T00:00:00.000",
+   "known": "2024-01-10T00:00:00.000",
+   "lag_raised_days": 19,
+   "lag_known_days": 26,
+   "peak_z": 9.5
+  },
+  {
+   "event": "sg_congestion_2024",
+   "split": "holdout",
+   "indicator": "sg_teu_per_call",
+   "detected": true,
+   "raised": "2024-05-31T00:00:00.000",
+   "known": "2024-06-15T00:00:00.000",
+   "lag_raised_days": 91,
+   "lag_known_days": 106,
+   "peak_z": 4.2
+  },
+  {
+   "event": "sg_congestion_2024",
+   "split": "holdout",
+   "indicator": "sg_calls_container",
+   "detected": true,
+   "raised": "2024-03-21T00:00:00.000",
+   "known": "2024-03-28T00:00:00.000",
+   "lag_raised_days": 20,
+   "lag_known_days": 27,
+   "peak_z": 3.0
+  },
+  {
+   "event": "hormuz_2026",
+   "split": "holdout",
+   "indicator": "cp_hormuz",
+   "detected": true,
+   "raised": "2026-03-07T00:00:00.000",
+   "known": "2026-03-14T00:00:00.000",
+   "lag_raised_days": 7,
+   "lag_known_days": 14,
+   "peak_z": 4.1
+  },
+  {
+   "event": "red_sea_2026",
+   "split": "holdout",
+   "indicator": "cp_bab",
+   "detected": true,
+   "raised": "2026-08-06T00:00:00.000",
+   "known": "2026-08-13T00:00:00.000",
+   "lag_raised_days": 17,
+   "lag_known_days": 24,
+   "peak_z": 4.2
+  }
+ ],
+ "sg_lead": [
+  {
+   "event": "sg_congestion_2024",
+   "reference": "2024-05-30T00:00:00.000",
+   "via_event": "red_sea_2023",
+   "indicator": "cp_bab",
+   "known": "2023-12-30T00:00:00.000",
+   "lead_days": 152
+  },
+  {
+   "event": "sg_congestion_2024",
+   "reference": "2024-05-30T00:00:00.000",
+   "via_event": "red_sea_2023",
+   "indicator": "cp_suez",
+   "known": "2024-01-05T00:00:00.000",
+   "lead_days": 146
+  },
+  {
+   "event": "sg_congestion_2024",
+   "reference": "2024-05-30T00:00:00.000",
+   "via_event": "red_sea_2023",
+   "indicator": "cp_cape",
+   "known": "2024-01-10T00:00:00.000",
+   "lead_days": 141
+  },
+  {
+   "event": "sg_congestion_2024",
+   "reference": "2024-05-30T00:00:00.000",
+   "via_event": "sg_congestion_2024",
+   "indicator": "sg_calls_container",
+   "known": "2024-03-28T00:00:00.000",
+   "lead_days": 63
+  },
+  {
+   "event": "sg_congestion_2024",
+   "reference": "2024-05-30T00:00:00.000",
+   "via_event": "sg_congestion_2024",
+   "indicator": "sg_teu_per_call",
+   "known": "2024-06-15T00:00:00.000",
+   "lead_days": -16
+  }
+ ],
+ "alert_days_total": 549,
+ "alert_days_outside_events": 69,
+ "posture_as_of": "2026-10-11",
+ "posture_level": 3,
+ "posture_label": "Activate review",
+ "posture_active": "cp_bab;sg_teu_per_call;gscpi",
+ "false_alarms_total": 92,
+ "median_lag_known_days_route": 18.0
+}

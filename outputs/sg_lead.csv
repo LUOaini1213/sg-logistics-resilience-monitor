@@ -1,0 +1,6 @@
+event,reference,via_event,indicator,known,lead_days
+sg_congestion_2024,2024-05-30,red_sea_2023,cp_bab,2023-12-30,152
+sg_congestion_2024,2024-05-30,red_sea_2023,cp_suez,2024-01-05,146
+sg_congestion_2024,2024-05-30,red_sea_2023,cp_cape,2024-01-10,141
+sg_congestion_2024,2024-05-30,sg_congestion_2024,sg_calls_container,2024-03-28,63
+sg_congestion_2024,2024-05-30,sg_congestion_2024,sg_teu_per_call,2024-06-15,-16
