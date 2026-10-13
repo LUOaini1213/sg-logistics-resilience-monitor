@@ -126,6 +126,7 @@ def load_monthly(raw: Path = RAW) -> pd.DataFrame:
     air = air[air.series == "Total Air Cargo Tonnage"]
     air = pd.Series(air["value"].astype(float).values,
                     index=pd.to_datetime(air["month"], format="%Y %b")).sort_index()
+    # The New York Fed serves a legacy .xls workbook under a .xlsx name; pandas reads it with xlrd.
     g = pd.read_excel(raw / "gscpi_data.xlsx", sheet_name="GSCPI Monthly Data").iloc[:, :2]
     g.columns = ["date", "gscpi"]
     g = g.dropna()
