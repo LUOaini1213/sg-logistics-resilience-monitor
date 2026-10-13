@@ -41,8 +41,12 @@ def _bands(fig: go.Figure, events: pd.DataFrame, start: pd.Timestamp, rows: int 
             for r in range(1, rows + 1):
                 fig.add_vrect(row=r, col=1, **kw)
         else:
-            fig.add_vrect(annotation_text=SHORT.get(e.event_id, e.event_id), annotation_position="top left",
-                          annotation_font_size=10, annotation_font_color=INK2, **kw)
+            fig.add_vrect(**kw)
+    if not rows:   # label the bands at two staggered heights so neighbours do not collide
+        for i, (_, e) in enumerate(events.sort_values("onset").iterrows()):
+            fig.add_annotation(x=max(e.onset, start), y=1.08 if i % 2 == 0 else 1.25, xanchor="left",
+                               yanchor="bottom", text=SHORT.get(e.event_id, e.event_id), showarrow=False,
+                               font=dict(size=10, color=INK2))
 
 
 def _alarm_overlay(frame: pd.DataFrame, values: pd.Series) -> pd.Series:
@@ -57,9 +61,11 @@ def posture_figure(po: pd.DataFrame, events: pd.DataFrame) -> go.Figure:
                              marker_line_width=0, customdata=po.active,
                              hovertemplate=f"%{{x|%d %b %Y}}<br>Level {lvl}: {name}<br>%{{customdata}}<extra></extra>"))
     fig.update_layout(barmode="stack", bargap=0)
-    fig.update_yaxes(visible=False, range=[0, 1.35])
+    fig.update_yaxes(visible=False, range=[0, 1.45])
     _bands(fig, events, po.index[0])
-    _layout(fig, 220)
+    _layout(fig, 250)
+    fig.update_layout(legend=dict(orientation="h", y=-0.18, x=0, traceorder="normal"), hovermode="closest",
+                      margin=dict(t=12, b=56))
     return fig
 
 
