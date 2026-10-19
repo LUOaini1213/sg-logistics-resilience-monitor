@@ -75,14 +75,20 @@ def detect(x: np.ndarray, direction: str, p: Params) -> tuple[pd.DataFrame, list
     z = np.full(n, np.nan)
     breach = np.zeros(n, dtype=bool)
     active_arr = np.zeros(n, dtype=bool)
+    observed = np.isfinite(x)
 
     episodes: list[Episode] = []
     run = 0                # consecutive breaches
     run_start = -1
     active: Episode | None = None
     quiet = 0
+    active_observations = 0
     for t in range(n):
-        if not np.isfinite(x[t]):
+        if not observed[t]:
+            # Missing data cannot confirm persistence, recovery, or a new normal.
+            # Keep an already raised alarm, but expose that it was not observed.
+            run = quiet = active_observations = 0
+            active_arr[t] = active is not None
             continue
         hi = t - p.gap                      # baseline uses indices < hi
         if hi > 0:
@@ -119,7 +125,8 @@ def detect(x: np.ndarray, direction: str, p: Params) -> tuple[pd.DataFrame, list
                 quiet = 0
         if active is not None:
             active_arr[t] = True
-            if t - active.start + 1 >= p.sustain:
+            active_observations += 1
+            if active_observations >= p.sustain:
                 lo = t - p.sustain + 1
                 clean[:lo] = False                      # forget the old regime
                 clean[lo:t + 1] = np.isfinite(x[lo:t + 1])
@@ -128,21 +135,29 @@ def detect(x: np.ndarray, direction: str, p: Params) -> tuple[pd.DataFrame, list
                 episodes.append(active)
                 active = None
                 run = 0
+                active_observations = 0
+        else:
+            active_observations = 0
     if active is not None:
         episodes.append(active)
     frame = pd.DataFrame({"value": x, "median": med, "scale": scl, "z": z,
-                          "breach": breach, "alarm": active_arr})
+                          "breach": breach, "alarm": active_arr, "observed": observed})
     return frame, episodes
 
 
 def threshold_level(x: np.ndarray, threshold: float, persist: int) -> tuple[pd.DataFrame, list[Episode]]:
     """For an index that is already in standard-deviation units (GSCPI)."""
     x = np.asarray(x, dtype=float)
+    observed = np.isfinite(x)
     breach = np.isfinite(x) & (x >= threshold)
     episodes: list[Episode] = []
     alarm = np.zeros(len(x), dtype=bool)
     run, active = 0, None
     for t in range(len(x)):
+        if not observed[t]:
+            run = 0
+            alarm[t] = active is not None
+            continue
         if breach[t]:
             run += 1
             if active is None and run >= persist:
@@ -159,5 +174,5 @@ def threshold_level(x: np.ndarray, threshold: float, persist: int) -> tuple[pd.D
     if active is not None:
         episodes.append(active)
     frame = pd.DataFrame({"value": x, "median": np.nan, "scale": np.nan, "z": x,
-                          "breach": breach, "alarm": alarm})
+                          "breach": breach, "alarm": alarm, "observed": observed})
     return frame, episodes

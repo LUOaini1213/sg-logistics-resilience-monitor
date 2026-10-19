@@ -7,17 +7,21 @@
   "pairs": 11,
   "detected": 11,
   "recall": 1.0,
+  "recall_defined": true,
   "false_alarms": 42,
   "indicator_years": 51.0,
-  "fa_per_indicator_year": 0.823
+  "fa_per_indicator_year": 0.823,
+  "false_alarm_rate_defined": true
  },
  "holdout": {
   "pairs": 8,
   "detected": 8,
   "recall": 1.0,
+  "recall_defined": true,
   "false_alarms": 50,
   "indicator_years": 63.0,
-  "fa_per_indicator_year": 0.793
+  "fa_per_indicator_year": 0.793,
+  "false_alarm_rate_defined": true
  },
  "n_indicators": 17,
  "n_events": 8,
@@ -285,7 +289,8 @@
  "posture_as_of": "2026-10-11",
  "posture_level": 3,
  "posture_label": "Activate review",
- "posture_active": "cp_bab;sg_teu_per_call;gscpi",
+ "posture_active": "cp_bab;sg_calls_container;sg_teu_per_call;gscpi",
+ "posture_unavailable": "sg_calls_container;sg_box_volume;klang_calls_container;tpp_calls_container",
  "false_alarms_total": 92,
  "median_lag_known_days_route": 18.0
 }

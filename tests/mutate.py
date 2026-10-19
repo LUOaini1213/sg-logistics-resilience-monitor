@@ -43,7 +43,7 @@ MUTANTS = [
     ("detect.py", "if s > 0:", "if True:", "zero scale not guarded"),
     ("detect.py", "breach = np.isfinite(x) & (x >= threshold)", "breach = np.isfinite(x) & (x > threshold)",
      "GSCPI threshold made exclusive"),
-    ("detect.py", "            if t - active.start + 1 >= p.sustain:", "            if t - active.start >= p.sustain:",
+    ("detect.py", "            if active_observations >= p.sustain:", "            if active_observations > p.sustain:",
      "sustain length off by one"),
     ("indicators.py", "rolling(7, min_periods=7)", "rolling(7, min_periods=1)", "partial weeks summed"),
     ("indicators.py", "s.shift(12, freq=\"MS\")", "s.shift(11, freq=\"MS\")", "year-on-year lag of 11 months"),
