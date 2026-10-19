@@ -58,8 +58,9 @@ def posture_figure(po: pd.DataFrame, events: pd.DataFrame) -> go.Figure:
     for lvl, name in LEVEL_NAMES.items():
         y = po.level.where(po.level == lvl)
         fig.add_trace(go.Bar(x=po.index, y=(y * 0 + 1), name=f"{lvl} {name}", marker_color=LEVEL_COLORS[lvl],
-                             marker_line_width=0, customdata=po.active,
-                             hovertemplate=f"%{{x|%d %b %Y}}<br>Level {lvl}: {name}<br>%{{customdata}}<extra></extra>"))
+                             marker_line_width=0, customdata=po[["active", "unavailable"]].values,
+                             hovertemplate=f"%{{x|%d %b %Y}}<br>Level {lvl}: {name}<br>Last known alarms: "
+                                           "%{customdata[0]}<br>Unavailable input: %{customdata[1]}<extra></extra>"))
     fig.update_layout(barmode="stack", bargap=0)
     fig.update_yaxes(visible=False, range=[0, 1.58])
     _bands(fig, events, po.index[0])
@@ -121,6 +122,7 @@ def build_dashboard(frames, matched, events, po, det, fa_tab, lead, summary, pat
                       "holdout_per_year"]]
     lead_view = lead.assign(indicator=lead.indicator.map(lambda k: INDICATORS[k].label))
     active = ", ".join(INDICATORS[k].label for k in summary["posture_active"].split(";") if k) or "none"
+    unavailable = ", ".join(INDICATORS[k].label for k in summary["posture_unavailable"].split(";") if k) or "none"
     de = summary["data_end"]
     page = f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -149,11 +151,14 @@ overflow-x:auto}}
 <div class="card tile"><div><span class="dot" style="background:{LEVEL_COLORS[lvl]}"></span>
 <span class="lvl">Level {lvl}: {html.escape(summary['posture_label'])}</span></div>
 <div><p style="margin:0">As of {summary['posture_as_of']} (PortWatch data to {de['portwatch']}; MPA to {de['mpa']};
-Changi to {de['changi']}; GSCPI to {de['gscpi']}).<br>Indicators in alarm: {html.escape(active)}.</p></div></div>
+Changi to {de['changi']}; GSCPI to {de['gscpi']}).<br>Last known alarms: {html.escape(active)}.
+<br>Unavailable detector input at the latest published slot: {html.escape(unavailable)}.
+An unavailable input retains an existing alarm; it does not confirm current stress or recovery.</p></div></div>
 <h2>Alert level over time</h2>
 <p>Watch: any indicator in alarm. Alert: two route indicators, or a route indicator plus a Singapore or regional
 one. Activate review: Alert plus a Singapore monthly outcome in alarm. Each day uses only data that had been
-published by then. Grey bands are the labelled events.</p>
+published by then. Missing observations reset consecutive confirmation and recovery counts while retaining
+the last known alarm; hover to see unavailable inputs. Grey bands are the labelled events.</p>
 <div class="card">{divs['posture']}</div>
 <h2>Shipping routes (IMF PortWatch)</h2><div class="card">{divs['route']}</div>
 <h2>Singapore and global pressure</h2>

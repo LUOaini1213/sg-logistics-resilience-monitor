@@ -48,15 +48,18 @@ Selected setting, tuned on 2020–2022 only: **z ≥ 2.5 for 3 consecutive days*
 
   These checks are in the test suite.
 
-**Current posture (data to 4 October 2026): Level 3, Activate review.** Indicators in alarm:
+**Latest computed posture (publication slots through 11 October 2026): Level 3, Activate review.**
+Last known alarms:
 
 - Bab el-Mandeb transits, falling since the Red Sea restrictions of 20 July 2026.
 - TEU per container-ship call: 3,581 in August 2026, the highest value in the series.
 - The GSCPI at 1.28 (September 2026).
+- Singapore container-ship calls: the alarm remains active at the last available observation, 2 October.
 
-Singapore container-ship calls were also in alarm through late September. We found no official statement
-on berth waiting times in Singapore in 2026, so this reading is a flag for follow-up with operators, not a
-finding of congestion.
+PortWatch route data extend to 4 October, but port data stop on 2 October. The missing port observations
+are marked unavailable; retaining the last known alarm does not establish current stress or recovery.
+We found no official statement on berth waiting times in Singapore in 2026, so this reading is a flag
+for follow-up with operators, not a finding of congestion.
 
 ## Data
 
@@ -98,6 +101,13 @@ free historical download that can be redistributed in a public repository.
   hidden the second Red Sea shock in July 2026. With it, that shock raised a fresh alarm 24 days after the
   20 July restrictions.
 - The GSCPI is already in standard-deviation units; it alarms at ≥ 1.0 for two consecutive months.
+
+**Missing observations.** Daily and monthly calendars retain missing dates. A non-finite detector input
+resets consecutive confirmation, recovery and sustained-shift counts; it cannot help confirm an alarm or
+re-baselining. An existing alarm retains its last known state until observed recovery. Detector frames
+include `observed`; daily posture and the dashboard identify `unavailable` inputs after publication lag.
+This marks missing input at the latest published slot, not a guarantee of source freshness. In particular,
+two high GSCPI months separated by an unobserved month do not satisfy the two-consecutive-month rule.
 
 **Publication lag.** Every alarm is dated by when it could have been read:
 
@@ -155,6 +165,11 @@ Tuning:
 - A stricter setting (z ≥ 3, 7 days) would have done better on the holdout: 8 of 8 detected with 7 false
   alarms. It caught only 7 of 11 in development, so the rule did not pick it. We report the setting the rule
   chose.
+
+Quiet runs and empty event sets produce tables with the same columns as nonempty results. Scores always
+retain `pairs` and `indicator_years`: `recall_defined` and `false_alarm_rate_defined` are false when their
+denominators are zero. The corresponding numeric `0.0` is a finite placeholder, **not** measured zero
+recall or false-alarm rate. No detected route events gives a null median lag.
 
 ## Findings in more detail
 
@@ -221,7 +236,8 @@ python tests/mutate.py       # mutation check
 ```
 
 **Tests.** The suite checks the detector against hand-computed series, the bookkeeping of the backtest
-(window boundaries, lags, lead, ladder levels), the raw data against the three official MPA/MOT totals, and
+(window boundaries, lags, lead, ladder levels), missing observation/calendar gaps, empty-result reports,
+the raw data against the three official MPA/MOT totals, and
 that the numbers in this README match `outputs/summary.json`.
 
 **Mutation check.** `tests/mutate.py` plants 31 bugs one at a time, for example:

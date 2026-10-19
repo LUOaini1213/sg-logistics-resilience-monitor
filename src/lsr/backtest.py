@@ -36,6 +36,12 @@ PRE_ONSET_DAYS = 28
 GSCPI_THRESHOLD = 1.0
 GSCPI_PERSIST = 2
 
+MATCH_COLUMNS = ["indicator", "raised", "known", "first_breach", "end", "peak_z", "sustained",
+                 "rebaseline", "event", "true_alarm", "period"]
+DETECTION_COLUMNS = ["event", "split", "indicator", "detected", "raised", "known",
+                     "lag_raised_days", "lag_known_days", "peak_z"]
+LEAD_COLUMNS = ["event", "reference", "via_event", "indicator", "known", "lead_days"]
+
 
 @dataclass
 class Alarm:
@@ -67,12 +73,13 @@ def run_detectors(daily: pd.DataFrame, monthly: pd.DataFrame, pd_: D.Params, pm:
     alarms: list[Alarm] = []
     for key, ind in INDICATORS.items():
         if ind.freq == "D":
-            s = daily[key]
+            s = daily[key].asfreq("D")
             frame, eps = D.detect(s.values, ind.direction, pd_)
             idx = s.index
             dates = lambda i: idx[i]  # noqa: E731
         else:
-            s = monthly[key].dropna()
+            # Persistence is in calendar months, not adjacent non-missing rows.
+            s = monthly[key].asfreq("MS")
             tr = (transforms or {}).get(key, ind.transform)
             if key == "gscpi":
                 frame, eps = D.threshold_level(s.values, GSCPI_THRESHOLD, GSCPI_PERSIST)
@@ -107,7 +114,7 @@ def match(alarms: list[Alarm], events: pd.DataFrame) -> pd.DataFrame:
                 break
         rows.append({**a.__dict__, "event": hit, "true_alarm": hit is not None,
                      "period": "dev" if a.raised <= DEV_END else "holdout"})
-    return pd.DataFrame(rows)
+    return pd.DataFrame(rows, columns=MATCH_COLUMNS).astype({"true_alarm": bool})
 
 
 def evaluated_years(frames: dict[str, pd.DataFrame], period: str) -> dict[str, float]:
@@ -138,7 +145,7 @@ def detections(matched: pd.DataFrame, events: pd.DataFrame) -> pd.DataFrame:
                 rows.append({"event": e.event_id, "split": e.split, "indicator": ind, "detected": False,
                              "raised": None, "known": None, "lag_raised_days": None,
                              "lag_known_days": None, "peak_z": None})
-    return pd.DataFrame(rows)
+    return pd.DataFrame(rows, columns=DETECTION_COLUMNS).astype({"detected": bool})
 
 
 def score(matched: pd.DataFrame, det: pd.DataFrame, frames, period: str) -> dict:
@@ -146,9 +153,11 @@ def score(matched: pd.DataFrame, det: pd.DataFrame, frames, period: str) -> dict
     fa = matched[(matched.period == period) & (~matched.true_alarm)]
     years = sum(evaluated_years(frames, period).values())
     return {"pairs": len(d), "detected": int(d.detected.sum()),
-            "recall": float(d.detected.mean()) if len(d) else float("nan"),
+            "recall": float(d.detected.mean()) if len(d) else 0.0,
+            "recall_defined": bool(len(d)),
             "false_alarms": len(fa), "indicator_years": round(years, 1),
-            "fa_per_indicator_year": len(fa) / years if years else float("nan")}
+            "fa_per_indicator_year": len(fa) / years if years else 0.0,
+            "false_alarm_rate_defined": bool(years)}
 
 
 GRID_K = (2.5, 3.0, 3.5, 4.0)
@@ -201,7 +210,7 @@ def sg_lead(matched: pd.DataFrame, events: pd.DataFrame) -> pd.DataFrame:
             rows.append({"event": e.event_id, "reference": e.sg_reference_date.date(),
                          "via_event": a.event, "indicator": ind, "known": a.known.date(),
                          "lead_days": (e.sg_reference_date - a.known).days})
-    return pd.DataFrame(rows).sort_values(["event", "lead_days"], ascending=[True, False])
+    return pd.DataFrame(rows, columns=LEAD_COLUMNS).sort_values(["event", "lead_days"], ascending=[True, False])
 
 
 # ---------------------------------------------------------------- posture
@@ -217,7 +226,7 @@ def posture(frames: dict[str, pd.DataFrame], days: pd.DatetimeIndex) -> pd.DataF
     Alert plus a Singapore monthly outcome (throughput, TEU per call, arrivals,
     cargo, air cargo) in alarm.
     """
-    known = {}
+    known, observed = {}, {}
     for key, f in frames.items():
         ind = INDICATORS[key]
         lag = pd.Timedelta(days=ind.lag_days)
@@ -228,7 +237,10 @@ def posture(frames: dict[str, pd.DataFrame], days: pd.DatetimeIndex) -> pd.DataF
             s = f["alarm"].astype(float)
             s.index = s.index + pd.offsets.MonthEnd(0) + lag
         known[key] = s.reindex(days, method="ffill").fillna(0.0).astype(bool)
-    k = pd.DataFrame(known)
+        available = f.get("observed", pd.Series(True, index=f.index)).astype(float)
+        available.index = s.index
+        observed[key] = available.reindex(days, method="ffill").fillna(0.0).astype(bool)
+    k = pd.DataFrame(known, index=days)
     fam = {key: INDICATORS[key].family for key in k.columns}
     route = k[[c for c in k if fam[c] == "route"]].sum(axis=1)
     local = k[[c for c in k if fam[c] in ("singapore", "regional")]].any(axis=1)
@@ -240,4 +252,6 @@ def posture(frames: dict[str, pd.DataFrame], days: pd.DatetimeIndex) -> pd.DataF
     out = pd.DataFrame({"level": level, "route_alarms": route, "local_alarm": local,
                         "outcome_alarm": outcome}, index=days)
     out["active"] = k.apply(lambda r: ";".join(c for c in k.columns if r[c]), axis=1)
+    unavailable = ~pd.DataFrame(observed, index=days)
+    out["unavailable"] = unavailable.apply(lambda r: ";".join(c for c in unavailable.columns if r[c]), axis=1)
     return out

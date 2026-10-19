@@ -26,7 +26,8 @@ def first_level_dates(po: pd.DataFrame, events: pd.DataFrame) -> pd.DataFrame:
             row[f"first_level{lvl}"] = hit[0].date() if len(hit) else None
             row[f"days_from_onset_level{lvl}"] = (hit[0] - e.onset).days if len(hit) else None
         rows.append(row)
-    return pd.DataFrame(rows)
+    return pd.DataFrame(rows, columns=["event", "onset", "first_level2", "days_from_onset_level2",
+                                       "first_level3", "days_from_onset_level3"])
 
 
 def main() -> dict:
@@ -109,9 +110,11 @@ def main() -> dict:
         "posture_level": int(po.level.iloc[-1]),
         "posture_label": B.LEVELS[int(po.level.iloc[-1])],
         "posture_active": po.active.iloc[-1],
+        "posture_unavailable": po.unavailable.iloc[-1],
         "false_alarms_total": int(len(fa)),
-        "median_lag_known_days_route": float(np.median(
-            det[det.detected & det.indicator.str.startswith("cp_")].lag_known_days)),
+        "median_lag_known_days_route": (
+            float(det[det.detected & det.indicator.str.startswith("cp_")].lag_known_days.median())
+            if (det.detected & det.indicator.str.startswith("cp_")).any() else None),
     }
     (OUT / "summary.json").write_text(json.dumps(summary, indent=1, default=str))
     build_dashboard(frames, matched, events, po, det, fa_tab, lead, summary, ROOT / "docs" / "index.html")
