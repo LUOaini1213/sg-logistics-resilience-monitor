@@ -81,7 +81,9 @@ def indicator_grid(keys: list[str], frames: dict, events: pd.DataFrame, start: p
         v = f["value"]
         if INDICATORS[k].freq == "M" and INDICATORS[k].transform == "yoy":
             v = v * 100.0
-        v = v[v.index >= start]
+        # Rounded so the page does not depend on last-bit differences in log() between CPUs and
+        # platforms (the year-on-year series); 6 decimals is far below what the charts can show.
+        v = v[v.index >= start].round(6)
         fig.add_trace(go.Scatter(x=v.index, y=v, mode="lines", line=dict(color=SERIES, width=1.5),
                                  name="value" if i == 1 else None, showlegend=(i == 1),
                                  legendgroup="v"), row=i, col=1)

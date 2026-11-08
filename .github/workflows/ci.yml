@@ -27,6 +27,9 @@ jobs:
           git diff --stat --exit-code -- outputs/ docs/index.html
           untracked=$(git status --porcelain --untracked-files=all -- outputs/ docs/)
           if [ -n "$untracked" ]; then echo "rebuild left files that are not committed:"; echo "$untracked"; exit 1; fi
+      - name: Show the changed values if the rebuild differs
+        if: failure()
+        run: git diff --word-diff=porcelain --word-diff-regex='[^,]+' -- outputs/ docs/index.html | grep -E '^[-+][^-+]' | head -40 | cut -c1-200 || true
       - name: No local machine paths in tracked text files
         run: |
           if git grep -nIE '[A-Za-z]:[\/](Users|Documents and Settings)[\/]|/home/[a-z][a-z0-9_-]*/|/Users/[A-Za-z]' -- . ':!.github/workflows/ci.yml'; then
