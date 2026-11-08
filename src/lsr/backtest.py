@@ -222,9 +222,11 @@ def posture(frames: dict[str, pd.DataFrame], days: pd.DatetimeIndex) -> pd.DataF
     """Daily alert level using only what was known on each day.
 
     Watch: any indicator in alarm. Alert: two or more route indicators, or a
-    route indicator together with a Singapore or regional one. Activate review:
-    Alert plus a Singapore monthly outcome (throughput, TEU per call, arrivals,
-    cargo, air cargo) in alarm.
+    route indicator together with a Singapore or regional *port* indicator
+    (the daily PortWatch port series; the monthly outcomes do not count here).
+    Activate review: Alert plus a Singapore monthly outcome (throughput, TEU
+    per call, arrivals, cargo, air cargo) in alarm. One outcome alarm therefore
+    cannot satisfy both the Alert step and the Activate step.
     """
     known, observed = {}, {}
     for key, f in frames.items():
@@ -243,7 +245,7 @@ def posture(frames: dict[str, pd.DataFrame], days: pd.DatetimeIndex) -> pd.DataF
     k = pd.DataFrame(known, index=days)
     fam = {key: INDICATORS[key].family for key in k.columns}
     route = k[[c for c in k if fam[c] == "route"]].sum(axis=1)
-    local = k[[c for c in k if fam[c] in ("singapore", "regional")]].any(axis=1)
+    local = k[[c for c in k if fam[c] in ("singapore", "regional") and c not in SG_OUTCOMES]].any(axis=1)
     outcome = k[[c for c in SG_OUTCOMES if c in k]].any(axis=1)
     level = np.where(k.any(axis=1), 1, 0)
     alert = (route >= 2) | ((route >= 1) & local)

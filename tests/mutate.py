@@ -21,7 +21,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src" / "lsr"
 PYTEST = [sys.executable, "-m", "pytest", "-x", "-q", "-p", "no:cacheprovider", "tests",
-          "--deselect", "tests/test_backtest.py::test_readme_numbers_match_outputs"]
+          "--deselect", "tests/test_backtest.py::test_readme_numbers_match_outputs",
+          "--deselect", "tests/test_backtest.py::test_readme_cited_numbers_match_output_tables"]
 
 CONTROL = ("detect.py", "Robust, one-sided anomaly detection", "Robust, one-sided anomaly detector")
 
@@ -76,6 +77,8 @@ MUTANTS = [
      "lead sign flipped"),
     ("backtest.py", "level = np.where(alert & outcome, 3, level)", "level = np.where(outcome, 3, level)",
      "activate review without alert"),
+    ("backtest.py", 'fam[c] in ("singapore", "regional") and c not in SG_OUTCOMES]',
+     'fam[c] in ("singapore", "regional")]', "monthly outcome counted as the Alert's port indicator"),
 ]
 
 

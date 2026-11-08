@@ -12,11 +12,13 @@ of normal values; see the README for the method and the backtest.
 |---|---|---|---|
 | 0 Normal | No indicator in alarm | Weekly dashboard to the team | Routine monitoring |
 | 1 Watch | Any one indicator in alarm | Team lead same day | Check the cause against news and operator contacts within 2 working days; note it in the watch log. No external activation. |
-| 2 Alert | Two or more route indicators in alarm, **or** one route indicator plus a Singapore or regional port indicator | Agency management and partner agencies within 24 h | Convene the industry and agency contact group within 3 working days; ask operators for the data the dashboard cannot see (berth waiting time, yard utilisation, bookings); brief essential-goods importers on lead-time risk. |
+| 2 Alert | Two or more route indicators in alarm, **or** one route indicator plus a Singapore or regional port indicator (daily port calls or container volume at Singapore, Port Klang or Tanjung Pelepas; the monthly outcomes in Level 3 do not count here) | Agency management and partner agencies within 24 h | Convene the industry and agency contact group within 3 working days; ask operators for the data the dashboard cannot see (berth waiting time, yard utilisation, bookings); brief essential-goods importers on lead-time risk. |
 | 3 Activate review | Alert, **plus** a Singapore monthly outcome in alarm (container throughput, TEU per call, vessel arrivals, cargo throughput, air cargo) | Senior management within 24 h | Decide whether to activate the sector plan: coordination cell, information-sharing rhythm (for example twice weekly), review of measures such as berth or yard priority for essential cargo and customs facilitation. |
 
 **Stepping down.** A level steps down when its trigger has been clear for 14 consecutive days and the
-contact group agrees. A *sustained* shift (an alarm active for 182 days) is re-baselined by the detector and
+contact group agrees. The monitor's daily series (`outputs/posture_daily.csv`) and the day counts in the
+README do not apply this hold: they recompute the level each day, so a level there drops the day its trigger
+clears, and episodes run by this rule would last longer. A *sustained* shift (an alarm active for 182 days) is re-baselined by the detector and
 stops counting; the team should then decide whether the new normal needs a standing measure rather than a
 crisis response.
 
