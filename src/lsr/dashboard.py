@@ -112,8 +112,10 @@ def build_dashboard(frames, matched, events, po, det, fa_tab, lead, summary, pat
         "sg": indicator_grid(["sg_calls_container", "sg_box_volume", "sg_teu_per_call", "mpa_teu",
                               "changi_air_cargo", "gscpi"], frames, events, start, "sg"),
     }
-    divs = {k: f.to_html(full_html=False, include_plotlyjs=False, config={"displayModeBar": False,
-                                                                           "responsive": True})
+    # Fixed div ids keep the page byte-identical across rebuilds (Plotly defaults to random UUIDs),
+    # so CI can diff docs/index.html as well as outputs/.
+    divs = {k: f.to_html(full_html=False, include_plotlyjs=False, div_id=f"fig-{k}",
+                         config={"displayModeBar": False, "responsive": True})
             for k, f in figs.items()}
     lvl = summary["posture_level"]
     det_view = det.assign(indicator=det.indicator.map(lambda k: INDICATORS[k].label))
@@ -156,7 +158,9 @@ Changi to {de['changi']}; GSCPI to {de['gscpi']}).<br>Last known alarms: {html.e
 An unavailable input retains an existing alarm; it does not confirm current stress or recovery.</p></div></div>
 <h2>Alert level over time</h2>
 <p>Watch: any indicator in alarm. Alert: two route indicators, or a route indicator plus a Singapore or regional
-one. Activate review: Alert plus a Singapore monthly outcome in alarm. Each day uses only data that had been
+port indicator (daily port calls or container volume; the monthly outcomes do not count here). Activate review:
+Alert plus a Singapore monthly outcome in alarm. The level is recomputed each day, without the 14-day step-down
+hold of the exercise pack. Each day uses only data that had been
 published by then. Missing observations reset consecutive confirmation and recovery counts while retaining
 the last known alarm; hover to see unavailable inputs. Grey bands are the labelled events.</p>
 <div class="card">{divs['posture']}</div>

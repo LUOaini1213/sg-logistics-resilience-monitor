@@ -2,18 +2,33 @@ name: ci
 on: [push, pull_request]
 jobs:
   test:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.11"   # the pins in requirements.txt have no wheels for 3.12+
       - run: pip install -r requirements.txt
       - name: Tests
         run: python -m pytest -q tests
       - name: Mutation check (control must survive; every planted bug must be caught)
+        if: matrix.os == 'ubuntu-latest'
         run: python tests/mutate.py
-      - name: Rebuild outputs from the committed raw data and compare
+      - name: Rebuild outputs and dashboard from the committed raw data and compare
         run: |
           python run_all.py
-          git diff --stat --exit-code -- outputs/summary.json outputs/detections.csv outputs/alarms.csv outputs/tuning_grid.csv outputs/sg_lead.csv
+          git diff --stat --exit-code -- outputs/ docs/index.html
+          untracked=$(git status --porcelain --untracked-files=all -- outputs/ docs/)
+          if [ -n "$untracked" ]; then echo "rebuild left files that are not committed:"; echo "$untracked"; exit 1; fi
+      - name: No local machine paths in tracked text files
+        run: |
+          if git grep -nIE '[A-Za-z]:[\/](Users|Documents and Settings)[\/]|/home/[a-z][a-z0-9_-]*/|/Users/[A-Za-z]' -- . ':!.github/workflows/ci.yml'; then
+            echo "local machine path found"; exit 1
+          fi

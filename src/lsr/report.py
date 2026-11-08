@@ -30,6 +30,31 @@ def first_level_dates(po: pd.DataFrame, events: pd.DataFrame) -> pd.DataFrame:
                                        "first_level3", "days_from_onset_level3"])
 
 
+def chance_baseline(det: pd.DataFrame, events: pd.DataFrame, fa_tab: pd.DataFrame) -> pd.DataFrame:
+    """Expected event-indicator "detections" from alarms that fire at random.
+
+    For each expected pair, an alarm process firing as a Poisson process at the indicator's own
+    false-alarm rate in that split (``false_alarms_by_indicator.csv``) raises at least one alarm in
+    the scoring window (28 days before onset to window end) with probability
+    ``1 - exp(-rate * window_days / 365.25)``. Summed over a split, this is the recall that alarms
+    unrelated to the events would reach by chance.
+    """
+    rate = {(r.indicator, per): r[f"{per}_per_year"] for _, r in fa_tab.iterrows() for per in ("dev", "holdout")}
+    ev = events.set_index("event_id")
+    rows = []
+    for _, d in det.iterrows():
+        e = ev.loc[d.event]
+        days = (e.window_end - (e.onset - pd.Timedelta(days=B.PRE_ONSET_DAYS))).days + 1
+        lam = rate.get((d.indicator, d.split))
+        lam = 0.0 if lam is None or pd.isna(lam) else float(lam)
+        rows.append({"event": d.event, "split": d.split, "indicator": d.indicator, "window_days": days,
+                     "false_alarms_per_year": round(lam, 2),
+                     "p_chance_hit": round(1.0 - float(np.exp(-lam * days / 365.25)), 3),
+                     "detected": bool(d.detected)})
+    return pd.DataFrame(rows, columns=["event", "split", "indicator", "window_days", "false_alarms_per_year",
+                                       "p_chance_hit", "detected"])
+
+
 def main() -> dict:
     OUT.mkdir(exist_ok=True)
     daily, monthly, events = load_daily(), load_monthly(), B.load_events()
@@ -58,6 +83,9 @@ def main() -> dict:
         fa_tab.append(row)
     fa_tab = pd.DataFrame(fa_tab)
     fa_tab.to_csv(OUT / "false_alarms_by_indicator.csv", index=False)
+
+    chance = chance_baseline(det, events, fa_tab)
+    chance.to_csv(OUT / "chance_baseline.csv", index=False)
 
     lead = B.sg_lead(matched, events)
     lead.to_csv(OUT / "sg_lead.csv", index=False)
@@ -112,6 +140,10 @@ def main() -> dict:
         "posture_active": po.active.iloc[-1],
         "posture_unavailable": po.unavailable.iloc[-1],
         "false_alarms_total": int(len(fa)),
+        "chance_expected_detections": {per: round(float(chance[chance.split == per].p_chance_hit.sum()), 1)
+                                       for per in ("dev", "holdout")},
+        "holdout_full_recall_settings": int((grid.get("holdout_recall", pd.Series(dtype=float)) == 1.0).sum()),
+        "grid_settings": int(len(grid)),
         "median_lag_known_days_route": (
             float(det[det.detected & det.indicator.str.startswith("cp_")].lag_known_days.median())
             if (det.detected & det.indicator.str.startswith("cp_")).any() else None),
