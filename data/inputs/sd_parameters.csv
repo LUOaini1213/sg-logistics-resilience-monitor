@@ -1,0 +1,9 @@
+name,value,low,high,unit,label,source,url,accessed,note
+capacity_absorbed_june_2024,0.12,,,share of container-ship demand,REAL,"UNCTAD, Review of Maritime Transport 2024, Chapter II, citing Clarksons Research (2024a): Cape diversions increase 'container ship demand by 12 per cent' (June 2024 versus no rerouting)",https://unctad.org/system/files/official-document/rmt2024ch2_en.pdf,2026-11-15,Scales the absorbed-capacity stock A: a_scale = 0.12 / A(June 2024). Not estimated from the repository's data
+tau_u_days,1.0,,,days,ASSUMPTION,Author's assumption,,,"Reliability is taken to follow the capacity shortfall within about a day, so the fitted absorption delay tau_a carries the whole delay between routing and reliability (the two are not separately identified)"
+adapt,1.0,,,share,ASSUMPTION,Author's assumption,,,"Singapore adaptation eventually removes all of the bunching pressure; an unconstrained trial fit put adapt at this bound"
+tau_k_equals_tau_q,1,,,flag,ASSUMPTION,Author's assumption,,,"With adapt = 1 the bunching and adaptation time constants are interchangeable in the response, so they are tied"
+phi_calibration,0.0,,,-,ASSUMPTION,Author's assumption,,,Re-routing friction is switched off in the calibration; it is a scenario input only
+tau_a_search_days,1.0,1.0,150.0,days,ASSUMPTION,Author's choice of search range,,,Golden-section search range for tau_a (low and high columns)
+tau_q_search_days,5.0,5.0,400.0,days,ASSUMPTION,Author's choice of search range,,,Golden-section search range for tau_q (low and high columns)
+tau_a_sensitivity_days,30.0,,,days,ASSUMPTION,"About one Asia-Europe voyage: UNCTAD (2024) gives about 31 days Shenzhen-Rotterdam via Suez and 41 via the Cape",https://unctad.org/system/files/official-document/rmt2024ch2_en.pdf,2026-11-15,Alternative fixed absorption delay used for the sensitivity check

@@ -1,0 +1,10 @@
+block,parameter_1,parameter_2,correlation
+routing,d_max,tau_d,0.084
+routing,d_max,tau_c,-0.022
+routing,d_max,kappa,-0.495
+routing,tau_d,tau_c,-0.264
+routing,tau_d,kappa,-0.063
+routing,tau_c,kappa,0.254
+singapore,tau_q,theta_c,-0.299
+singapore,tau_q,theta_t,-0.219
+singapore,theta_c,theta_t,0.065

@@ -112,7 +112,7 @@ def line_panels(panels: list[dict], title: str, width: int = 760, panel_h: int =
     """Small multiples of time series. Each panel: ``{"title", "series": [{"name", "dates", "values",
     "color", "dash", "points"}], "ylabel", "vline": (date, label) | None}``. Panels share no axes."""
     rows = (len(panels) + cols - 1) // cols
-    top, gap_y, left_pad, right_pad = 34, 46, 54, 14
+    top, gap_y, left_pad, right_pad = 34, 62, 54, 14
     pw = (width - 16) // cols
     height = top + rows * (panel_h + gap_y) + 8
     s = Svg(width, height, title)
@@ -121,9 +121,9 @@ def line_panels(panels: list[dict], title: str, width: int = 760, panel_h: int =
         r, c = divmod(n, cols)
         x0 = 8 + c * pw + left_pad
         x1 = 8 + (c + 1) * pw - right_pad
-        y0 = top + r * (panel_h + gap_y) + 22
+        y0 = top + r * (panel_h + gap_y) + 40
         y1 = y0 + panel_h - 22
-        s.text(x0 - left_pad + 4, y0 - 8, p["title"], size=11, color=INK, weight="bold")
+        s.text(x0 - left_pad + 4, y0 - 24, p["title"], size=11, color=INK, weight="bold")
         xs = [_ordinal(d) for ser in p["series"] for d in ser["dates"]]
         ys = [v for ser in p["series"] for v in ser["values"] if v is not None]
         xlo, xhi = min(xs), max(xs)
@@ -167,8 +167,9 @@ def line_panels(panels: list[dict], title: str, width: int = 760, panel_h: int =
             label = ser["name"]
             w = 7 * len(label) + 22
             lx -= w
-            s.rect(lx, y0 - 17, 12, 3 if not ser.get("points") else 8, ser["color"], rx=1.5)
-            s.text(lx + 16, y0 - 11, label, size=10, color=INK2)
+            s.rect(lx, y0 - 14 + (0 if ser.get("points") else 3), 12, 3 if not ser.get("points") else 8,
+                   ser["color"], rx=1.5)
+            s.text(lx + 16, y0 - 7, label, size=10, color=INK2)
     return s.render()
 
 
