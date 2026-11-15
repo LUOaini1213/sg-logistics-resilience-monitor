@@ -320,6 +320,12 @@ def invert(a: list[list[float]]) -> list[list[float]]:
     return [r[n:] for r in m]
 
 
+def ar1_inflation(rho: float) -> float:
+    """Variance inflation for lag-1 autocorrelated residuals, (1 + rho) / (1 - rho); 1 when rho <= 0."""
+    rho = max(0.0, rho)
+    return (1.0 + rho) / (1.0 - rho)
+
+
 def lag1(xs: list[float]) -> float:
     m = mean(xs)
     num = math.fsum((a - m) * (b - m) for a, b in zip(xs, xs[1:]))
@@ -342,7 +348,7 @@ def covariance(p: sd.Params, obs: dict, block: str) -> dict:
     jtj = [[math.fsum(a * b for a, b in zip(cols[i], cols[j])) for j in range(k)] for i in range(k)]
     cov = invert(jtj)
     rho = max(0.0, mean(lag1([v / math.sqrt(var[s]) for v in r0[s]]) for s in series))
-    infl = (1.0 + rho) / (1.0 - rho)
+    infl = ar1_inflation(rho)
     se = [math.sqrt(cov[i][i]) for i in range(k)]
     corr = [[cov[i][j] / (se[i] * se[j]) for j in range(k)] for i in range(k)]
     return {"names": names, "estimate": theta, "se": se, "se_ar1": [s * math.sqrt(infl) for s in se],

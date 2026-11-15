@@ -93,6 +93,11 @@ def test_optimisers_and_linear_algebra():
     assert C.lag1([1.0, -1.0, 1.0, -1.0, 1.0, -1.0]) < -0.8
     assert C.week_means(list(range(400)), [C.START + C.dt.timedelta(days=10)]) == [7.0]
     assert C.month_means([1.0] * 30 + [3.0] * 31, ["2023-06", "2023-07"]) == [1.0, 3.0]
+    assert C.ar1_inflation(0.5) == pytest.approx(3.0) and C.ar1_inflation(-0.4) == 1.0
+    prof = [{"t0": d, "objective": o} for d, o in ((1, 1.30), (2, 1.05), (3, 1.00), (4, 1.10), (5, 1.60))]
+    # n = 40: 40 ln(1.05) = 1.95 and 40 ln(1.10) = 3.81 are inside 3.84; 40 ln(1.30) = 10.5 is not
+    assert C.onset_interval(prof, 40) == (2, 4)
+    assert C.onset_interval(prof, 40, inflation=3.0) == (1, 4)       # 10.5 <= 11.5 once widened
 
 
 @pytest.fixture(scope="module")

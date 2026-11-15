@@ -60,6 +60,7 @@ NODES = [
 ]
 
 UNCTAD = "UNCTAD, Review of Maritime Transport 2024, Chapter II"
+UNCTAD3 = "UNCTAD, Review of Maritime Transport 2024, Chapter III"
 LINKS = [
     Link("risk", "diversion", +1, "estimated",
          "Routing block: diverted share and onset fitted to PortWatch transits (outputs/maritime/sd_parameters.csv)"),
@@ -83,11 +84,14 @@ LINKS = [
          "Singapore block: adaptation removes the bunching pressure (adapt = 1 assumed)", 0.25),
     Link("bunching", "teu_call", +1, "estimated", "Singapore block: theta_t, MPA TEU per PortWatch call"),
     Link("bunching", "calls", -1, "estimated", "Singapore block: theta_c, PortWatch Singapore container-ship calls"),
-    Link("bunching", "capacity", -1, "assumed",
-         "Ships waiting at anchor are capacity that is not sailing; not estimated", 0.18),
+    Link("bunching", "capacity", -1, "cited",
+         f"{UNCTAD3}, citing Linerlytica: by mid-June 2024 congestion held 2.5 million TEU (8.4% of the fleet) "
+         "at anchorages; not estimated here", 0.18),
     Link("reliability", "frontload", -1, "assumed", "Shippers order earlier when transit times are unreliable; not verified"),
     Link("frontload", "capacity", -1, "assumed", "Early orders add demand on the same ships; not verified", -0.22),
-    Link("capacity", "rates", -1, "assumed", "No freight-rate series in the repository (see README Data); not estimated"),
+    Link("capacity", "rates", -1, "cited",
+         f"{UNCTAD3}: diversions reduced 'the availability of shipping capacity' and rates rose; no freight-rate "
+         "series in the repository, so not estimated"),
     Link("rates", "blank", -1, "assumed", "Carriers cancel sailings when rates fall; not verified here", 0.2),
     Link("blank", "capacity", -1, "assumed", "Cancelled sailings remove capacity; not verified here", 0.1),
     Link("rates", "speed", +1, "assumed",

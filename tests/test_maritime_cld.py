@@ -23,7 +23,8 @@ def test_named_loops_and_their_polarity():
     assert {k: v["polarity"] for k, v in loops.items()} == {
         "B1": "B", "B2": "B", "B3": "B", "B4": "B", "R1": "R", "R2": "R", "R3": "R"}
     assert loops["B1"]["all_links_estimated"]                     # the port-response loop is fitted
-    assert "assumed" in loops["R1"]["statuses"]                   # the congestion spiral is not
+    assert loops["R1"]["statuses"] == "cited;estimated"          # the congestion spiral is only partly fitted
+    assert "assumed" in loops["R2"]["statuses"] and "assumed" in loops["B2"]["statuses"]
     for name in ("B2", "B3", "B4", "R2", "R3"):
         assert not loops[name]["all_links_estimated"]
 

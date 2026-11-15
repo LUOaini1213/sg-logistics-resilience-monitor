@@ -26,13 +26,13 @@
 <text x="280.3" y="575.8" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="600">+</text>
 <path d="M322.8,492.1 Q394.4,561.4 464.7,583.0" fill="none" stroke="#0b0b0b" stroke-width="2.2" marker-end="url(#arrow-estimated)"/>
 <text x="435.0" y="587.8" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="600">−</text>
-<path d="M366.1,456.4 Q519.6,424.8 642.0,272.4" fill="none" stroke="#898781" stroke-width="1.5" stroke-dasharray="2 4" marker-end="url(#arrow-assumed)"/>
+<path d="M366.1,456.4 Q519.6,424.8 642.0,272.4" fill="none" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow-cited)"/>
 <text x="604.8" y="335.1" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="600">−</text>
 <path d="M393.2,322.0 Q275.0,309.6 140.3,361.4" fill="none" stroke="#898781" stroke-width="1.5" stroke-dasharray="2 4" marker-end="url(#arrow-assumed)"/>
 <text x="185.1" y="338.3" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="600">−</text>
 <path d="M120.9,358.5 Q347.4,190.0 592.3,237.0" fill="none" stroke="#898781" stroke-width="1.5" stroke-dasharray="2 4" marker-end="url(#arrow-assumed)"/>
 <text x="504.4" y="242.1" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="600">−</text>
-<path d="M692.0,271.2 Q760.4,316.4 804.0,321.4" fill="none" stroke="#898781" stroke-width="1.5" stroke-dasharray="2 4" marker-end="url(#arrow-assumed)"/>
+<path d="M692.0,271.2 Q760.4,316.4 804.0,321.4" fill="none" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow-cited)"/>
 <text x="784.8" y="332.9" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="600">−</text>
 <path d="M889.1,307.1 Q916.0,240.0 889.1,172.9" fill="none" stroke="#898781" stroke-width="1.5" stroke-dasharray="2 4" marker-end="url(#arrow-assumed)"/>
 <text x="907.7" y="198.3" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="600">−</text>

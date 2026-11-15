@@ -1,8 +1,8 @@
 loop,name,polarity,path,length,statuses,all_links_estimated
 B1,Port response,B,bunching -> port -> bunching,2,estimated,True
-B2,Blank sailings,B,blank -> capacity -> rates -> blank,3,assumed,False
-B3,Speed-up,B,capacity -> rates -> speed -> capacity,3,assumed;model,False
+B2,Blank sailings,B,blank -> capacity -> rates -> blank,3,assumed;cited,False
+B3,Speed-up,B,capacity -> rates -> speed -> capacity,3,assumed;cited;model,False
 B4,Fleet supply,B,capacity -> rates -> newbuild -> capacity,3,assumed;cited,False
-R1,Congestion spiral,R,bunching -> capacity -> reliability -> bunching,3,assumed;estimated,False
+R1,Congestion spiral,R,bunching -> capacity -> reliability -> bunching,3,cited;estimated,False
 R2,Early ordering,R,capacity -> reliability -> frontload -> capacity,3,assumed;estimated,False
 R3,Cost pass-through,R,costs -> rates -> speed -> costs,3,assumed;cited;model,False
