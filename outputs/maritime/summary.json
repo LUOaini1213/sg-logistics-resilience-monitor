@@ -121,5 +121,25 @@
   "glp_rmse_fitted": 1.363,
   "peak_calls_drop_pct": 13.3,
   "peak_tpc_rise_pct": 20.3
+ },
+ "cld": {
+  "nodes": 18,
+  "links": 27,
+  "links_by_status": {
+   "estimated": 7,
+   "model": 5,
+   "cited": 6,
+   "assumed": 9
+  },
+  "loops": {
+   "B1": "B",
+   "B2": "B",
+   "B3": "B",
+   "B4": "B",
+   "R1": "R",
+   "R2": "R",
+   "R3": "R"
+  },
+  "unnamed_loops": 0
  }
 }

@@ -6,6 +6,7 @@ import math
 import sys
 
 from . import calibrate as C
+from . import cld
 from . import sd
 from . import svg
 from . import voyage as V
@@ -251,11 +252,27 @@ def sd_outputs() -> dict:
     }}
 
 
+def cld_outputs() -> dict:
+    write_text(FIG / "cld.svg", cld.render())
+    labels = {n.key: n.label.replace("|", " ") for n in cld.NODES}
+    write_csv(OUT / "cld_links.csv", [{"from": lk.src, "to": lk.dst, "from_label": labels[lk.src],
+                                       "to_label": labels[lk.dst], "polarity": "+" if lk.sign > 0 else "-",
+                                       "status": lk.status, "delay": lk.delay, "evidence": lk.evidence}
+                                      for lk in cld.LINKS])
+    loops = cld.loops_table()
+    write_csv(OUT / "cld_loops.csv", loops)
+    counts = {s: sum(lk.status == s for lk in cld.LINKS) for s in ("estimated", "model", "cited", "assumed")}
+    return {"cld": {"nodes": len(cld.NODES), "links": len(cld.LINKS), "links_by_status": counts,
+                    "loops": {r["loop"]: r["polarity"] for r in loops if r["loop"]},
+                    "unnamed_loops": sum(1 for r in loops if not r["loop"])}}
+
+
 def main() -> dict:
     OUT.mkdir(parents=True, exist_ok=True)
     summary: dict = {}
     summary.update(voyage_outputs())
     summary.update(sd_outputs())
+    summary.update(cld_outputs())
     write_json(OUT / "summary.json", summary)
     return summary
 
