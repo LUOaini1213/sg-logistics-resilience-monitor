@@ -59,16 +59,16 @@ def main() -> dict:
     OUT.mkdir(exist_ok=True)
     daily, monthly, events = load_daily(), load_monthly(), B.load_events()
     grid, (k, p) = B.tune(daily, monthly, events)
-    grid.round(4).to_csv(OUT / "tuning_grid.csv", index=False)
+    grid.round(4).to_csv(OUT / "tuning_grid.csv", index=False, lineterminator="\n")
 
     r = B.evaluate(k, p, daily, monthly, events)
     matched, det, frames = r["matched"], r["det"], r["frames"]
-    det.to_csv(OUT / "detections.csv", index=False)
+    det.to_csv(OUT / "detections.csv", index=False, lineterminator="\n")
     al = matched.copy()
     for c in ("raised", "known", "first_breach", "end", "rebaseline"):
         al[c] = pd.to_datetime(al[c]).dt.date
     al["peak_z"] = al["peak_z"].round(2)
-    al.sort_values(["indicator", "raised"]).to_csv(OUT / "alarms.csv", index=False)
+    al.sort_values(["indicator", "raised"]).to_csv(OUT / "alarms.csv", index=False, lineterminator="\n")
 
     fa = matched[~matched.true_alarm]
     yrs = {per: B.evaluated_years(frames, per) for per in ("dev", "holdout")}
@@ -82,13 +82,13 @@ def main() -> dict:
             row[f"{per}_per_year"] = round(n / yrs[per][key], 2) if yrs[per][key] else None
         fa_tab.append(row)
     fa_tab = pd.DataFrame(fa_tab)
-    fa_tab.to_csv(OUT / "false_alarms_by_indicator.csv", index=False)
+    fa_tab.to_csv(OUT / "false_alarms_by_indicator.csv", index=False, lineterminator="\n")
 
     chance = chance_baseline(det, events, fa_tab)
-    chance.to_csv(OUT / "chance_baseline.csv", index=False)
+    chance.to_csv(OUT / "chance_baseline.csv", index=False, lineterminator="\n")
 
     lead = B.sg_lead(matched, events)
-    lead.to_csv(OUT / "sg_lead.csv", index=False)
+    lead.to_csv(OUT / "sg_lead.csv", index=False, lineterminator="\n")
 
     # The TEU-per-call transform comparison (see indicators.py).
     alt = B.evaluate(k, p, daily, monthly, events, transforms={"sg_teu_per_call": "yoy"})
@@ -100,17 +100,17 @@ def main() -> dict:
             cmp_rows.append({"version": name, "event": x.event, "detected": x.detected,
                              "known": x.known, "lag_known_days": x.lag_known_days,
                              "false_alarms_2020_2026": n_fa})
-    pd.DataFrame(cmp_rows).to_csv(OUT / "teu_per_call_transform_check.csv", index=False)
+    pd.DataFrame(cmp_rows).to_csv(OUT / "teu_per_call_transform_check.csv", index=False, lineterminator="\n")
 
     end = max(daily.index.max(), monthly.dropna(how="all").index.max() + pd.offsets.MonthEnd(0))
     days = pd.date_range(B.EVAL_START, end + pd.Timedelta(days=7), freq="D")
     po = B.posture(frames, days)
-    po.to_csv(OUT / "posture_daily.csv", index_label="date")
+    po.to_csv(OUT / "posture_daily.csv", index_label="date", lineterminator="\n")
     by_year = po.groupby([po.index.year, "level"]).size().unstack(fill_value=0)
     by_year.columns = [B.LEVELS[c] for c in by_year.columns]
-    by_year.to_csv(OUT / "posture_days_by_year.csv", index_label="year")
+    by_year.to_csv(OUT / "posture_days_by_year.csv", index_label="year", lineterminator="\n")
     fl = first_level_dates(po, events)
-    fl.to_csv(OUT / "posture_first_level_by_event.csv", index=False)
+    fl.to_csv(OUT / "posture_first_level_by_event.csv", index=False, lineterminator="\n")
 
     # Alert-or-above days that fall outside every labelled event window.
     in_window = pd.Series(False, index=po.index)
@@ -148,7 +148,7 @@ def main() -> dict:
             float(det[det.detected & det.indicator.str.startswith("cp_")].lag_known_days.median())
             if (det.detected & det.indicator.str.startswith("cp_")).any() else None),
     }
-    (OUT / "summary.json").write_text(json.dumps(summary, indent=1, default=str))
+    (OUT / "summary.json").write_text(json.dumps(summary, indent=1, default=str), newline="\n")
     build_dashboard(frames, matched, events, po, det, fa_tab, lead, summary, ROOT / "docs" / "index.html")
     return summary
 

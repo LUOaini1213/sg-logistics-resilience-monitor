@@ -186,4 +186,4 @@ Event sources are listed in data/events.csv.</p>
 </main></body></html>
 """
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(page, encoding="utf-8")
+    path.write_text(page, encoding="utf-8", newline="\n")
