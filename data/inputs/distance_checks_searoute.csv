@@ -1,0 +1,4 @@
+from_port,to_port,suez_nm,cape_nm,extra_nm
+Shanghai,Rotterdam,10514.0,13833.9,3319.9
+Yantian,Rotterdam,9818.9,13153.6,3334.7
+Singapore,Rotterdam,8364.7,11852.9,3488.2

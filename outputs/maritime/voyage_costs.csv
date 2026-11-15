@@ -1,0 +1,3 @@
+routing,speed_kn,distance_nm,sea_days,port_and_canal_days,round_voyage_days,ships_for_weekly_service,fuel_t,co2_t,co2_covered_by_eu_ets_t,fuel_usd,charter_usd,canal_usd,war_risk_usd,eu_ets_usd,total_usd,teu_carried,usd_per_teu
+suez,16.0,21793,56.75,10.0,66.75,9.54,4093,12745,5257,3642599,4005203,1774109,3000000,521090,12943001,21000,616.33
+cape,17.0,28770,70.51,8.0,78.51,11.22,5995,18667,8108,5335215,4710838,0,0,803715,10849769,21000,516.66

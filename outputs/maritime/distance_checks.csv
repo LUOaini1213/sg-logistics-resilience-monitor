@@ -1,0 +1,4 @@
+from_port,to_port,quantity,searoute_nm,published_nm,difference_pct,published_source
+Yantian,Rotterdam,suez_nm,9819,10000,-1.8,"UNCTAD, Review of Maritime Transport 2024, Chapter II (citing Coyne, 2024): Shenzhen to Rotterdam via Suez 'travels 10,000 nautical miles in about 31 days'"
+Yantian,Rotterdam,cape_nm,13154,13000,1.2,"UNCTAD, Review of Maritime Transport 2024, Chapter II (citing Coyne, 2024): via the Cape 'the distance increases to 13,000 nautical miles'"
+Shanghai,Rotterdam,extra_nm,3320,4575,-27.4,"Notteboom, Haralambides & Cullinane (2024), Maritime Economics & Logistics 26:1-20: Cape routing 'adds 4575 nautical miles in sailing distance between Shanghai and Rotterdam'"

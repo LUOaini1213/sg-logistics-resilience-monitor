@@ -1,0 +1,3 @@
+# Optional tools that are NOT needed for the offline build, the tests or CI.
+# scripts/compute_distances.py
+searoute==1.6.0

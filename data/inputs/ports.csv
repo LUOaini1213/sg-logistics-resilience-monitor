@@ -1,0 +1,8 @@
+port,lon,lat,eu_ets_port,label,note
+Shanghai,122.06,30.62,0,ASSUMPTION,"Approximate position of the Yangshan terminals, rounded to 0.01 degree; chosen by the author, not taken from a port register"
+Ningbo,121.86,29.93,0,ASSUMPTION,"Approximate position of the Beilun terminals, rounded to 0.01 degree"
+Yantian,114.28,22.57,0,ASSUMPTION,"Approximate position of Yantian (Shenzhen), rounded to 0.01 degree"
+Singapore,103.75,1.26,0,ASSUMPTION,"Approximate position of the Pasir Panjang approaches, rounded to 0.01 degree"
+Rotterdam,4.03,51.95,1,ASSUMPTION,"Approximate position of Maasvlakte, rounded to 0.01 degree; EU port"
+Hamburg,9.93,53.53,1,ASSUMPTION,"Approximate position of the Hamburg container terminals, rounded to 0.01 degree; EU port"
+Antwerp,4.28,51.28,1,ASSUMPTION,"Approximate position of the Deurganck dock, rounded to 0.01 degree; EU port"

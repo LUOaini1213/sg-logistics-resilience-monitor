@@ -1,0 +1,43 @@
+{
+ "voyage": {
+  "distance_checks": {
+   "Yantian-Rotterdam suez_nm": -1.8,
+   "Yantian-Rotterdam cape_nm": 1.2,
+   "Shanghai-Rotterdam extra_nm": -27.4
+  },
+  "loop": "Shanghai-Ningbo-Yantian-Singapore-Rotterdam-Hamburg-Antwerp-Singapore-Shanghai",
+  "ship_teu": 14000,
+  "war_risk_pct_base": 1.0,
+  "suez_total_usd": 12943001,
+  "cape_total_usd": 10849769,
+  "suez_usd_per_teu": 616.33,
+  "cape_usd_per_teu": 516.66,
+  "cape_minus_suez_usd_per_teu": -99.68,
+  "suez_days": 66.75,
+  "cape_days": 78.51,
+  "extra_ships_weekly": 1.68,
+  "extra_fuel_t": 1902,
+  "suez_toll_usd_per_transit": 887055,
+  "breakeven_war_risk_pct": 0.302,
+  "breakeven_war_risk_usd_per_transit": 453384,
+  "tornado_top": [
+   "bunker_usd_t",
+   "cape_distance_factor",
+   "speed_cape_kn"
+  ],
+  "tornado_top_range_pct": [
+   [
+    0.102,
+    0.448
+   ],
+   [
+    0.302,
+    0.623
+   ],
+   [
+    0.18,
+    0.449
+   ]
+  ]
+ }
+}

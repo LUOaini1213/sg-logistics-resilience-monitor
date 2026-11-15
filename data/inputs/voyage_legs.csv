@@ -1,0 +1,17 @@
+routing,seq,from_port,to_port,distance_nm,passages,label,source,url,accessed
+suez,1,Shanghai,Ningbo,69.9,,REAL,"searoute 1.6.0 (Python package, bundled marine network); computed from the port positions in ports.csv (ASSUMPTION)",https://pypi.org/project/searoute/1.6.0/,2026-11-15
+suez,2,Ningbo,Yantian,725.8,,REAL,"searoute 1.6.0 (Python package, bundled marine network); computed from the port positions in ports.csv (ASSUMPTION)",https://pypi.org/project/searoute/1.6.0/,2026-11-15
+suez,3,Yantian,Singapore,1460.0,,REAL,"searoute 1.6.0 (Python package, bundled marine network); computed from the port positions in ports.csv (ASSUMPTION)",https://pypi.org/project/searoute/1.6.0/,2026-11-15
+suez,4,Singapore,Rotterdam,8364.7,babalmandab;gibraltar;malacca;suez,REAL,"searoute 1.6.0 (Python package, bundled marine network); computed from the port positions in ports.csv (ASSUMPTION)",https://pypi.org/project/searoute/1.6.0/,2026-11-15
+suez,5,Rotterdam,Hamburg,294.3,,REAL,"searoute 1.6.0 (Python package, bundled marine network); computed from the port positions in ports.csv (ASSUMPTION)",https://pypi.org/project/searoute/1.6.0/,2026-11-15
+suez,6,Hamburg,Antwerp,361.8,,REAL,"searoute 1.6.0 (Python package, bundled marine network); computed from the port positions in ports.csv (ASSUMPTION)",https://pypi.org/project/searoute/1.6.0/,2026-11-15
+suez,7,Antwerp,Singapore,8361.7,babalmandab;gibraltar;malacca;suez,REAL,"searoute 1.6.0 (Python package, bundled marine network); computed from the port positions in ports.csv (ASSUMPTION)",https://pypi.org/project/searoute/1.6.0/,2026-11-15
+suez,8,Singapore,Shanghai,2155.1,,REAL,"searoute 1.6.0 (Python package, bundled marine network); computed from the port positions in ports.csv (ASSUMPTION)",https://pypi.org/project/searoute/1.6.0/,2026-11-15
+cape,1,Shanghai,Ningbo,69.9,,REAL,"searoute 1.6.0 (Python package, bundled marine network); computed from the port positions in ports.csv (ASSUMPTION)",https://pypi.org/project/searoute/1.6.0/,2026-11-15
+cape,2,Ningbo,Yantian,725.8,,REAL,"searoute 1.6.0 (Python package, bundled marine network); computed from the port positions in ports.csv (ASSUMPTION)",https://pypi.org/project/searoute/1.6.0/,2026-11-15
+cape,3,Yantian,Singapore,1460.0,,REAL,"searoute 1.6.0 (Python package, bundled marine network); computed from the port positions in ports.csv (ASSUMPTION)",https://pypi.org/project/searoute/1.6.0/,2026-11-15
+cape,4,Singapore,Rotterdam,11852.9,south_africa;sunda,REAL,"searoute 1.6.0 (Python package, bundled marine network); computed from the port positions in ports.csv (ASSUMPTION)",https://pypi.org/project/searoute/1.6.0/,2026-11-15
+cape,5,Rotterdam,Hamburg,294.3,,REAL,"searoute 1.6.0 (Python package, bundled marine network); computed from the port positions in ports.csv (ASSUMPTION)",https://pypi.org/project/searoute/1.6.0/,2026-11-15
+cape,6,Hamburg,Antwerp,361.8,,REAL,"searoute 1.6.0 (Python package, bundled marine network); computed from the port positions in ports.csv (ASSUMPTION)",https://pypi.org/project/searoute/1.6.0/,2026-11-15
+cape,7,Antwerp,Singapore,11849.9,south_africa;sunda,REAL,"searoute 1.6.0 (Python package, bundled marine network); computed from the port positions in ports.csv (ASSUMPTION)",https://pypi.org/project/searoute/1.6.0/,2026-11-15
+cape,8,Singapore,Shanghai,2155.1,,REAL,"searoute 1.6.0 (Python package, bundled marine network); computed from the port positions in ports.csv (ASSUMPTION)",https://pypi.org/project/searoute/1.6.0/,2026-11-15
