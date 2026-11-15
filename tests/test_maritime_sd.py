@@ -29,7 +29,7 @@ def test_rk4_matches_two_stage_chain_and_bunching_pulse():
     """D follows a step with tau_d; Dc follows D with tau_c (both analytic); with D held constant,
     the Q-K pair with tau_q = tau_k = tau and adapt = 1 gives Q = dU (t/tau) exp(-t/tau)."""
     p = sd.Params(t0=0.0, d_max=0.8, tau_d=5.0, tau_c=12.0, tau_a=1e9, beta=0.0)
-    traj = sd.simulate(p, 60, y0=(0.0, 0.0, 0.0, p.u0, 0.0, 0.0))
+    traj = sd.simulate(p, 60, y0=(0.0, 0.0, 0.0, p.u0, 0.0, 0.0, 0.0))
     for t in (1, 7, 20, 60):
         d = 0.8 * (1 - math.exp(-t / 5.0))
         dc = 0.8 * (1 - (12.0 * math.exp(-t / 12.0) - 5.0 * math.exp(-t / 5.0)) / 7.0)
@@ -38,7 +38,7 @@ def test_rk4_matches_two_stage_chain_and_bunching_pulse():
     q = sd.Params(beta=0.15, tau_q=40.0, tau_k=40.0, adapt=1.0, tau_a=30.0, tau_u=1.0)
     d = 0.6
     du = 0.15 * d
-    traj = sd.simulate(q, 200, target=lambda t: d, y0=(d, d, d, q.u0 + du, 0.0, 0.0))
+    traj = sd.simulate(q, 200, target=lambda t: d, y0=(d, d, d, q.u0 + du, 0.0, 0.0, d))
     for t in (10, 40, 100, 200):
         assert traj[t][3] == pytest.approx(q.u0 + du, abs=1e-12)            # U stays put
         assert traj[t][4] == pytest.approx(du * t / 40.0 * math.exp(-t / 40.0), abs=1e-7)
@@ -75,7 +75,7 @@ def test_vectorised_integration_matches_scalar():
                     adapt=1.0)
     vec = sd.simulate(arr, 40, y0=tuple(np.full(2, v) for v in sd.initial_state(p)))
     for i in (10, 40):
-        for k in range(6):
+        for k in range(7):
             assert vec[i][k][0] == scalar[i][k] and vec[i][k][1] == scalar[i][k]
 
 

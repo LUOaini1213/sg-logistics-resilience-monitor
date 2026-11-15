@@ -141,5 +141,68 @@
    "R3": "R"
   },
   "unnamed_loops": 0
+ },
+ "scenarios": {
+  "start": "2026-10-05",
+  "horizon_days": 182,
+  "draws": 2000,
+  "diverted_share_now": 0.741,
+  "diverted_share_date": "2026-10-04",
+  "ladder": {
+   "control": {
+    "p_level1": 0.968,
+    "p_level2": 0.414,
+    "p_level3": 0.0,
+    "p_level2_attributable": 0.0,
+    "p_level3_attributable": 0.0,
+    "days_to_level2_p50": ""
+   },
+   "gulf": {
+    "p_level1": 0.977,
+    "p_level2": 0.427,
+    "p_level3": 0.0,
+    "p_level2_attributable": 0.013,
+    "p_level3_attributable": 0.0,
+    "days_to_level2_p50": 79.0
+   },
+   "strait": {
+    "p_level1": 0.997,
+    "p_level2": 0.822,
+    "p_level3": 0.014,
+    "p_level2_attributable": 0.411,
+    "p_level3_attributable": 0.014,
+    "days_to_level2_p50": 11.0
+   },
+   "reopen": {
+    "p_level1": 0.86,
+    "p_level2": 0.119,
+    "p_level3": 0.0,
+    "p_level2_attributable": 0.0,
+    "p_level3_attributable": 0.0,
+    "days_to_level2_p50": ""
+   }
+  },
+  "gulf_cape_cost_change_usd_per_teu": [
+   61.175,
+   99.164,
+   137.84
+  ],
+  "strait_waiting_cost_usd_m": [
+   7.779,
+   47.596,
+   221.057
+  ],
+  "strait_waiting_ship_days": [
+   120.705,
+   738.492,
+   3429.906
+  ],
+  "reopen_suez_minus_cape_usd_per_teu": [
+   -27.054,
+   10.19,
+   65.292
+  ],
+  "reopen_p_suez_cheaper": 0.366,
+  "exact_check_min_agreement": 0.9942
  }
 }

@@ -1,0 +1,19 @@
+scenario,indicator,unit,baseline,baseline_date,min_p5,min_p50,min_p95,max_p5,max_p50,max_p95
+control,cp_malacca,% vs baseline,1638.0,2026-10-04,-7.388,-6.899,-5.531,3.71,5.16,6.199
+control,sg_calls_container,% vs baseline,277.0,2026-10-02,-10.623,-6.762,-6.204,6.093,8.456,9.643
+control,sg_box_volume,% vs baseline,10525983.5,2026-10-02,-23.096,-18.37,-9.958,9.875,11.239,11.394
+control,cp_bab,% vs baseline,248.0,2026-10-04,-27.755,-23.043,-11.978,13.306,15.139,24.675
+control,cp_cape,% vs baseline,635.0,2026-10-04,-16.208,-13.288,-11.22,13.982,21.221,25.616
+control,sg_teu_per_call,% vs baseline,3079.9081,2026-08-01,-9.357,-6.04,-1.524,0.654,3.295,4.3
+gulf,cp_malacca,% vs baseline,1638.0,2026-10-04,-18.779,-14.977,-10.675,2.225,4.029,5.517
+gulf,cp_hormuz,% vs baseline,34.0,2026-10-04,-58.334,-41.658,-23.592,7.209,24.444,39.658
+gulf,sg_calls_container,% vs baseline,277.0,2026-10-02,-11.741,-8.058,-5.535,5.792,8.532,11.144
+strait,sg_calls_container,% vs baseline,277.0,2026-10-02,-66.571,-31.926,-11.856,11.48,21.384,32.59
+strait,sg_box_volume,% vs baseline,10525983.5,2026-10-02,-66.9,-33.105,-17.32,11.394,23.873,37.019
+strait,cp_malacca,% vs baseline,1638.0,2026-10-04,-53.409,-23.383,-8.767,7.282,17.495,29.244
+strait,sg_teu_per_call,% vs baseline,3079.9081,2026-08-01,-9.357,-6.04,-1.524,0.984,3.941,7.279
+reopen,cp_bab,% vs baseline,248.0,2026-10-04,-27.728,-13.216,-6.608,38.049,52.293,70.513
+reopen,cp_suez,% vs baseline,289.0,2026-10-04,-17.787,-8.961,-4.169,30.645,40.443,49.993
+reopen,cp_cape,% vs baseline,635.0,2026-10-04,-26.342,-21.676,-16.861,9.463,16.068,25.616
+reopen,sg_calls_container,% vs baseline,277.0,2026-10-02,-10.623,-6.604,-4.93,8.818,12.66,17.812
+reopen,sg_teu_per_call,% vs baseline,3079.9081,2026-08-01,-20.004,-12.944,-7.18,-1.917,1.711,4.287

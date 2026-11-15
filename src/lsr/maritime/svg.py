@@ -241,3 +241,37 @@ def range_rows(rows: list[dict], title: str, xlabel: str, width: int = 760) -> s
         s.rect(px(r["p25"]), y + 9, px(r["p75"]) - px(r["p25"]), 12, SERIES[0], rx=2.0)
         s.line(px(r["p50"]), y + 6, px(r["p50"]), y + 24, INK, 2.0)
     return s.render()
+
+
+def grouped_bars(rows: list[dict], series: list[str], title: str, xlabel: str, width: int = 760) -> str:
+    """Horizontal grouped bars on a 0-1 scale: one group per row, one bar per series (in fixed order)."""
+    k = len(series)
+    bar, gap = 10, 14
+    group_h = k * (bar + 3) + gap
+    top, left = 58, 250
+    height = top + len(rows) * group_h + 48
+    s = Svg(width, height, title)
+    s.text(8, 20, title, size=13, color=INK, weight="bold")
+    x0, x1 = left, width - 40
+
+    def px(v):
+        return x0 + v * (x1 - x0)
+
+    lx = 8
+    for i, name in enumerate(series):
+        s.rect(lx, 30, 12, 8, SERIES[i], rx=2.0)
+        s.text(lx + 16, 38, name, size=10, color=INK2)
+        lx += 30 + 6 * len(name)
+    for t in (0.0, 0.25, 0.5, 0.75, 1.0):
+        s.line(px(t), top - 6, px(t), top + len(rows) * group_h - gap, GRID, 1.0)
+        s.text(px(t), top + len(rows) * group_h + 8, f"{t:.2f}", size=10, color=MUTED, anchor="middle")
+    s.text((x0 + x1) / 2, top + len(rows) * group_h + 28, xlabel, size=11, color=INK2, anchor="middle")
+    for j, r in enumerate(rows):
+        y = top + j * group_h
+        s.text(left - 8, y + (k * (bar + 3)) / 2 + 3, r["label"], size=11, color=INK2, anchor="end")
+        for i, v in enumerate(r["values"]):
+            yy = y + i * (bar + 3)
+            if v > 0:
+                s.rect(px(0.0), yy, px(v) - px(0.0), bar, SERIES[i], rx=2.0)
+            s.text(px(v) + 4, yy + bar - 1, f"{v:.2f}", size=9, color=INK2)
+    return s.render()

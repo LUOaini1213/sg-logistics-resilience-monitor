@@ -1,0 +1,17 @@
+indicator,control_p_alarm,holdout_false_alarms_per_year,poisson_p_alarm_same_horizon
+cp_suez,0.408,0.27,0.126
+cp_bab,0.558,0.81,0.332
+cp_cape,0.675,2.99,0.775
+cp_panama,0.0,0.27,0.126
+cp_hormuz,0.0,0.27,0.126
+cp_malacca,0.0,0.8,0.329
+cp_taiwan,0.469,2.93,0.768
+sg_calls_container,0.0,0.8,0.329
+sg_box_volume,0.459,0.53,0.232
+klang_calls_container,0.0,0.8,0.329
+tpp_calls_container,0.0,2.13,0.654
+mpa_teu,0.0,0.0,0.0
+mpa_vessel_arrivals,0.0,0.0,0.0
+mpa_cargo,0.0,0.0,0.0
+changi_air_cargo,0.0,0.0,0.0
+sg_teu_per_call,0.0,0.27,0.126

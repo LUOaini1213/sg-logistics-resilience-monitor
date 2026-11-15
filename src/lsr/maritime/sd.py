@@ -1,6 +1,6 @@
 """Stock-and-flow model of the Red Sea diversion and its echo in Singapore, with its own integrators.
 
-Six stocks, one day per step (time unit: days):
+Seven stocks, one day per step (time unit: days):
 
 * ``D``  share of the pre-crisis Bab el-Mandeb container traffic that is diverted,
           ``dD/dt = (target(t) - D) / tau_d``; in the calibration ``target = d_max`` from the onset.
@@ -8,12 +8,14 @@ Six stocks, one day per step (time unit: days):
 * ``A``  capacity absorbed by the longer routes, in units of D, ``dA/dt = (D - A) / tau_a``.
           ``a_scale x A`` is the extra container-ship demand as a share of the fleet.
 * ``U``  schedule unreliability (1 - share of arrivals on time),
-          ``dU/dt = (u0 + beta (A + phi |D - A|) - U) / tau_u``. ``phi`` adds unreliability while the
-          network is re-routing (D away from A); it is 0 in the calibration.
+          ``dU/dt = (u0 + beta (A + phi |D - N|) - U) / tau_u``. ``phi`` adds unreliability while the
+          service network has not caught up with the routing (D away from N); it is 0 in the calibration.
 * ``Q``  bunching pressure at Singapore, ``dQ/dt = ((U - u0) - K - Q) / tau_q``.
 * ``K``  adaptation at Singapore (berths and yard brought into use, re-sequenced calls),
           ``dK/dt = (adapt (U - u0) - K) / tau_k``. ``K`` and ``Q`` form the balancing loop that lets the
           congestion fade while the diversion persists; ``1 - adapt`` of the pressure remains.
+* ``N``  position of the service network (rotations, schedules), ``dN/dt = (D - N) / tau_n``; it only
+          matters through ``phi`` (scenarios).
 
 Observation equations (7-day sums or monthly means of the daily values):
 ``Bab = B0 (1 - D)``, ``Cape = C0 + kappa B0 Dc``, ``GLP = 1 - U``,
@@ -29,7 +31,7 @@ import math
 from dataclasses import dataclass, replace
 from typing import Callable, Sequence
 
-STOCKS = ("D", "Dc", "A", "U", "Q", "K")
+STOCKS = ("D", "Dc", "A", "U", "Q", "K", "N")
 
 
 def euler_step(f: Callable, t: float, y: tuple, dt: float) -> tuple:
@@ -71,6 +73,7 @@ class Params:
     phi: float = 0.0       # re-routing friction (0 in the calibration; scenario input)
     tau_q: float = 30.0    # Singapore bunching adjustment time (days)
     tau_k: float = 60.0    # Singapore adaptation time (days)
+    tau_n: float = 78.5    # time for the service network to follow the routing (days) - scenario input
     adapt: float = 0.7     # share of the pressure that adaptation eventually removes
     theta_c: float = 1.0   # fall in calls per unit of Q
     theta_t: float = 1.0   # rise in TEU per call per unit of Q
@@ -83,21 +86,22 @@ def step_target(p: Params) -> Callable[[float], float]:
 
 def derivatives(p: Params, target: Callable) -> Callable:
     def f(t, y):
-        D, Dc, A, U, Q, K = y
+        D, Dc, A, U, Q, K, N = y
         du = U - p.u0
         return ((target(t) - D) / p.tau_d,
                 (D - Dc) / p.tau_c,
                 (D - A) / p.tau_a,
-                (p.u0 + p.beta * (A + p.phi * abs(D - A)) - U) / p.tau_u,
+                (p.u0 + p.beta * (A + p.phi * abs(D - N)) - U) / p.tau_u,
                 (du - K - Q) / p.tau_q,
-                (p.adapt * du - K) / p.tau_k)
+                (p.adapt * du - K) / p.tau_k,
+                (D - N) / p.tau_n)
     return f
 
 
 def initial_state(p: Params, d_start: float = 0.0) -> tuple:
     """Steady state for a constant diversion share ``d_start``."""
     du = p.beta * d_start
-    return (d_start, d_start, d_start, p.u0 + du, (1.0 - p.adapt) * du, p.adapt * du)
+    return (d_start, d_start, d_start, p.u0 + du, (1.0 - p.adapt) * du, p.adapt * du, d_start)
 
 
 def simulate(p: Params, n_days: int, target: Callable | None = None, y0: tuple | None = None,

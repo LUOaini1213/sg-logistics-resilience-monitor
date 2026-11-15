@@ -2,11 +2,17 @@
 from __future__ import annotations
 
 import datetime as dt
+import json
 import math
 import sys
 
+import numpy as np
+
+from .. import backtest as B
+from ..indicators import INDICATORS
 from . import calibrate as C
 from . import cld
+from . import scenarios as S
 from . import sd
 from . import svg
 from . import voyage as V
@@ -121,8 +127,7 @@ SERIES_LABEL = {"bab": "Bab el-Mandeb container transits (7-day sum)",
                 "tpc": "Singapore TEU per container-ship call"}
 
 
-def sd_outputs() -> dict:
-    res = C.calibrate()
+def sd_outputs(res: dict) -> dict:
     p, obs, profile, routing = res["params"], res["obs"], res["profile"], res["routing"]
     stats = C.fit_stats(p, obs)
     covs = {b: C.covariance(p, obs, b) for b in C.BLOCKS}
@@ -267,12 +272,135 @@ def cld_outputs() -> dict:
                     "unnamed_loops": sum(1 for r in loops if not r["loop"])}}
 
 
+SCEN_INDICATORS = {
+    "control": ("cp_malacca", "sg_calls_container", "sg_box_volume", "cp_bab", "cp_cape", "sg_teu_per_call"),
+    "gulf": ("cp_malacca", "cp_hormuz", "sg_calls_container"),
+    "strait": ("sg_calls_container", "sg_box_volume", "cp_malacca", "sg_teu_per_call"),
+    "reopen": ("cp_bab", "cp_suez", "cp_cape", "sg_calls_container", "sg_teu_per_call"),
+}
+
+
+def _q(a) -> list[float]:
+    return [round(v, 3) for v in S.pct(np.asarray(a, dtype=float))]
+
+
+def scenario_outputs(cal: dict) -> dict:
+    sel = json.loads((ROOT / "outputs" / "summary.json").read_text(encoding="utf-8"))["selected"]
+    k, persist = sel["k"], sel["persist_days"]
+    events = B.load_events()
+    frames = B.evaluate(k, persist, events=events)["frames"]
+    p, obs = cal["params"], cal["obs"]
+    d_now, d_date = S.diverted_share_now(obs["bab_base"])
+    res = S.run_all(frames, events, p, obs["bab_base"], d_now, k, persist)
+    ctrl = res["control"]
+    n = ctrl["n"]
+    c_max = ctrl["level"].max(axis=1)
+    ladder_rows, ind_rows, cost_rows = [], [], []
+    for name, r in res.items():
+        mx = r["level"].max(axis=1)
+        row = {"scenario": name, "title": S.TITLES[name], "draws": n}
+        for lv in (1, 2, 3):
+            row[f"p_level{lv}"] = round(int((mx >= lv).sum()) / n, 3)
+            row[f"p_level{lv}_attributable"] = round(int(((mx >= lv) & (c_max < lv)).sum()) / n, 3)
+        attr = (mx >= 2) & (c_max < 2)
+        if name != "control" and attr.any():
+            first = S.first_day(r["level"] >= 2)
+            lag = first[attr] - r["onset"][attr]
+            row.update({f"days_to_level2_p{q}": round(v, 1) for q, v in zip((10, 50, 90),
+                                                                              S.pct(lag, (10, 50, 90)))})
+        else:
+            row.update({"days_to_level2_p10": "", "days_to_level2_p50": "", "days_to_level2_p90": ""})
+        for key in ("cp_malacca", "sg_calls_container", "sg_box_volume", "sg_teu_per_call"):
+            a = r["alarms"][key] if key in r["alarms"] else r["alarms_monthly"][key]
+            ca = ctrl["alarms"][key] if key in ctrl["alarms"] else ctrl["alarms_monthly"][key]
+            row[f"alarm_{key}_attributable"] = round(int((a.any(axis=1) & ~ca.any(axis=1)).sum()) / n, 3)
+        ladder_rows.append(row)
+        for key in SCEN_INDICATORS[name]:
+            b = r["base"][key]
+            x = r["x_daily"][key] if key in r["x_daily"] else r["x_monthly"][key]
+            rel = (x - b["median"]) / b["median"] * 100.0 if b["level"] else (x - b["median"]) * 100.0
+            unit = "% vs baseline" if b["level"] else "log-points x100 vs baseline"
+            lo, hi = rel.min(axis=1), rel.max(axis=1)
+            ind_rows.append({"scenario": name, "indicator": key, "unit": unit,
+                             "baseline": round(b["median"], 4), "baseline_date": str(b["date"].date()),
+                             "min_p5": _q(lo)[0], "min_p50": _q(lo)[2], "min_p95": _q(lo)[4],
+                             "max_p5": _q(hi)[0], "max_p50": _q(hi)[2], "max_p95": _q(hi)[4]})
+        for metric, vals in r["costs"].items():
+            qv = _q(vals)
+            cost_rows.append({"scenario": name, "metric": metric, "p5": qv[0], "p25": qv[1], "p50": qv[2],
+                              "p75": qv[3], "p95": qv[4],
+                              "mean": round(math.fsum(float(v) for v in vals) / len(vals), 3),
+                              "share_below_zero": round(int((np.asarray(vals) < 0).sum()) / len(vals), 3)})
+    write_csv(OUT / "scenario_ladder.csv", ladder_rows)
+    write_csv(OUT / "scenario_indicators.csv", ind_rows)
+    write_csv(OUT / "scenario_costs.csv", cost_rows)
+    # noise check: control alarm shares against the real holdout false-alarm rates
+    fa = {r["indicator"]: r for r in read_csv(ROOT / "outputs" / "false_alarms_by_indicator.csv")}
+    horizon = ctrl["horizon"]
+    noise_rows = []
+    for key in S.DAILY + S.MONTHLY:
+        a = ctrl["alarms"][key] if key in ctrl["alarms"] else ctrl["alarms_monthly"][key]
+        rate = float(fa[key]["holdout_per_year"] or 0.0)
+        noise_rows.append({"indicator": key, "control_p_alarm": round(int(a.any(axis=1).sum()) / n, 3),
+                           "holdout_false_alarms_per_year": rate,
+                           "poisson_p_alarm_same_horizon": round(1.0 - math.exp(-rate * horizon / 365.25), 3)})
+    write_csv(OUT / "scenario_noise_check.csv", noise_rows)
+    exact = []
+    for name, keys in (("control", ("cp_malacca", "sg_calls_container")),
+                       ("strait", ("cp_malacca", "sg_calls_container")),
+                       ("reopen", ("cp_bab", "sg_calls_container"))):
+        exact += S.exact_check(res[name], frames, k, persist, keys)
+    write_csv(OUT / "scenario_exact_check.csv", [{**e, "breach_day_agreement": round(e["breach_day_agreement"], 4),
+                                                  "median_abs_z_difference": round(e["median_abs_z_difference"], 3)}
+                                                 for e in exact])
+    write_text(FIG / "scenario_ladder.svg", svg.grouped_bars(
+        [{"label": S.TITLES[r["scenario"]], "values": [r["p_level2"], r["p_level3"], r["p_level2_attributable"]]}
+         for r in ladder_rows],
+        ["Level 2 (Alert) or higher", "Level 3 (Activate review)", "Level 2, attributable to the scenario"],
+        "Activation ladder within 26 weeks: share of 2,000 draws", "Share of draws"))
+    stress = []
+    for name, key, side, label in (("gulf", "cp_malacca", "min", "Gulf: Malacca transits, trough"),
+                                   ("strait", "sg_calls_container", "min", "Strait: Singapore calls, trough"),
+                                   ("strait", "cp_malacca", "min", "Strait: Malacca transits, trough"),
+                                   ("reopen", "sg_calls_container", "max", "Reopening: Singapore calls, peak"),
+                                   ("reopen", "sg_teu_per_call", "min", "Reopening: TEU per call, trough"),
+                                   ("control", "sg_calls_container", "min", "Control: Singapore calls, trough")):
+        r = res[name]
+        b = r["base"][key]
+        x = r["x_daily"][key] if key in r["x_daily"] else r["x_monthly"][key]
+        rel = (x - b["median"]) / b["median"] * 100.0
+        v = rel.min(axis=1) if side == "min" else rel.max(axis=1)
+        q = S.pct(v)
+        stress.append({"label": label, "p5": q[0], "p25": q[1], "p50": q[2], "p75": q[3], "p95": q[4]})
+    write_text(FIG / "scenario_ranges.svg", svg.range_rows(
+        stress, "Indicator extremes over 26 weeks (P5-P95 bar, P25-P75 box, median tick)",
+        "% change against the detector baseline at the data cut-off"))
+    cm = {(r["scenario"], r["metric"]): r for r in cost_rows}
+    lad = {r["scenario"]: r for r in ladder_rows}
+    return {"scenarios": {
+        "start": str(S.START.date()), "horizon_days": horizon, "draws": n,
+        "diverted_share_now": round(d_now, 3), "diverted_share_date": str(d_date.date()),
+        "ladder": {name: {kk: lad[name][kk] for kk in ("p_level1", "p_level2", "p_level3", "p_level2_attributable",
+                                                       "p_level3_attributable", "days_to_level2_p50")}
+                   for name in lad},
+        "gulf_cape_cost_change_usd_per_teu": [cm[("gulf", "cape_usd_per_teu_change")][q] for q in ("p5", "p50", "p95")],
+        "strait_waiting_cost_usd_m": [cm[("strait", "waiting_cost_usd_m")][q] for q in ("p5", "p50", "p95")],
+        "strait_waiting_ship_days": [cm[("strait", "waiting_ship_days")][q] for q in ("p5", "p50", "p95")],
+        "reopen_suez_minus_cape_usd_per_teu": [cm[("reopen", "suez_minus_cape_usd_per_teu")][q]
+                                               for q in ("p5", "p50", "p95")],
+        "reopen_p_suez_cheaper": cm[("reopen", "suez_minus_cape_usd_per_teu")]["share_below_zero"],
+        "exact_check_min_agreement": round(min(e["breach_day_agreement"] for e in exact), 4),
+    }}
+
+
 def main() -> dict:
     OUT.mkdir(parents=True, exist_ok=True)
     summary: dict = {}
     summary.update(voyage_outputs())
-    summary.update(sd_outputs())
+    cal = C.calibrate()
+    summary.update(sd_outputs(cal))
     summary.update(cld_outputs())
+    summary.update(scenario_outputs(cal))
     write_json(OUT / "summary.json", summary)
     return summary
 

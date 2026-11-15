@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="270" viewBox="0 0 760 270" font-family="system-ui, -apple-system, Segoe UI, sans-serif" role="img">
+<title>Indicator extremes over 26 weeks (P5-P95 bar, P25-P75 box, median tick)</title>
+<rect x="0" y="0" width="760" height="270" fill="#fcfcfb"/>
+<text x="8.0" y="20.0" font-size="13" fill="#0b0b0b" text-anchor="start" font-weight="600">Indicator extremes over 26 weeks (P5-P95 bar, P25-P75 box, median tick)</text>
+<line x1="353.7" y1="36.0" x2="353.7" y2="220.0" stroke="#e1e0d9" stroke-width="1.0"/>
+<text x="353.7" y="236.0" font-size="10" fill="#898781" text-anchor="middle">-60</text>
+<line x1="445.9" y1="36.0" x2="445.9" y2="220.0" stroke="#e1e0d9" stroke-width="1.0"/>
+<text x="445.9" y="236.0" font-size="10" fill="#898781" text-anchor="middle">-40</text>
+<line x1="538.2" y1="36.0" x2="538.2" y2="220.0" stroke="#e1e0d9" stroke-width="1.0"/>
+<text x="538.2" y="236.0" font-size="10" fill="#898781" text-anchor="middle">-20</text>
+<line x1="630.5" y1="36.0" x2="630.5" y2="220.0" stroke="#e1e0d9" stroke-width="1.0"/>
+<text x="630.5" y="236.0" font-size="10" fill="#898781" text-anchor="middle">0</text>
+<line x1="722.7" y1="36.0" x2="722.7" y2="220.0" stroke="#e1e0d9" stroke-width="1.0"/>
+<text x="722.7" y="236.0" font-size="10" fill="#898781" text-anchor="middle">20</text>
+<line x1="630.5" y1="36.0" x2="630.5" y2="220.0" stroke="#c3c2b7" stroke-width="1.0"/>
+<text x="518.0" y="254.0" font-size="11" fill="#52514e" text-anchor="middle">% change against the detector baseline at the data cut-off</text>
+<text x="292.0" y="59.0" font-size="11" fill="#52514e" text-anchor="end">Gulf: Malacca transits, trough</text>
+<rect x="543.8" y="51.0" width="37.4" height="8.0" rx="2.0" fill="#b7d3f6"/>
+<rect x="553.5" y="49.0" width="16.1" height="12.0" rx="2.0" fill="#2a78d6"/>
+<line x1="561.4" y1="46.0" x2="561.4" y2="64.0" stroke="#0b0b0b" stroke-width="2.0"/>
+<text x="292.0" y="89.0" font-size="11" fill="#52514e" text-anchor="end">Strait: Singapore calls, trough</text>
+<rect x="323.4" y="81.0" width="252.4" height="8.0" rx="2.0" fill="#b7d3f6"/>
+<rect x="423.2" y="79.0" width="106.4" height="12.0" rx="2.0" fill="#2a78d6"/>
+<line x1="483.2" y1="76.0" x2="483.2" y2="94.0" stroke="#0b0b0b" stroke-width="2.0"/>
+<text x="292.0" y="119.0" font-size="11" fill="#52514e" text-anchor="end">Strait: Malacca transits, trough</text>
+<rect x="384.1" y="111.0" width="205.9" height="8.0" rx="2.0" fill="#b7d3f6"/>
+<rect x="475.4" y="109.0" width="82.7" height="12.0" rx="2.0" fill="#2a78d6"/>
+<line x1="522.6" y1="106.0" x2="522.6" y2="124.0" stroke="#0b0b0b" stroke-width="2.0"/>
+<text x="292.0" y="149.0" font-size="11" fill="#52514e" text-anchor="end">Reopening: Singapore calls, peak</text>
+<rect x="671.1" y="141.0" width="41.5" height="8.0" rx="2.0" fill="#b7d3f6"/>
+<rect x="680.6" y="139.0" width="17.6" height="12.0" rx="2.0" fill="#2a78d6"/>
+<line x1="688.9" y1="136.0" x2="688.9" y2="154.0" stroke="#0b0b0b" stroke-width="2.0"/>
+<text x="292.0" y="179.0" font-size="11" fill="#52514e" text-anchor="end">Reopening: TEU per call, trough</text>
+<rect x="538.2" y="171.0" width="59.2" height="8.0" rx="2.0" fill="#b7d3f6"/>
+<rect x="558.0" y="169.0" width="24.6" height="12.0" rx="2.0" fill="#2a78d6"/>
+<line x1="570.8" y1="166.0" x2="570.8" y2="184.0" stroke="#0b0b0b" stroke-width="2.0"/>
+<text x="292.0" y="209.0" font-size="11" fill="#52514e" text-anchor="end">Control: Singapore calls, trough</text>
+<rect x="581.5" y="201.0" width="20.4" height="8.0" rx="2.0" fill="#b7d3f6"/>
+<rect x="581.5" y="199.0" width="19.0" height="12.0" rx="2.0" fill="#2a78d6"/>
+<line x1="599.3" y1="196.0" x2="599.3" y2="214.0" stroke="#0b0b0b" stroke-width="2.0"/>
+</svg>
