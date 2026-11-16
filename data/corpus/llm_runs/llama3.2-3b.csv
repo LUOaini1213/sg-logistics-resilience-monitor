@@ -1,0 +1,97 @@
+passage_id,cause,effect,polarity,in_codebook,quote_verbatim,quote_words,quote_truncated,quote_stored
+u2-02,diversion,distance_time,+,True,True,10,False,Rerouting vessels around Africa adds distance and extends transit times.
+u2-02,diversion,capacity_demand,+,True,True,24,True,Diverting tonnage around the Cape of Good Hope increases global vessel demand by 3
+u2-02,diversion,shipping_capacity,+,True,True,24,True,Diverting tonnage around the Cape of Good Hope increases global vessel demand by 3
+u2-02,diversion,operating_costs,+,True,True,13,False,"supported charter markets, boosted ship sales and purchases and lowered ship demolition levels."
+u2-02,diversion,port_congestion,+,True,True,20,True,Rerouting vessels around the Cape of Good Hope due to the disruption in the
+u2-04,diversion,vessel_speed,+,True,True,13,False,"Rerouting has increased ship sailing speeds, as operators try to stick to schedules."
+u2-04,diversion,fuel_emissions,+,True,True,9,False,"This generates additional fuel consumption and carbon emissions, ..."
+u2-04,diversion,operating_costs,+,True,True,9,False,"This generates additional fuel consumption and carbon emissions, ..."
+u2-04,diversion,front_loading,-,True,True,25,True,"For example, the speed of container ships of 17,000 TEU and beyond increased 5"
+u2-05,diversion,capacity_demand,+,True,True,8,False,due to disruptions in shipping routes boosting demand
+u3-01,red_sea_disruption,freight_rates,+,True,True,18,True,"disruptions in the Red Sea, the Suez Canal and the Panama Canal caused container"
+u3-01,diversion,freight_rates,+,True,True,9,False,container shipping rates to rise and become more unpredictable
+u3-01,capacity_demand,freight_rates,+,True,True,9,False,container shipping rates to rise and become more unpredictable
+u3-01,shipping_capacity,freight_rates,+,True,True,9,False,container shipping rates to rise and become more unpredictable
+u3-01,front_loading,freight_rates,+,True,True,9,False,container shipping rates to rise and become more unpredictable
+u3-02,red_sea_disruption,freight_rates,+,True,True,19,True,"disruptions in the Red Sea, the Suez Canal and the Panama Canal caused freight"
+u3-02,diversion,shipping_capacity,-,True,True,9,False,reducing the availability of shipping capacity and affecting demand.
+u3-02,diversion,capacity_demand,+,True,True,16,True,demand for additional capacity increased by around 12 per cent to accommodate for these
+u3-02,diversion,vessel_speed,+,True,True,12,False,led to a need for increased vessel speeds to meet delivery schedules.
+u3-03,red_sea_disruption,port_congestion,+,True,True,20,True,Disruptions in the Red Sea and the Suez Canal exacerbated congestion at major ports
+u3-03,port_congestion,freight_rates,+,True,True,5,False,increasing charges and freight rates
+u3-03,port_congestion,vessel_speed,+,True,True,14,False,port congestion meant that vessel capacity of 2.5 million TEU were waiting at anchorages
+u3-03,vessel_speed,operating_costs,+,True,True,9,False,This represented 8.4 per cent of the global fleet
+u3-03,vessel_speed,capacity_demand,+,True,True,12,False,Hub ports in the Western Mediterranean also faced increased demand and congestion
+u3-03,capacity_demand,shipping_capacity,+,True,True,10,False,vessel capacity of 2.5 million TEU were waiting at anchorages
+u3-03,shipping_capacity,front_loading,+,True,True,17,True,"By mid-June 2024, port congestion meant that vessel capacity of 2.5 million TEU were"
+u3-04,red_sea_disruption,freight_rates,+,True,True,20,True,Charter rates initially responded slowly to the disruptions in the Red Sea but began
+u3-04,diversion,freight_rates,+,True,True,33,True,"Rates increased across different vessel sizes, driven by higher demand for larger charter vessels"
+u3-04,capacity_demand,freight_rates,+,True,True,33,True,"Rates increased across different vessel sizes, driven by higher demand for larger charter vessels"
+u3-04,shipping_capacity,freight_rates,+,True,True,33,True,"Rates increased across different vessel sizes, driven by higher demand for larger charter vessels"
+u3-04,front_loading,freight_rates,+,True,True,33,True,"Rates increased across different vessel sizes, driven by higher demand for larger charter vessels"
+u3-05,red_sea_disruption,freight_rates,+,True,False,15,True,"disruptions to the Suez Canal, the Red Sea and the Panama Canal impacted freight"
+m1-01,diversion,vessel_speed,-,True,True,5,False,has disrupted vessel arrival schedules
+m1-01,diversion,schedule_reliability,-,True,True,4,False,with off-schedule arrivals and
+m1-02,diversion,distance_time,+,True,True,18,True,the increased container volumes handled in Singapore have resulted in longer vessels’ wait time
+m1-02,front_loading,diversion,+,True,True,18,True,the increased container volumes handled in Singapore have resulted in longer vessels’ wait time
+m1-02,diversion,port_congestion,+,True,True,18,True,the increased container volumes handled in Singapore have resulted in longer vessels’ wait time
+m1-02,diversion,port_capacity,+,True,True,18,True,the increased container volumes handled in Singapore have resulted in longer vessels’ wait time
+m1-02,diversion,container_volume,+,True,True,18,True,the increased container volumes handled in Singapore have resulted in longer vessels’ wait time
+m1-02,diversion,containers_per_call,+,True,True,18,True,the increased container volumes handled in Singapore have resulted in longer vessels’ wait time
+m1-02,diversion,fuel_emissions,+,True,True,18,True,the increased container volumes handled in Singapore have resulted in longer vessels’ wait time
+m1-02,diversion,operating_costs,+,True,True,18,True,the increased container volumes handled in Singapore have resulted in longer vessels’ wait time
+m1-02,diversion,charter_rates,+,True,True,18,True,the increased container volumes handled in Singapore have resulted in longer vessels’ wait time
+m1-02,diversion,front_loading,+,True,True,18,True,the increased container volumes handled in Singapore have resulted in longer vessels’ wait time
+m1-03,front_loading,container_volume,+,True,True,32,True,The increased demand on container handling in Singapore is a result of several container
+m1-03,front_loading,containers_per_call,+,True,True,10,False,The number of containers handled per vessel has also increased.
+m1-03,front_loading,capacity_demand,+,True,True,32,True,"Added to these demands, container lines are also leveraging PSA’s cargo handling capabilities to"
+m1-04,front_loading,container_volume,+,True,True,4,False,help alleviate the situation
+m1-04,container_volume,vessel_speed,+,True,True,7,False,increase the number of containers handled weekly
+m1-04,vessel_speed,fuel_emissions,+,True,True,7,False,increase the number of containers handled weekly
+m1-04,fuel_emissions,operating_costs,+,True,True,4,False,help alleviate the situation
+m1-04,operating_costs,charter_rates,+,True,True,4,False,help alleviate the situation
+m1-04,charter_rates,capacity_demand,+,True,True,4,False,help alleviate the situation
+m1-04,capacity_demand,shipping_capacity,+,True,True,4,False,help alleviate the situation
+m1-04,shipping_capacity,schedule_reliability,+,True,True,4,False,help alleviate the situation
+m1-04,shipping_capacity,port_congestion,+,True,True,4,False,help alleviate the situation
+m1-04,port_congestion,port_capacity,+,True,True,4,False,help alleviate the situation
+m1-04,port_capacity,diversion,+,True,True,4,False,help alleviate the situation
+m1-04,diversion,distance_time,+,True,True,4,False,help alleviate the situation
+m1-04,distance_time,red_sea_disruption,+,True,True,4,False,help alleviate the situation
+m2-01,front_loading,container_volume,+,True,True,13,False,a significant 6.1% increase in container volumes over the same period last year
+m2-01,shipping_capacity,container_volume,+,True,True,13,False,a significant 6.1% increase in container volumes over the same period last year
+m2-01,capacity_demand,container_volume,+,True,True,13,False,a significant 6.1% increase in container volumes over the same period last year
+m2-01,container_volume,containers_per_call,+,True,True,15,True,most container vessels completed their simultaneous cargo handling and bunkering within a day of
+m2-01,container_volume,port_congestion,-,True,True,20,True,the average wait time for container berths at port has been reduced to less
+m2-01,container_volume,port_capacity,+,True,True,20,True,the average wait time for container berths at port has been reduced to less
+m2-01,container_volume,fuel_emissions,+,True,True,20,True,the average wait time for container berths at port has been reduced to less
+m2-01,operating_costs,freight_rates,+,True,True,15,True,most container vessels completed their simultaneous cargo handling and bunkering within a day of
+m2-01,operating_costs,charter_rates,+,True,True,15,True,most container vessels completed their simultaneous cargo handling and bunkering within a day of
+m2-01,operating_costs,vessel_speed,+,True,True,15,True,most container vessels completed their simultaneous cargo handling and bunkering within a day of
+m2-01,operating_costs,schedule_reliability,+,True,True,15,True,most container vessels completed their simultaneous cargo handling and bunkering within a day of
+m2-01,operating_costs,diversion,+,True,True,15,True,most container vessels completed their simultaneous cargo handling and bunkering within a day of
+m2-01,operating_costs,red_sea_disruption,+,True,True,15,True,most container vessels completed their simultaneous cargo handling and bunkering within a day of
+m2-01,operating_costs,port_congestion,+,True,True,15,True,most container vessels completed their simultaneous cargo handling and bunkering within a day of
+m2-01,operating_costs,capacity_demand,+,True,True,15,True,most container vessels completed their simultaneous cargo handling and bunkering within a day of
+m2-01,operating_costs,shipping_capacity,+,True,True,15,True,most container vessels completed their simultaneous cargo handling and bunkering within a day of
+m2-01,operating_costs,front_loading,+,True,True,15,True,most container vessels completed their simultaneous cargo handling and bunkering within a day of
+m2-01,operating_costs,consumer_prices,+,True,True,15,True,most container vessels completed their simultaneous cargo handling and bunkering within a day of
+t1-01,red_sea_disruption,diversion,+,True,True,17,True,diverted to the longer route around the Cape of Good Hope for sailings between
+t1-01,diversion,port_congestion,+,True,True,9,False,compounding the issue by causing a “vessel bunching” effect
+t1-01,diversion,schedule_reliability,-,True,True,2,False,off-schedule arrivals
+t1-02,diversion,distance_time,+,True,True,12,False,to unload cargoes bound for Asian ports beyond Singapore before turning around
+t1-02,diversion,port_congestion,+,True,True,17,True,"which in turn increased the waiting time for incoming vessels, leading to congestion at"
+t1-02,diversion,capacity_demand,+,True,True,17,True,"which in turn increased the waiting time for incoming vessels, leading to congestion at"
+t1-02,diversion,port_capacity,+,True,True,17,True,"which in turn increased the waiting time for incoming vessels, leading to congestion at"
+t1-02,diversion,container_volume,+,True,True,17,True,"which in turn increased the waiting time for incoming vessels, leading to congestion at"
+t1-02,diversion,containers_per_call,+,True,True,17,True,"which in turn increased the waiting time for incoming vessels, leading to congestion at"
+t1-02,diversion,front_loading,+,True,True,17,True,"which in turn increased the waiting time for incoming vessels, leading to congestion at"
+t1-02,diversion,operating_costs,+,True,True,17,True,"which in turn increased the waiting time for incoming vessels, leading to congestion at"
+t1-02,diversion,fuel_emissions,+,True,True,17,True,"which in turn increased the waiting time for incoming vessels, leading to congestion at"
+t1-02,distance_time,port_congestion,+,True,True,31,True,"These have lengthened the time container vessels stay in our port for cargo operations,"
+t1-03,port_congestion,port_capacity,+,True,True,14,False,reactivated some of the berths and yard space at Keppel and Tanjong Pagar Terminals
+t1-03,port_capacity,capacity_demand,+,True,True,24,True,"PSA has ramped up its handling capacity across its terminals, and will continue to"
+t1-04,red_sea_disruption,capacity_demand,+,True,True,9,False,the Red Sea crisis will ease any time soon
+t1-04,front_loading,capacity_demand,+,True,True,8,False,companies bring forward export schedules out of Asia
+t1-04,front_loading,container_volume,+,True,True,8,False,companies bring forward export schedules out of Asia

@@ -1,0 +1,39 @@
+passage_id,cause,effect,polarity,in_codebook,quote_verbatim,quote_words,quote_truncated,quote_stored
+u2-01,red_sea_disruption,diversion,+,True,True,19,True,Attacks on vessels in the Red Sea prompted most shipping lines to reroute around
+u2-02,red_sea_disruption,diversion,+,True,True,10,False,Rerouting vessels around Africa adds distance and extends transit times.
+u2-02,diversion,distance_time,+,True,True,20,True,"By going around the Cape of Good Hope, the distance increases to 13,000 nautical"
+u2-02,diversion,capacity_demand,+,True,True,24,True,Diverting tonnage around the Cape of Good Hope increases global vessel demand by 3
+u2-02,capacity_demand,shipping_capacity,+,True,True,11,False,The additional demand and increased ton-miles have altered global ship capacity
+u2-02,diversion,port_congestion,+,True,True,20,True,Rerouting vessels around the Cape of Good Hope due to the disruption in the
+u2-02,red_sea_disruption,operating_costs,+,True,True,16,True,"Rerouting ships onto longer routes is triggering market inefficiencies, such as port congestion and"
+u2-03,diversion,distance_time,+,True,True,13,False,Longer routes also hike up costs ... around the Cape of Good Hope
+u2-03,diversion,port_congestion,+,True,True,17,True,"Recent bottlenecks at the Port of Singapore, caused by ships being diverted ... illustrate"
+u2-03,red_sea_disruption,freight_rates,+,True,True,9,False,"Ultimately, these additional costs translate into higher freight rates"
+u2-03,red_sea_disruption,operating_costs,+,True,True,13,False,"Longer routes also hike up costs for crew wages, chartering, insurance and fuel"
+u2-03,red_sea_disruption,capacity_demand,+,True,True,13,False,Longer routes also hike up costs ... around the Cape of Good Hope
+u2-04,diversion,vessel_speed,+,True,True,6,False,Rerouting has increased ship sailing speeds
+u2-04,vessel_speed,fuel_emissions,+,True,True,8,False,This generates additional fuel consumption and carbon emissions
+u2-05,capacity_demand,shipping_capacity,+,True,True,19,True,"concerns over excess capacity in container shipping have eased for now, due to disruptions"
+u3-01,red_sea_disruption,freight_rates,+,True,True,18,True,"disruptions in the Red Sea, the Suez Canal and the Panama Canal caused container"
+u3-02,distance_time,capacity_demand,+,True,True,31,True,"ships on the most affected East– West routes took longer routes, either around the"
+u3-02,diversion,capacity_demand,+,True,True,16,True,demand for additional capacity increased by around 12 per cent to accommodate for these
+u3-02,red_sea_disruption,freight_rates,+,True,True,19,True,"disruptions in the Red Sea, the Suez Canal and the Panama Canal caused freight"
+u3-02,red_sea_disruption,shipping_capacity,-,True,True,14,False,"Ships had to be diverted onto longer routes, reducing the availability of shipping capacity"
+u3-03,distance_time,port_congestion,+,True,True,14,False,Disruptions in the Red Sea and the Suez Canal exacerbated congestion at major ports
+u3-03,red_sea_disruption,capacity_demand,+,True,True,11,False,Disruptions in the Red Sea and the Suez Canal exacerbated congestion
+u3-03,port_congestion,freight_rates,+,True,True,5,False,increasing charges and freight rates
+u3-03,diversion,capacity_demand,+,True,True,12,False,waiting times at Jebel Ali Port in the United Arab Emirates rose
+u3-03,port_congestion,shipping_capacity,+,True,True,10,False,vessel capacity of 2.5 million TEU were waiting at anchorages
+u3-04,red_sea_disruption,charter_rates,+,True,False,8,False,rates began to surge from January 2024 onwards
+u3-05,red_sea_disruption,freight_rates,+,True,True,16,True,"disruptions to the Suez Canal, the Red Sea and the Panama Canal significantly impacted"
+m1-01,diversion,schedule_reliability,-,True,True,13,False,disrupted vessel arrival schedules at major ports around the world with off-schedule arrivals
+m1-02,container_volume,port_congestion,+,True,False,18,True,increase in container volumes handled in Singapore have resulted in longer vessels’ wait time
+m1-03,container_volume,container_volume,+,True,True,20,True,The increased demand on container handling in Singapore is a result of several container
+m1-04,capacity_demand,port_capacity,+,True,True,6,False,... to help alleviate the situation.
+m2-01,port_capacity,container_volume,+,True,True,18,True,The total number of containers handled by the Port of Singapore...marking a significant 6.1%
+t1-01,red_sea_disruption,diversion,+,True,True,10,False,The Red Sea crisis has led to vessels being diverted...
+t1-01,diversion,schedule_reliability,-,True,True,9,False,...ports around the world are experiencing more off-schedule arrivals.
+t1-01,vessel_speed,container_volume,+,True,True,14,False,"Many of the vessels are also arriving within a short window, compounding the issue..."
+t1-02,container_volume,port_congestion,+,True,True,14,False,"increased the waiting time for incoming vessels, leading to congestion at our container berths"
+t1-03,red_sea_disruption,port_capacity,+,True,True,10,False,PSA has ramped up its handling capacity across its terminals
+t1-04,red_sea_disruption,container_volume,+,True,True,11,False,an increase in container volumes as companies bring forward export schedules

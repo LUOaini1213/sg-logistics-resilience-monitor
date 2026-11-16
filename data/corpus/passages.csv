@@ -1,0 +1,20 @@
+passage_id,source_id,start_anchor,end_anchor,n_words,sha256
+u2-01,unctad_rmt2024_ch2,"However, increased geopolitical instability",low water levels.,65,c2789d2d2ba4c4f0f1c3159e55a2e1628f1445271ece04cd63ed94b923465253
+u2-02,unctad_rmt2024_ch2,Rerouting vessels around Africa adds distance,has overwhelmed many ports.,184,cfd16e246152b14e7435d2dcf882d7e4484ccf37b90a7422f425c3f07b0fcd09
+u2-03,unctad_rmt2024_ch2,"Off-schedule arrivals, for example,",freight rates and shipping expenses,142,b1a630020fcb2a77bd9b8a3da939f56456550d372f9357b206330bb864e50b58
+u2-04,unctad_rmt2024_ch2,Rerouting has increased ship sailing speeds,compared to 2023,54,fff120e65abae4785b5ecec98fbda7a5284cc9641071fe5b77d331fab5adb63f
+u2-05,unctad_rmt2024_ch2,"In 2023, the global fleet and container ship capacity grew faster",overcapacity issues are likely to return.,53,dec13ac8f5a3bc8370c6bff0bdba38217fff3e389f6b85bed819b58dad3c56e7
+u3-01,unctad_rmt2024_ch3,"At the end of 2023 and into 2024, disruptions",including record highs.,53,002f3d14c35a9a4d65106d04982e2b24acce35bbf61f96137c6e276130baeb85
+u3-02,unctad_rmt2024_ch3,"Since December 2023, disruptions in the Red Sea",to meet delivery schedules.,133,34602e5a94edfab8e6d5f72347cb29f327ab7ffbe9bdf0c55777875a47ae635e
+u3-03,unctad_rmt2024_ch3,Disruptions in the Red Sea and the Suez Canal exacerbated,contributed to the increase in freight rates.,153,07ba014c026b0274461a7b0f8e1f054f079e3df7f2037454a0f33b6739938008
+u3-04,unctad_rmt2024_ch3,Charter rates initially responded slowly,cascading effects of the disruption.,53,bf8bf95441e97da6ece6eda0b1d513848c57a529fd738b36bcbd436aa123067a
+u3-05,unctad_rmt2024_ch3,"The disruptions to the Suez Canal, the Red Sea and the Panama Canal significantly",SIDS and LDCs.,43,c748d066b34c030654aed2ddffd7eb4fa07d764aceaafbc490f044c48d5999c0
+m1-01,mpa_2024_05_30,The diversion of vessels around the Cape,increase in vessel arrivals.,45,1788b3b2901aed5ca8a51ee8e0f790bd3fc9795019a31bfe6df7a22d17e86ceb
+m1-02,mpa_2024_05_30,Container volumes handled in Singapore in the first four months,about two to three days.,100,a8fd41844b050492882fda7c678afc9650926e3fcf329f0d878e9370604fd7de
+m1-03,mpa_2024_05_30,The increased demand on container handling,subsequent port calls.,74,c2b59aec39fbc675d8416c882d053bd2d5900a553a1d652d868bfdab7beee2eb
+m1-04,mpa_2024_05_30,have been working with PSA and the industry since late 2023,"820,000 TEUs currently.",74,a568eace46058c5aed105a19b12a959a34dc72a1254b84cf6a5c6dcc357c6fa6
+m2-01,mpa_2024_09_04,The total number of containers handled by the Port of Singapore,scheduling for operations.,125,82ce4f7e22b624ceb12f69f16e6c8e63247cfa4fbe1e9436ef2f291896a950d8
+t1-01,mot_2024_07_02,The Red Sea crisis has led to vessels being diverted,effect.,78,bb874a0cacdc3575f747ec2f89bf24cd0fe7cec293721c3b9aea30fbce69fc74
+t1-02,mot_2024_07_02,To allow vessels to return to Europe more quickly,congestion at our container berths.,106,6ac4b6469fa432ad72db13e77d1efa071d884c3f0ef38ff5d275e7d0adf31b4b
+t1-03,mot_2024_07_02,are working closely together with our tripartite partners,anticipated demand.,58,7af557d0c1bd10e0069571af1fd3c3d573a772db00136bb985d2ce85a63f3d1f
+t1-04,mot_2024_07_02,While our efforts have improved average waiting times,second half of the year.,57,7416e84b8a096395ea1c4fcef65d8ef2013d00a5cb8d121d9d7375ccc43a11a8

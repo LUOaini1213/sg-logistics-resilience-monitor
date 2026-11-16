@@ -1,0 +1,40 @@
+{
+ "model": "gemma3:4b",
+ "digest": "c30276f7dffec93a536d283e15088990454b8d21cf180a3d6eea4959e4147291",
+ "ollama_version": "0.40.2",
+ "options": {
+  "temperature": 0,
+  "seed": 42,
+  "num_ctx": 4096,
+  "num_predict": 1024
+ },
+ "think": null,
+ "prompt_sha256": "bcea929804c8d2c4ae0c4241228a56e3b3cb79867fe0ec71d771075a2690985b",
+ "codebook_sha256": "bb7c7627d548f9013db27d6b1c7345e985865e8d6b56e34193e1b2a9e8b056c4",
+ "passages": 19,
+ "links": 38,
+ "seconds_per_passage": [
+  27.8,
+  43.0,
+  32.2,
+  11.7,
+  8.8,
+  9.0,
+  37.5,
+  38.3,
+  8.1,
+  8.9,
+  8.1,
+  9.2,
+  8.7,
+  7.1,
+  9.7,
+  22.9,
+  8.8,
+  8.6,
+  8.4
+ ],
+ "outputs_cut_at_num_predict": 0,
+ "errors": [],
+ "run_utc": "2026-11-15T15:20:22Z"
+}

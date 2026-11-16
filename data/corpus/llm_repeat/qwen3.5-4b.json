@@ -1,0 +1,38 @@
+{
+ "model": "qwen3.5:4b",
+ "digest": "96f38c742e0a10e194b237d2ffb8b55925ebfeed9d27df72688f565e773569e7",
+ "ollama_version": "0.40.2",
+ "options": {
+  "temperature": 0,
+  "seed": 42,
+  "num_ctx": 4096
+ },
+ "think": false,
+ "prompt_sha256": "bcea929804c8d2c4ae0c4241228a56e3b3cb79867fe0ec71d771075a2690985b",
+ "codebook_sha256": "bb7c7627d548f9013db27d6b1c7345e985865e8d6b56e34193e1b2a9e8b056c4",
+ "passages": 19,
+ "links": 42,
+ "seconds_per_passage": [
+  48.6,
+  58.1,
+  29.2,
+  18.5,
+  23.9,
+  12.5,
+  40.5,
+  28.5,
+  25.3,
+  17.0,
+  11.8,
+  14.2,
+  10.3,
+  12.3,
+  14.0,
+  28.2,
+  20.4,
+  11.9,
+  16.4
+ ],
+ "errors": [],
+ "run_utc": "2026-11-15T14:45:39Z"
+}
