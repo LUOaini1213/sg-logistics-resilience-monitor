@@ -357,7 +357,23 @@ The first full run caught 30 of 31 and exited with an error
 from a Singapore outcome alarm alone, without an Alert. It survived because the ladder test never covered a
 day with an outcome alarm and no route alarm. That case was added, and the current run catches 32 of 32
 ([`outputs/mutation_run.txt`](outputs/mutation_run.txt)). CI runs the tests, the mutation check, and a full rebuild
-that must reproduce every committed file in `outputs/` and `docs/index.html` exactly.
+that must reproduce every committed file in `outputs/`, `docs/index.html` and `paper/working_paper.md`
+exactly.
+
+**Maritime layer.** Its tests check the voyage costs against a three-port loop worked by hand and the
+Suez Canal Authority bands summed by hand, the RK4 integrator against analytic step responses and its
+fourth-order convergence, the calibration on data generated from known parameters, the scenario alarm
+logic and ladder against `detect.detect` and `backtest.posture`, Monte Carlo determinism under the fixed
+seed, the extraction scoring on hand-made sets, the provenance labels, and the numbers in this README,
+the paper and the workshop pack against `outputs/maritime/summary.json`. `tests/mutate_maritime.py` plants
+43 bugs in the maritime modules, each run against the tests of the module it changes, after a no-op
+control that must survive. The first full run caught all of them; while the mutants were being written,
+three were found to have no test that could catch them (a provenance check accepting unlabelled rows,
+the autocorrelation inflation dropped, the onset interval ignoring it), and those tests were added
+before that run. The current run catches 43 of 43
+([`outputs/mutation_maritime_run.txt`](outputs/mutation_maritime_run.txt)). The language models, the corpus
+download, `searoute` and the PDF build are not run by CI; their committed outputs are checked instead
+(hashes of the passages, the codebook and the paper's Markdown source).
 
 ## Repository layout
 

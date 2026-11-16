@@ -156,3 +156,18 @@ def test_paper_renderer_formats_and_refuses_leftovers():
         paper.render("{{missing.key}}", data, main)
     with pytest.raises(ValueError):
         paper.render("{{a.b.1}} }}", data, main)
+
+
+def test_readme_mutation_counts_match_the_harness_and_its_report():
+    sys.path.insert(0, str(ROOT / "tests"))
+    import mutate_maritime
+    n = len(mutate_maritime.MUTANTS)
+    assert n >= 20
+    readme = " ".join((ROOT / "README.md").read_text(encoding="utf-8").split())
+    assert f"plants {n} bugs in the maritime modules" in readme
+    assert f"The current run catches {n} of {n}" in readme
+    report = (ROOT / "outputs" / "mutation_maritime_run.txt").read_text(encoding="utf-8")
+    assert f"{n}/{n} planted bugs caught" in report and "control (no-op) mutant: survived" in report
+    assert report.count("  caught ") == n and "SURVIVED" not in report
+    for fname, _, _, desc in mutate_maritime.MUTANTS:
+        assert f"{fname}: {desc}" in report

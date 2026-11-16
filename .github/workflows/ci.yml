@@ -21,15 +21,18 @@ jobs:
       - name: Mutation check (control must survive; every planted bug must be caught)
         if: matrix.os == 'ubuntu-latest'
         run: python tests/mutate.py
-      - name: Rebuild outputs and dashboard from the committed raw data and compare
+      - name: Mutation check of the maritime modules
+        if: matrix.os == 'ubuntu-latest'
+        run: python tests/mutate_maritime.py
+      - name: Rebuild outputs, dashboard and paper text from the committed inputs and compare
         run: |
           python run_all.py
-          git diff --stat --exit-code -- outputs/ docs/index.html
-          untracked=$(git ls-files --others --exclude-standard -- outputs/ docs/)
+          git diff --stat --exit-code -- outputs/ docs/index.html paper/working_paper.md
+          untracked=$(git ls-files --others --exclude-standard -- outputs/ docs/ paper/)
           if [ -n "$untracked" ]; then echo "rebuild left files that are not committed:"; echo "$untracked"; exit 1; fi
       - name: Show the changed values if the rebuild differs
         if: failure()
-        run: git diff --word-diff=porcelain --word-diff-regex='[^,]+' -- outputs/ docs/index.html | grep -E '^[-+][^-+]' | head -40 | cut -c1-200 || true
+        run: git diff --word-diff=porcelain --word-diff-regex='[^,]+' -- outputs/ docs/index.html paper/working_paper.md | grep -E '^[-+][^-+]' | head -40 | cut -c1-200 || true
       - name: No local machine paths in tracked text files
         run: |
           if git grep -nIE '[A-Za-z]:[\/](Users|Documents and Settings)[\/]|/home/[a-z][a-z0-9_-]*/|/Users/[A-Za-z]' -- . ':!.github/workflows/ci.yml'; then
