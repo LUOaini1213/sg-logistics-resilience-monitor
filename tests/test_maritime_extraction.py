@@ -92,3 +92,18 @@ def test_committed_scores_match_a_rescore():
         assert int(row["tp"]) == s["tp"] and int(row["fp"]) == s["fp"] and int(row["fn"]) == s["fn"]
         assert float(row["precision"]) == pytest.approx(s["precision"], abs=6e-4)
         assert float(row["recall"]) == pytest.approx(s["recall"], abs=6e-4)
+
+
+def test_a_passage_counts_as_failed_only_when_both_attempts_failed(tmp_path):
+    """One unusable reply followed by a usable retry is not a failed passage; two unusable replies are."""
+    import json
+    path = tmp_path / "m.csv"
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=["passage_id", "cause", "effect", "polarity", "quote_verbatim"])
+        w.writeheader()
+        w.writerows([{**r, "quote_verbatim": "True"} for r in rows(("p1", "a", "b", "+"))])
+    path.with_suffix(".json").write_text(json.dumps({"model": "m", "errors": [
+        {"passage_id": "p1"}, {"passage_id": "p2"}, {"passage_id": "p2"}]}), encoding="utf-8")
+    s = E.score_model(path, rows(("p1", "a", "b", "+"), ("p2", "c", "d", "+")), ["p1", "p2"], ["a", "b", "c", "d"])
+    assert s["failed_passages"] == 1
+    assert (s["tp"], s["fn"]) == (1, 1)          # the failed passage still counts as a missed link
