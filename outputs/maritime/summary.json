@@ -13,6 +13,7 @@
   "suez_usd_per_teu": 616.33,
   "cape_usd_per_teu": 516.66,
   "cape_minus_suez_usd_per_teu": -99.68,
+  "cape_saving_usd_per_teu": 99.68,
   "suez_days": 66.75,
   "cape_days": 78.51,
   "extra_ships_weekly": 1.68,
@@ -120,7 +121,9 @@
   },
   "glp_rmse_fitted": 1.363,
   "peak_calls_drop_pct": 13.3,
-  "peak_tpc_rise_pct": 20.3
+  "peak_tpc_rise_pct": 20.3,
+  "obs_calls_drop_pct": 22.2,
+  "obs_tpc_rise_pct": 29.9
  },
  "cld": {
   "nodes": 18,
@@ -128,8 +131,8 @@
   "links_by_status": {
    "estimated": 7,
    "model": 5,
-   "cited": 6,
-   "assumed": 9
+   "cited": 8,
+   "assumed": 7
   },
   "loops": {
    "B1": "B",
@@ -150,7 +153,7 @@
   "diverted_share_date": "2026-10-04",
   "ladder": {
    "control": {
-    "p_level1": 0.968,
+    "p_level1": 0.9675,
     "p_level2": 0.414,
     "p_level3": 0.0,
     "p_level2_attributable": 0.0,
@@ -158,24 +161,24 @@
     "days_to_level2_p50": ""
    },
    "gulf": {
-    "p_level1": 0.977,
-    "p_level2": 0.427,
+    "p_level1": 0.9765,
+    "p_level2": 0.4275,
     "p_level3": 0.0,
-    "p_level2_attributable": 0.013,
+    "p_level2_attributable": 0.0135,
     "p_level3_attributable": 0.0,
     "days_to_level2_p50": 79.0
    },
    "strait": {
-    "p_level1": 0.997,
-    "p_level2": 0.822,
+    "p_level1": 0.9965,
+    "p_level2": 0.8215,
     "p_level3": 0.014,
-    "p_level2_attributable": 0.411,
+    "p_level2_attributable": 0.4115,
     "p_level3_attributable": 0.014,
     "days_to_level2_p50": 11.0
    },
    "reopen": {
-    "p_level1": 0.86,
-    "p_level2": 0.119,
+    "p_level1": 0.8595,
+    "p_level2": 0.1195,
     "p_level3": 0.0,
     "p_level2_attributable": 0.0,
     "p_level3_attributable": 0.0,
@@ -202,7 +205,69 @@
    10.19,
    65.292
   ],
-  "reopen_p_suez_cheaper": 0.366,
+  "reopen_p_suez_cheaper": 0.3665,
   "exact_check_min_agreement": 0.9942
+ },
+ "extraction": {
+  "passages": 19,
+  "reference_links": 45,
+  "variables": 17,
+  "models": {
+   "gemma3_4b": {
+    "model": "gemma3:4b",
+    "precision": 0.5263,
+    "precision_ci95": "0.38-0.68",
+    "recall": 0.4444,
+    "recall_ci95": "0.33-0.55",
+    "f1": 0.4819,
+    "polarity_agreement": 0.9,
+    "predicted_links": 38,
+    "tp": 20,
+    "quote_verbatim_share": 0.947,
+    "median_seconds_per_passage": 9.0,
+    "failed_passages": 0
+   },
+   "llama3_2_3b": {
+    "model": "llama3.2:3b",
+    "precision": 0.1562,
+    "precision_ci95": "0.06-0.32",
+    "recall": 0.3333,
+    "recall_ci95": "0.16-0.46",
+    "f1": 0.2128,
+    "polarity_agreement": 1.0,
+    "predicted_links": 96,
+    "tp": 15,
+    "quote_verbatim_share": 0.99,
+    "median_seconds_per_passage": 9.5,
+    "failed_passages": 2
+   },
+   "qwen3_5_4b": {
+    "model": "qwen3.5:4b",
+    "precision": 0.5952,
+    "precision_ci95": "0.45-0.70",
+    "recall": 0.5556,
+    "recall_ci95": "0.42-0.67",
+    "f1": 0.5747,
+    "polarity_agreement": 1.0,
+    "predicted_links": 42,
+    "tp": 25,
+    "quote_verbatim_share": 0.976,
+    "median_seconds_per_passage": 20.8,
+    "failed_passages": 0
+   }
+  },
+  "repeat": {
+   "qwen3_5_4b": {
+    "shared": 41,
+    "union": 43
+   }
+  }
+ },
+ "provenance": {
+  "files": 10,
+  "REAL": 70,
+  "ASSUMPTION": 52,
+  "ILLUSTRATIVE": 0,
+  "SYNTHETIC": 0
  }
 }

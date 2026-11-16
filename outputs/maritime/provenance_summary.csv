@@ -1,0 +1,11 @@
+file,rows,REAL,ASSUMPTION,ILLUSTRATIVE,SYNTHETIC
+data/inputs/distance_checks_published.csv,3,3,0,0,0
+data/inputs/distance_checks_searoute.csv,3,3,0,0,0
+data/inputs/ports.csv,7,0,7,0,0
+data/inputs/scenario_parameters.csv,24,0,24,0,0
+data/inputs/schedule_reliability_glp.csv,19,19,0,0,0
+data/inputs/sd_parameters.csv,8,1,7,0,0
+data/inputs/suez_toll_schedule.csv,8,8,0,0,0
+data/inputs/voyage_legs.csv,16,16,0,0,0
+data/inputs/voyage_parameters.csv,29,15,14,0,0
+data/corpus/sources.csv,5,5,0,0,0

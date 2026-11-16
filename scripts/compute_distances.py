@@ -59,7 +59,9 @@ def main() -> None:
     for a, b in CHECKS:
         s, _ = leg(p, a, b, "suez")
         c, _ = leg(p, a, b, "cape")
-        checks.append({"from_port": a, "to_port": b, "suez_nm": s, "cape_nm": c, "extra_nm": round(c - s, 1)})
+        checks.append({"from_port": a, "to_port": b, "suez_nm": s, "cape_nm": c, "extra_nm": round(c - s, 1),
+                       "label": "REAL", "source": f"searoute {version}; port positions in ports.csv (ASSUMPTION)",
+                       "url": f"https://pypi.org/project/searoute/{version}/", "accessed": dt.date.today().isoformat()})
     with open(INPUTS / "distance_checks_searoute.csv", "w", newline="\n", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=list(checks[0]), lineterminator="\n")
         w.writeheader()

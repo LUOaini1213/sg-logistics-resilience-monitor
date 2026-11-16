@@ -17,7 +17,7 @@ interviewees agree on is still recorded as *assumed* until data support it.
 ## Ground rules
 
 - Explain the purpose, how notes are kept and who sees them; ask for consent to take notes.
-- Record roles, not names or employers. Do not record commercially sensitive figures unless the
+- Record roles, not names or organisations. Do not record commercially sensitive figures unless the
   interviewee offers them for use, and then only as ranges.
 - Ask about what the interviewee has seen, with dates, before asking for opinions.
 - Use the link codes below (`from -> to`) in the notes so answers can be tallied against the diagram.

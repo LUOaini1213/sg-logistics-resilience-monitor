@@ -4,6 +4,7 @@ from __future__ import annotations
 import datetime as dt
 import json
 import math
+import re
 import sys
 
 import numpy as np
@@ -12,6 +13,8 @@ from .. import backtest as B
 from ..indicators import INDICATORS
 from . import calibrate as C
 from . import cld
+from . import extraction as E
+from . import paper
 from . import scenarios as S
 from . import sd
 from . import svg
@@ -100,6 +103,7 @@ def voyage_outputs() -> dict:
         "suez_total_usd": r0(s["total_usd"]), "cape_total_usd": r0(c["total_usd"]),
         "suez_usd_per_teu": r2(s["usd_per_teu"]), "cape_usd_per_teu": r2(c["usd_per_teu"]),
         "cape_minus_suez_usd_per_teu": r2(c["usd_per_teu"] - s["usd_per_teu"]),
+        "cape_saving_usd_per_teu": r2(s["usd_per_teu"] - c["usd_per_teu"]),
         "suez_days": r2(s["days"]), "cape_days": r2(c["days"]),
         "extra_ships_weekly": r2(c["ships_weekly"] - s["ships_weekly"]),
         "extra_fuel_t": r0(c["fuel_t"] - s["fuel_t"]),
@@ -254,6 +258,8 @@ def sd_outputs(res: dict) -> dict:
         "glp_rmse_fitted": round(st["glp"]["rmse"], 3),
         "peak_calls_drop_pct": round(100.0 * (1.0 - min(m["calls"]) / obs["calls_base"]), 1),
         "peak_tpc_rise_pct": round(100.0 * (max(m["tpc"]) / obs["tpc_base"] - 1.0), 1),
+        "obs_calls_drop_pct": round(100.0 * (1.0 - min(obs["calls"]) / obs["calls_base"]), 1),
+        "obs_tpc_rise_pct": round(100.0 * (max(obs["tpc"]) / obs["tpc_base"] - 1.0), 1),
     }}
 
 
@@ -300,8 +306,8 @@ def scenario_outputs(cal: dict) -> dict:
         mx = r["level"].max(axis=1)
         row = {"scenario": name, "title": S.TITLES[name], "draws": n}
         for lv in (1, 2, 3):
-            row[f"p_level{lv}"] = round(int((mx >= lv).sum()) / n, 3)
-            row[f"p_level{lv}_attributable"] = round(int(((mx >= lv) & (c_max < lv)).sum()) / n, 3)
+            row[f"p_level{lv}"] = round(int((mx >= lv).sum()) / n, 4)
+            row[f"p_level{lv}_attributable"] = round(int(((mx >= lv) & (c_max < lv)).sum()) / n, 4)
         attr = (mx >= 2) & (c_max < 2)
         if name != "control" and attr.any():
             first = S.first_day(r["level"] >= 2)
@@ -313,7 +319,7 @@ def scenario_outputs(cal: dict) -> dict:
         for key in ("cp_malacca", "sg_calls_container", "sg_box_volume", "sg_teu_per_call"):
             a = r["alarms"][key] if key in r["alarms"] else r["alarms_monthly"][key]
             ca = ctrl["alarms"][key] if key in ctrl["alarms"] else ctrl["alarms_monthly"][key]
-            row[f"alarm_{key}_attributable"] = round(int((a.any(axis=1) & ~ca.any(axis=1)).sum()) / n, 3)
+            row[f"alarm_{key}_attributable"] = round(int((a.any(axis=1) & ~ca.any(axis=1)).sum()) / n, 4)
         ladder_rows.append(row)
         for key in SCEN_INDICATORS[name]:
             b = r["base"][key]
@@ -330,7 +336,7 @@ def scenario_outputs(cal: dict) -> dict:
             cost_rows.append({"scenario": name, "metric": metric, "p5": qv[0], "p25": qv[1], "p50": qv[2],
                               "p75": qv[3], "p95": qv[4],
                               "mean": round(math.fsum(float(v) for v in vals) / len(vals), 3),
-                              "share_below_zero": round(int((np.asarray(vals) < 0).sum()) / len(vals), 3)})
+                              "share_below_zero": round(int((np.asarray(vals) < 0).sum()) / len(vals), 4)})
     write_csv(OUT / "scenario_ladder.csv", ladder_rows)
     write_csv(OUT / "scenario_indicators.csv", ind_rows)
     write_csv(OUT / "scenario_costs.csv", cost_rows)
@@ -393,6 +399,56 @@ def scenario_outputs(cal: dict) -> dict:
     }}
 
 
+def provenance_files() -> list:
+    return sorted(INPUTS.glob("*.csv")) + [ROOT / "data" / "corpus" / "sources.csv"]
+
+
+def provenance_outputs() -> dict:
+    from .inputs import LABELS, provenance_problems
+    rows, problems = [], []
+    for path in provenance_files():
+        data = read_csv(path)
+        rel = path.relative_to(ROOT).as_posix()
+        problems += provenance_problems(data, rel)
+        rows.append({"file": rel, "rows": len(data), **{lab: sum(r["label"] == lab for r in data) for lab in LABELS}})
+    if problems:
+        raise ValueError("provenance problems: " + "; ".join(problems))
+    write_csv(OUT / "provenance_summary.csv", rows)
+    return {"provenance": {"files": len(rows), **{lab: sum(r[lab] for r in rows) for lab in LABELS}}}
+
+
+def extraction_outputs() -> dict:
+    res = E.run()
+    rows, errs = [], []
+    for slug, m in res["models"].items():
+        s = m["score"]
+        rows.append({"model": s["model"], "digest": s["digest"], "passages": s["passages"],
+                     "reference_links": s["reference_links"], "predicted_links": s["predicted_links"],
+                     "tp": s["tp"], "fp": s["fp"], "fn": s["fn"], "precision": round(s["precision"], 4),
+                     "precision_ci95": "-".join(f"{v:.2f}" for v in s["ci95"]["precision"]),
+                     "recall": round(s["recall"], 4), "recall_ci95": "-".join(f"{v:.2f}" for v in s["ci95"]["recall"]),
+                     "f1": round(s["f1"], 4), "polarity_agreement": round(s["polarity_agreement"], 3),
+                     "out_of_codebook": s["out_of_codebook"], "failed_passages": s["failed_passages"],
+                     "quote_verbatim_share": round(s["quote_verbatim_share"], 3),
+                     "median_seconds_per_passage": s["median_seconds_per_passage"]})
+        errs += [{"model": s["model"], **e} for e in m["errors"]]
+    write_csv(OUT / "extraction_scores.csv", rows)
+    write_csv(OUT / "extraction_errors.csv", errs,
+              ["model", "passage_id", "kind", "cause", "effect", "polarity"])
+    ref = res["reference"]
+    keys = ("model", "precision", "precision_ci95", "recall", "recall_ci95", "f1", "polarity_agreement",
+            "predicted_links", "tp", "quote_verbatim_share", "median_seconds_per_passage", "failed_passages")
+    write_csv(OUT / "extraction_repeat.csv", [{"model": k, **{a: (round(b, 3) if isinstance(b, float) else b)
+                                                              for a, b in v.items()}}
+                                              for k, v in res["repeats"].items()],
+              ["model", "links_a", "links_b", "shared", "union", "jaccard"])
+    return {"extraction": {
+        "passages": len(res["passages"]), "reference_links": len(ref), "variables": len(res["variables"]),
+        "models": {re.sub(r"[^a-z0-9]+", "_", r["model"].lower()): {k: r[k] for k in keys} for r in rows},
+        "repeat": {re.sub(r"[^a-z0-9]+", "_", k.lower()): {"shared": v["shared"], "union": v["union"]}
+                   for k, v in res["repeats"].items()}}}
+
+
 def main() -> dict:
     OUT.mkdir(parents=True, exist_ok=True)
     summary: dict = {}
@@ -401,7 +457,10 @@ def main() -> dict:
     summary.update(sd_outputs(cal))
     summary.update(cld_outputs())
     summary.update(scenario_outputs(cal))
+    summary.update(extraction_outputs())
+    summary.update(provenance_outputs())
     write_json(OUT / "summary.json", summary)
+    write_text(paper.PAPER / "working_paper.md", paper.build(summary))
     return summary
 
 

@@ -3,7 +3,7 @@ gulf,cape_usd_per_teu_change,61.175,82.091,99.164,115.608,137.84,98.98,0.0
 gulf,bunker_increase_usd_t,214.305,287.574,347.385,404.99,482.873,346.741,0.0
 strait,waiting_ship_days,120.705,354.186,738.492,1494.911,3429.906,1128.48,0.0
 strait,waiting_cost_usd_m,7.779,22.827,47.596,96.347,221.057,72.731,0.0
-reopen,suez_minus_cape_usd_per_teu,-27.054,-8.658,10.19,32.753,65.292,13.378,0.366
+reopen,suez_minus_cape_usd_per_teu,-27.054,-8.658,10.19,32.753,65.292,13.378,0.3665
 reopen,war_risk_pct,0.19,0.316,0.443,0.599,0.827,0.467,0.0
 reopen,peak_bunching_q,0.0,0.0,0.0,0.0,0.0,0.0,0.0
 reopen,lowest_bunching_q,-0.032,-0.025,-0.021,-0.017,-0.012,-0.021,1.0
