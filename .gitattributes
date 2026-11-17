@@ -1,0 +1,5 @@
+# Text is stored and checked out with LF so a rebuild on Windows or Linux diffs cleanly.
+* text=auto eol=lf
+*.xlsx -text
+*.xls -text
+*.png -text

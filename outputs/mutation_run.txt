@@ -31,5 +31,6 @@ control (no-op) mutant: survived - harness can report survivors
   caught   backtest.py: monthly alarms dated at month start
   caught   backtest.py: lead sign flipped
   caught   backtest.py: activate review without alert
-31/31 planted bugs caught
+  caught   backtest.py: monthly outcome counted as the Alert's port indicator
+32/32 planted bugs caught
 exit=0

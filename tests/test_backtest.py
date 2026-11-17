@@ -106,6 +106,30 @@ def test_posture_levels_and_publication_lag():
     assert po.level["2024-01-14"] == 0 and po.level["2024-01-16"] == 1
 
 
+def test_outcome_alarm_does_not_count_as_the_alerts_port_indicator():
+    """One route alarm plus one Singapore monthly outcome is Watch, not Alert or Activate review.
+
+    The ladder needs a route alarm plus a *port* indicator for Alert, and an outcome on top of that
+    for Activate review; a single outcome alarm cannot satisfy both steps.
+    """
+    days = pd.date_range("2024-02-01", "2024-03-31")
+    mdays = pd.date_range("2023-12-01", "2024-03-01", freq="MS")
+    for outcome in ("mpa_teu", "changi_air_cargo", "sg_teu_per_call"):
+        frames = {
+            "cp_bab": _frame(days, [("2024-01-25", "2024-03-31")]),          # known from 1 Feb
+            outcome: pd.DataFrame({"z": 0.0, "alarm": [False, True, True, True]}, index=mdays),
+        }
+        po = B.posture(frames, days)
+        assert po.level["2024-03-02"] == 1, outcome               # route + outcome only: Watch
+        assert po.outcome_alarm["2024-03-02"] and not po.local_alarm["2024-03-02"], outcome
+        frames["sg_calls_container"] = _frame(days, [("2024-02-25", "2024-03-31")])  # known 3 Mar
+        po = B.posture(frames, days)
+        assert po.level["2024-03-02"] == 1 and po.level["2024-03-03"] == 3, outcome
+        frames.pop(outcome)
+        po = B.posture(frames, days)
+        assert po.level["2024-03-03"] == 2, outcome               # route + port, no outcome: Alert
+
+
 # ---- real run --------------------------------------------------------------
 
 @pytest.fixture(scope="module")
@@ -144,3 +168,95 @@ def test_readme_numbers_match_outputs():
     leads = {r["indicator"]: r["lead_days"] for r in s["sg_lead"]}
     assert f"{leads['cp_bab']} days" in readme and f"{leads['sg_calls_container']} days" in readme
     assert re.search(rf"Level {s['posture_level']}", readme)
+
+
+def _fmt_date(d) -> str:
+    d = pd.Timestamp(d)
+    return f"{d.day} {d.strftime('%B')} {d.year}"
+
+
+def test_readme_cited_numbers_match_output_tables():
+    """Every other number the README cites, read back from the committed outputs and raw data."""
+    s = json.loads((ROOT / "outputs" / "summary.json").read_text())
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    out = ROOT / "outputs"
+
+    def has(text):
+        assert text in readme, f"README does not contain {text!r}"
+
+    # Detection lags (README "Route alarms came quickly").
+    has(f"alarm was **{s['median_lag_known_days_route']:.0f} days**")
+    det = pd.read_csv(out / "detections.csv").set_index(["event", "indicator"]).lag_known_days
+    has(f"Ever Given, Suez: {det[('ever_given', 'cp_suez')]:.0f} days.")
+    has(f"Red Sea 2023, Bab el-Mandeb: {det[('red_sea_2023', 'cp_bab')]:.0f} days.")
+    has(f"Hormuz 2026: {det[('hormuz_2026', 'cp_hormuz')]:.0f} days.")
+    has(f"Panama drought: {det[('panama_drought', 'cp_panama')]:.0f} days.")
+    has(f"raised a fresh alarm {det[('red_sea_2026', 'cp_bab')]:.0f} days after the")
+    leads = {r["indicator"]: r["lead_days"] for r in s["sg_lead"]}
+    has(f"alarm came {-leads['sg_teu_per_call']} days *after* the statement")
+
+    # False alarms.
+    h, d = s["holdout"], s["dev"]
+    has(f"across {h['indicator_years']:.1f} indicator-years")
+    has(f"or about {round(h['fa_per_indicator_year'] * s['n_indicators'])} a year across all {s['n_indicators']}")
+    has(f"The development period had {d['false_alarms']} ({d['fa_per_indicator_year']:.2f} per indicator-year)")
+    fa = pd.read_csv(out / "false_alarms_by_indicator.csv").set_index("indicator")
+    hfa = fa.holdout_false_alarms
+    has(f"Cape of Good Hope ({hfa['cp_cape']}), Taiwan Strait ({hfa['cp_taiwan']}) and "
+        f"Tanjung Pelepas ({hfa['tpp_calls_container']})")
+    has(f"({fa.dev_false_alarms['klang_calls_container']} development false alarms)")
+    al = pd.read_csv(out / "alarms.csv", parse_dates=["raised"])
+    fal = al[~al.true_alarm]
+    cape = fal[(fal.indicator == "cp_cape") & (fal.period == "holdout")]
+    has(f"{cape.raised.dt.month.between(6, 9).sum()} of the {len(cape)} holdout false alarms were raised "
+        "between June and")
+    tw = fal[fal.indicator == "cp_taiwan"]
+    has(f"{tw.raised.dt.month.between(7, 10).sum()} of its {len(tw)} false alarms (2020–2026) fall in July–October")
+
+    # Chance baseline and grid.
+    c = s["chance_expected_detections"]
+    has(f"would catch about {c['dev']}\nand {c['holdout']})")
+    has(f"hit about {c['dev']} of the {d['pairs']} and {c['holdout']} of the {h['pairs']} windows")
+    ch = pd.read_csv(out / "chance_baseline.csv").set_index(["event", "indicator"])
+    has(f"(up to {ch.window_days.max()} days)")
+    has(f"Cape of Good Hope alone has a {ch.p_chance_hit[('red_sea_2023', 'cp_cape')]:.2f} chance")
+    has(f"{s['holdout_full_recall_settings']} of the {s['grid_settings']} grid settings also reach "
+        f"{h['pairs']} of {h['pairs']}")
+    g = pd.read_csv(out / "tuning_grid.csv").set_index(["k", "persist_days"]).loc[(3.0, 7)]
+    has(f"(z ≥ 3, 7 days) would have done better on the holdout: {g.holdout_detected} of {g.holdout_pairs} "
+        f"detected with {g.holdout_false_alarms} false\n  alarms. It caught only {g.dev_detected} of {g.dev_pairs}")
+
+    # Posture day counts.
+    po = pd.read_csv(out / "posture_daily.csv")
+    assert int((po.level >= 2).sum()) == s["alert_days_total"]
+    has(f"spent {s['alert_days_total']} days at Alert or above, {int((po.level == 3).sum())} of them at\n"
+        "Activate review")
+    has(f"{s['alert_days_outside_events']} of the {s['alert_days_total']} days fell outside every labelled event")
+    fl = pd.read_csv(out / "posture_first_level_by_event.csv").set_index("event")
+    has(f"The first Alert near the Red Sea event came on {_fmt_date(fl.first_level2['red_sea_2023'])}")
+
+    # TEU-per-call transform check.
+    tc = pd.read_csv(out / "teu_per_call_transform_check.csv").set_index(["version", "event"])
+    has(f"alarmed {tc.lag_known_days[('year-on-year (first version)', 'pandemic_congestion')]:.0f} days after the")
+    has(f"alarmed after {tc.lag_known_days[('level (used)', 'pandemic_congestion')]:.0f} days and "
+        f"{tc.lag_known_days[('level (used)', 'sg_congestion_2024')]:.0f} days respectively")
+
+    # Posture inputs from the raw data.
+    m = load_monthly()
+    tpc = m["sg_teu_per_call"].dropna()
+    assert tpc.idxmax() == tpc.index[-1] == T("2026-08-01")
+    has(f"{tpc.iloc[-1]:,.0f} in August 2026, the highest value in the series")
+    g_ = m["gscpi"].dropna()
+    has(f"The GSCPI at {g_.iloc[-1]:.2f} ({_fmt_date(g_.index[-1]).split(' ', 1)[1]})")
+    cp = pd.read_csv(ROOT / "data" / "raw" / "portwatch_chokepoints_daily.csv", parse_dates=["date"])
+    mal = cp[cp.portname == "Malacca Strait"].set_index("date").n_total
+    has(f"2022 averaged {(mal['2022'].mean() / mal['2021-01':'2021-10'].mean() - 1) * 100:.0f}% above")
+    has(f"extend to {pd.Timestamp(s['data_end']['portwatch']).day} October")
+
+    # Mutation harness count.
+    sys.path.insert(0, str(ROOT / "tests"))
+    import mutate  # noqa: E402
+    n = len(mutate.MUTANTS)
+    has(f"plants {n} bugs one at a time")
+    has(f"the current run catches {n} of {n}")
+    assert f"{n}/{n} planted bugs caught" in (out / "mutation_run.txt").read_text(encoding="utf-8")

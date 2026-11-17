@@ -1,8 +1,14 @@
 # Singapore Logistics Resilience Monitor
 
-Leading indicators of stress in Singapore's logistics sector, built only from public data, with alarms
-backtested against documented disruptions from 2020 to 2026, and a tabletop exercise pack that uses the
-same triggers.
+**Built:** 17 leading indicators of stress in Singapore's logistics sector from public data only, one
+robust z-score detector with alarms dated by publication lag, a three-level activation ladder, a backtest
+against 8 labelled disruptions (2020–2026), a static dashboard and a tabletop exercise pack.
+**Found:** the setting tuned on 2020–2022 caught **11 of 11** event-indicator pairs there and **8 of 8** in the
+2023–2026 holdout (alarms firing at random at each indicator's own false-alarm rate would catch about 1.9
+and 2.5), at **0.79 false alarms per indicator-year**; the Bab el-Mandeb alarm was readable **152 days**
+before MPA's 30 May 2024 congestion statement.
+**Limits:** 8 events are too few for tight recall intervals; public data cannot see berth waits, yards or
+rates; this is a reproducible snapshot of data fetched 13 October 2026, not a live feed.
 
 **Dashboard:** https://luoaini1213.github.io/sg-logistics-resilience-monitor/
 
@@ -25,6 +31,12 @@ Selected setting, tuned on 2020–2022 only: **z ≥ 2.5 for 3 consecutive days*
 
 - **Detection.** Every expected indicator fired for every labelled event: **11 of 11** event-indicator pairs
   in the development period and **8 of 8** in the holdout (2023–2026).
+  - Chance baseline: alarms firing at random, at each indicator's own false-alarm rate in that period, would
+    be expected to hit about 1.9 of the 11 and 2.5 of the 8 windows (`outputs/chance_baseline.csv`). The
+    windows are long (up to 758 days), so this is not zero: Cape of Good Hope alone has a 0.84 chance of a
+    random alarm inside the Red Sea 2023 window.
+  - Holdout recall does not separate settings: 10 of the 16 grid settings also reach 8 of 8 there. They
+    differ in false alarms (`outputs/tuning_grid.csv`).
 - **Route alarms came quickly.** For route indicators, the median time from documented onset to a readable
   alarm was **18 days**, publication lag included. Examples:
   - Ever Given, Suez: 11 days.
@@ -48,8 +60,9 @@ Selected setting, tuned on 2020–2022 only: **z ≥ 2.5 for 3 consecutive days*
 
   These checks are in the test suite.
 
-**Latest computed posture (publication slots through 11 October 2026): Level 3, Activate review.**
-Last known alarms:
+**Posture at the data cut-off (data fetched 13 October 2026, publication slots through 11 October 2026):
+Level 3, Activate review.** This is a snapshot: nothing refreshes the data or the dashboard automatically
+(`python run_all.py --fetch` does it by hand). Last known alarms:
 
 - Bab el-Mandeb transits, falling since the Red Sea restrictions of 20 July 2026.
 - TEU per container-ship call: 3,581 in August 2026, the highest value in the series.
@@ -123,8 +136,11 @@ two high GSCPI months separated by an unobserved month do not satisfy the two-co
 | Level | Trigger |
 |---|---|
 | 1 Watch | Any indicator in alarm. |
-| 2 Alert | Two route indicators, or one route indicator plus a Singapore or regional port indicator. |
+| 2 Alert | Two route indicators, or one route indicator plus a Singapore or regional port indicator (daily port calls or container volume; the monthly outcomes do not count here). |
 | 3 Activate review | Alert, plus a Singapore monthly outcome in alarm. |
+
+The level is recomputed every day. The 14-day step-down hold in the exercise pack is a team procedure and is
+not applied to the daily series or to the day counts below.
 
 ## Backtest protocol
 
@@ -173,9 +189,10 @@ recall or false-alarm rate. No detected route events gives a null median lag.
 
 ## Findings in more detail
 
-**Alert-level days.** From 2020 to October 2026 the ladder spent 549 days at Alert or above. 69 of those
-days fell outside every labelled event window (`outputs/posture_days_by_year.csv`,
-`outputs/posture_first_level_by_event.csv`).
+**Alert-level days.** From 2020 to October 2026 the ladder spent 475 days at Alert or above, 206 of them at
+Activate review. 38 of the 475 days fell outside every labelled event window (`outputs/posture_days_by_year.csv`,
+`outputs/posture_first_level_by_event.csv`). With the exercise pack's 14-day step-down hold, episodes would
+run longer than these counts.
 
 The first Alert near the Red Sea event came on 29 December 2023. It was set by a Panama alarm plus a Taiwan
 Strait false alarm, one day before the Bab el-Mandeb alarm became readable; the Red Sea route alarms alone
@@ -228,6 +245,9 @@ closes, congestion reaches Singapore, and then a collision restricts the Singapo
 
 ## Reproduce
 
+Python 3.11 (the CI version). The pinned numpy 1.24.3 and pandas 2.0.3 publish no wheels for Python 3.12 or
+later, so `pip install` fails there.
+
 ```
 pip install -r requirements.txt
 python run_all.py            # rebuilds outputs/ and docs/index.html from data/raw (about 1-2 minutes)
@@ -238,16 +258,17 @@ python tests/mutate.py       # mutation check
 **Tests.** The suite checks the detector against hand-computed series, the bookkeeping of the backtest
 (window boundaries, lags, lead, ladder levels), missing observation/calendar gaps, empty-result reports,
 the raw data against the three official MPA/MOT totals, and
-that the numbers in this README match `outputs/summary.json`.
+that the numbers in this README match `outputs/summary.json` and the output tables.
 
-**Mutation check.** `tests/mutate.py` plants 31 bugs one at a time, for example:
+**Mutation check.** `tests/mutate.py` plants 32 bugs one at a time, for example:
 
 - a flipped stress sign;
 - a persistence rule that is off by one;
 - breach values leaking into the baseline;
 - an ignored publication lag;
 - an 11-month "year-on-year" lag;
-- a wrong Cape direction.
+- a wrong Cape direction;
+- a Singapore monthly outcome counted as the Alert's port indicator.
 
 Each bug must make the tests fail. Before that, the harness runs a no-op control mutant that must *survive*,
 which shows that it can report a surviving bug.
@@ -255,9 +276,9 @@ which shows that it can report a surviving bug.
 The first full run caught 30 of 31 and exited with an error
 ([`outputs/mutation_first_run.txt`](outputs/mutation_first_run.txt)). The survivor raised Activate review
 from a Singapore outcome alarm alone, without an Alert. It survived because the ladder test never covered a
-day with an outcome alarm and no route alarm. That case was added, and the current run catches 31 of 31
+day with an outcome alarm and no route alarm. That case was added, and the current run catches 32 of 32
 ([`outputs/mutation_run.txt`](outputs/mutation_run.txt)). CI runs the tests, the mutation check, and a full rebuild
-that must reproduce the committed outputs exactly.
+that must reproduce every committed file in `outputs/` and `docs/index.html` exactly.
 
 ## Repository layout
 
