@@ -1,0 +1,4 @@
+model,digest,passages,reference_links,predicted_links,tp,fp,fn,precision,precision_ci95,recall,recall_ci95,f1,polarity_agreement,out_of_codebook,failed_passages,quote_verbatim_share,median_seconds_per_passage
+gemma3:4b,c30276f7dffe,19,45,38,20,18,25,0.5263,0.38-0.68,0.4444,0.33-0.55,0.4819,0.9,0,0,0.947,9.0
+llama3.2:3b,a80c4f17acd5,19,45,96,15,81,30,0.1562,0.06-0.32,0.3333,0.16-0.46,0.2128,1.0,0,2,0.99,9.5
+qwen3.5:4b,96f38c742e0a,19,45,42,25,17,20,0.5952,0.45-0.70,0.5556,0.42-0.67,0.5747,1.0,0,0,0.976,20.8

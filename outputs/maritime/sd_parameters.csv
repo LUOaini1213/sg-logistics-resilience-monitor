@@ -1,0 +1,21 @@
+block,parameter,estimate,se,se_ar1,ci95_low,ci95_high,status,unit,meaning
+routing,t0,2023-12-14,,,2023-11-30,2023-12-16,estimated (profile over whole days),date,Onset of the diversion; data/events.csv documents 2023-12-15
+routing,d_max,0.7378,0.0089,0.0106,0.717,0.7586,estimated,share,Diverted share of the pre-crisis Bab el-Mandeb container transits
+routing,tau_d,1.3434,0.733,0.8754,0.0,3.0592,estimated (Wald interval truncated at zero),days,Routing adjustment time
+routing,tau_c,12.7234,3.0234,3.6106,5.6466,19.8001,estimated,days,Delay before diverted ships appear at the Cape
+routing,kappa,0.8686,0.0212,0.0253,0.8189,0.9182,estimated,-,Cape container transits gained per Bab el-Mandeb transit lost
+reliability,beta,0.1479,0.0055,0.0087,0.1307,0.165,estimated,-,Unreliability (share of late arrivals) per unit of absorbed capacity
+singapore,tau_q,165.9978,12.5258,17.9478,130.8202,201.1755,estimated,days,Bunching build-up time = adaptation time (tau_k tied to tau_q)
+singapore,theta_c,3.3133,0.1701,0.2437,2.8356,3.791,estimated,-,Relative fall in Singapore container calls per unit of bunching
+singapore,theta_t,5.0803,0.3605,0.5165,4.0679,6.0926,estimated,-,Relative rise in TEU per call per unit of bunching
+reliability,tau_a,1.0,,,1.0,10.0,"estimated, at the lower bound of the search range; the interval is the profile bound on a grid",days,Delay between diversion and absorbed capacity (carries the whole routing-to-reliability delay)
+fixed,tau_u,1.0,,,,,assumed (data/inputs/sd_parameters.csv),days,Reliability response time
+fixed,adapt,1.0,,,,,assumed (data/inputs/sd_parameters.csv),share,Share of the bunching pressure that adaptation removes
+fixed,tau_k,= tau_q,,,,,assumed tie (data/inputs/sd_parameters.csv),days,Adaptation time
+fixed,u0,0.359,,,,,"fixed from data (mean GLP, Jun-Oct 2023)",share,Pre-crisis unreliability
+fixed,B0,141.84,,,,,fixed from data (1 Jul - 15 Nov 2023),transits/week,Pre-crisis Bab el-Mandeb container transits
+fixed,C0,43.26,,,,,fixed from data (1 Jul - 15 Nov 2023),transits/week,Pre-crisis Cape container transits
+fixed,Cb,291.95,,,,,fixed from data (1 Jul - 15 Nov 2023),calls/week,Pre-crisis Singapore container-ship calls
+fixed,Tb,2602.8,,,,,fixed from data (Jul-Nov 2023),TEU/call,Pre-crisis Singapore TEU per call
+fixed,phi,0.0,,,,,assumed 0 in the calibration (scenario input),-,Re-routing friction
+fixed,a_scale,0.1626,,,,,cited: UNCTAD RMT 2024 citing Clarksons (12% in June 2024),share of demand per unit of A,Absorbed capacity at full diversion

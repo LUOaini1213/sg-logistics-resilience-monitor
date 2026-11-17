@@ -1,0 +1,47 @@
+baseline: maritime tests pass on unmodified code
+control (no-op) mutant: survived - harness can report survivors
+  caught   voyage.py: intra-EU voyages only half covered by the ETS
+  caught   voyage.py: extra-EU voyages not covered by the ETS
+  caught   voyage.py: speed-fuel exponent ignored
+  caught   voyage.py: calorific-value correction inverted
+  caught   voyage.py: toll band charged in full even when tonnage runs out
+  caught   voyage.py: laden and ballast toll rates swapped
+  caught   voyage.py: war-risk premium not converted from percent
+  caught   voyage.py: break-even counts one war-risk transit per round voyage
+  caught   voyage.py: canal days not charged
+  caught   voyage.py: Suez surcharge applied as a rebate
+  caught   voyage.py: backhaul TEU left out of cost per TEU
+  caught   voyage.py: distance factor scales the whole Cape leg
+  caught   sd.py: RK4 weights wrong
+  caught   sd.py: RK4 third stage takes a full step
+  caught   sd.py: Cape pipeline sign flipped
+  caught   sd.py: adaptation adds to bunching
+  caught   sd.py: steady-state bunching wrong
+  caught   sd.py: daily mean uses the start of day only
+  caught   calibrate.py: weekly window shifted by a day
+  caught   calibrate.py: least-squares denominator wrong
+  caught   calibrate.py: autocorrelation inflation dropped
+  caught   calibrate.py: Nelder-Mead reflects toward the worst point
+  caught   calibrate.py: golden-section keeps the wrong side
+  caught   calibrate.py: onset interval ignores autocorrelation
+  caught   scenarios.py: alarm persistence off by one
+  caught   scenarios.py: alarm closes a day late
+  caught   scenarios.py: route plus port alarm no longer an Alert
+  caught   scenarios.py: publication lag ignored
+  caught   scenarios.py: triangular inverse CDF branches swapped
+  caught   scenarios.py: no catch-up after the closure
+  caught   scenarios.py: weekly factor averaged over six days
+  caught   scenarios.py: scenarios draw different noise
+  caught   extraction.py: false positives counted from the reference
+  caught   extraction.py: precision uses false negatives
+  caught   extraction.py: repeated pair keeps the last polarity
+  caught   extraction.py: polarity agreement always perfect
+  caught   cld.py: loop polarity flipped
+  caught   cld.py: cycles counted more than once
+  caught   inputs.py: unknown provenance labels accepted
+  caught   inputs.py: REAL rows no longer need a URL and an access date
+  caught   inputs.py: access date not required
+  caught   paper.py: number formats ignored in the paper
+  caught   paper.py: list index ignored in paper placeholders
+43/43 planted bugs caught
+exit=0

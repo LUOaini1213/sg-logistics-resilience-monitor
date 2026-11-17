@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" font-family="system-ui, -apple-system, Segoe UI, sans-serif" role="img">
+<title>Break-even war-risk premium: one input at a time at its low or high value</title>
+<rect x="0" y="0" width="760" height="420" fill="#fcfcfb"/>
+<text x="8.0" y="20.0" font-size="13" fill="#0b0b0b" text-anchor="start" font-weight="600">Break-even war-risk premium: one input at a time at its low or high value</text>
+<line x1="274.4" y1="46.0" x2="274.4" y2="364.0" stroke="#e1e0d9" stroke-width="1.0"/>
+<text x="274.4" y="380.0" font-size="10" fill="#898781" text-anchor="middle">0.1</text>
+<line x1="357.7" y1="46.0" x2="357.7" y2="364.0" stroke="#e1e0d9" stroke-width="1.0"/>
+<text x="357.7" y="380.0" font-size="10" fill="#898781" text-anchor="middle">0.2</text>
+<line x1="440.9" y1="46.0" x2="440.9" y2="364.0" stroke="#e1e0d9" stroke-width="1.0"/>
+<text x="440.9" y="380.0" font-size="10" fill="#898781" text-anchor="middle">0.3</text>
+<line x1="524.2" y1="46.0" x2="524.2" y2="364.0" stroke="#e1e0d9" stroke-width="1.0"/>
+<text x="524.2" y="380.0" font-size="10" fill="#898781" text-anchor="middle">0.4</text>
+<line x1="607.5" y1="46.0" x2="607.5" y2="364.0" stroke="#e1e0d9" stroke-width="1.0"/>
+<text x="607.5" y="380.0" font-size="10" fill="#898781" text-anchor="middle">0.5</text>
+<line x1="690.8" y1="46.0" x2="690.8" y2="364.0" stroke="#e1e0d9" stroke-width="1.0"/>
+<text x="690.8" y="380.0" font-size="10" fill="#898781" text-anchor="middle">0.6</text>
+<text x="493.0" y="398.0" font-size="11" fill="#52514e" text-anchor="middle">War-risk premium (% of hull value per transit) at which Suez and the Cape cost the same</text>
+<text x="242.0" y="69.0" font-size="11" fill="#52514e" text-anchor="end">Bunker price (USD/t)</text>
+<rect x="276.0" y="57.0" width="166.6" height="8.0" rx="2.0" fill="#2a78d6"/>
+<rect x="442.6" y="66.0" width="121.6" height="8.0" rx="2.0" fill="#eb6834"/>
+<text x="242.0" y="95.0" font-size="11" fill="#52514e" text-anchor="end">Cape extra distance (factor)</text>
+<rect x="442.6" y="83.0" width="0.0" height="8.0" rx="2.0" fill="#2a78d6"/>
+<rect x="442.6" y="92.0" width="267.4" height="8.0" rx="2.0" fill="#eb6834"/>
+<text x="242.0" y="121.0" font-size="11" fill="#52514e" text-anchor="end">Speed via the Cape (kn)</text>
+<rect x="341.0" y="109.0" width="101.6" height="8.0" rx="2.0" fill="#2a78d6"/>
+<rect x="442.6" y="118.0" width="122.4" height="8.0" rx="2.0" fill="#eb6834"/>
+<text x="242.0" y="147.0" font-size="11" fill="#52514e" text-anchor="end">Hull value (USD)</text>
+<rect x="442.6" y="135.0" width="125.8" height="8.0" rx="2.0" fill="#2a78d6"/>
+<rect x="380.1" y="144.0" width="62.5" height="8.0" rx="2.0" fill="#eb6834"/>
+<text x="242.0" y="173.0" font-size="11" fill="#52514e" text-anchor="end">Charter rate (USD/day)</text>
+<rect x="377.6" y="161.0" width="65.0" height="8.0" rx="2.0" fill="#2a78d6"/>
+<rect x="442.6" y="170.0" width="98.3" height="8.0" rx="2.0" fill="#eb6834"/>
+<text x="242.0" y="199.0" font-size="11" fill="#52514e" text-anchor="end">Speed via Suez (kn)</text>
+<rect x="442.6" y="187.0" width="60.8" height="8.0" rx="2.0" fill="#2a78d6"/>
+<rect x="366.0" y="196.0" width="76.6" height="8.0" rx="2.0" fill="#eb6834"/>
+<text x="242.0" y="225.0" font-size="11" fill="#52514e" text-anchor="end">Suez Canal Net Tonnage</text>
+<rect x="442.6" y="213.0" width="49.1" height="8.0" rx="2.0" fill="#2a78d6"/>
+<rect x="393.5" y="222.0" width="49.1" height="8.0" rx="2.0" fill="#eb6834"/>
+<text x="242.0" y="251.0" font-size="11" fill="#52514e" text-anchor="end">Suez rebate (share)</text>
+<rect x="442.6" y="239.0" width="0.0" height="8.0" rx="2.0" fill="#2a78d6"/>
+<rect x="442.6" y="248.0" width="65.8" height="8.0" rx="2.0" fill="#eb6834"/>
+<text x="242.0" y="277.0" font-size="11" fill="#52514e" text-anchor="end">Speed-fuel exponent</text>
+<rect x="442.6" y="265.0" width="30.0" height="8.0" rx="2.0" fill="#2a78d6"/>
+<rect x="412.6" y="274.0" width="30.0" height="8.0" rx="2.0" fill="#eb6834"/>
+<text x="242.0" y="303.0" font-size="11" fill="#52514e" text-anchor="end">Canal days per transit</text>
+<rect x="442.6" y="291.0" width="18.3" height="8.0" rx="2.0" fill="#2a78d6"/>
+<rect x="406.8" y="300.0" width="35.8" height="8.0" rx="2.0" fill="#eb6834"/>
+<text x="242.0" y="329.0" font-size="11" fill="#52514e" text-anchor="end">Suez surcharge (share)</text>
+<rect x="442.6" y="317.0" width="53.3" height="8.0" rx="2.0" fill="#2a78d6"/>
+<rect x="442.6" y="326.0" width="0.0" height="8.0" rx="2.0" fill="#eb6834"/>
+<text x="242.0" y="355.0" font-size="11" fill="#52514e" text-anchor="end">EU allowance (EUR/t)</text>
+<rect x="418.5" y="343.0" width="24.2" height="8.0" rx="2.0" fill="#2a78d6"/>
+<rect x="442.6" y="352.0" width="1.7" height="8.0" rx="2.0" fill="#eb6834"/>
+<line x1="442.6" y1="42.0" x2="442.6" y2="364.0" stroke="#0b0b0b" stroke-width="1.5"/>
+<text x="446.6" y="40.0" font-size="10" fill="#0b0b0b" text-anchor="start">base 0.302</text>
+<rect x="8.0" y="30.0" width="12.0" height="8.0" rx="2.0" fill="#2a78d6"/>
+<text x="24.0" y="38.0" font-size="10" fill="#52514e" text-anchor="start">parameter at its low value</text>
+<rect x="188.0" y="30.0" width="12.0" height="8.0" rx="2.0" fill="#eb6834"/>
+<text x="204.0" y="38.0" font-size="10" fill="#52514e" text-anchor="start">parameter at its high value</text>
+</svg>

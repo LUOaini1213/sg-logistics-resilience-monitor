@@ -1,0 +1,273 @@
+{
+ "voyage": {
+  "distance_checks": {
+   "Yantian-Rotterdam suez_nm": -1.8,
+   "Yantian-Rotterdam cape_nm": 1.2,
+   "Shanghai-Rotterdam extra_nm": -27.4
+  },
+  "loop": "Shanghai-Ningbo-Yantian-Singapore-Rotterdam-Hamburg-Antwerp-Singapore-Shanghai",
+  "ship_teu": 14000,
+  "war_risk_pct_base": 1.0,
+  "suez_total_usd": 12943001,
+  "cape_total_usd": 10849769,
+  "suez_usd_per_teu": 616.33,
+  "cape_usd_per_teu": 516.66,
+  "cape_minus_suez_usd_per_teu": -99.68,
+  "cape_saving_usd_per_teu": 99.68,
+  "suez_days": 66.75,
+  "cape_days": 78.51,
+  "extra_ships_weekly": 1.68,
+  "extra_fuel_t": 1902,
+  "suez_toll_usd_per_transit": 887055,
+  "breakeven_war_risk_pct": 0.302,
+  "breakeven_war_risk_usd_per_transit": 453384,
+  "tornado_top": [
+   "bunker_usd_t",
+   "cape_distance_factor",
+   "speed_cape_kn"
+  ],
+  "tornado_top_range_pct": [
+   [
+    0.102,
+    0.448
+   ],
+   [
+    0.302,
+    0.623
+   ],
+   [
+    0.18,
+    0.449
+   ]
+  ]
+ },
+ "sd": {
+  "fit_window": "2023-07-02 to 2024-12-29 (weekly); 2023-07 to 2024-12 (monthly)",
+  "onset": "2023-12-14",
+  "onset_ci95": [
+   "2023-11-30",
+   "2023-12-16"
+  ],
+  "r2": {
+   "bab": 0.962,
+   "cape": 0.909,
+   "glp": 0.926,
+   "calls": 0.659,
+   "tpc": 0.816
+  },
+  "mape_pct": {
+   "bab": 13.8,
+   "cape": 10.6,
+   "glp": 2.0,
+   "calls": 3.3,
+   "tpc": 2.9
+  },
+  "params": {
+   "d_max": 0.7378,
+   "tau_d": 1.3434,
+   "tau_c": 12.7234,
+   "kappa": 0.8686,
+   "beta": 0.1479,
+   "tau_q": 165.9978,
+   "theta_c": 3.3133,
+   "theta_t": 5.0803
+  },
+  "ci95": {
+   "d_max": [
+    0.717,
+    0.7586
+   ],
+   "tau_d": [
+    0.0,
+    3.0592
+   ],
+   "tau_c": [
+    5.6466,
+    19.8001
+   ],
+   "kappa": [
+    0.8189,
+    0.9182
+   ],
+   "beta": [
+    0.1307,
+    0.165
+   ],
+   "tau_q": [
+    130.8202,
+    201.1755
+   ],
+   "theta_c": [
+    2.8356,
+    3.791
+   ],
+   "theta_t": [
+    4.0679,
+    6.0926
+   ]
+  },
+  "rho": {
+   "routing": 0.176,
+   "reliability": 0.431,
+   "singapore": 0.345
+  },
+  "tau_a_days": 1.0,
+  "tau_a_profile_max_days": 10.0,
+  "a_scale": 0.1626,
+  "tau_a_held": {
+   "tau_a": 30.0,
+   "glp_rmse": 2.279,
+   "tau_q": 127.79
+  },
+  "glp_rmse_fitted": 1.363,
+  "peak_calls_drop_pct": 13.3,
+  "peak_tpc_rise_pct": 20.3,
+  "obs_calls_drop_pct": 22.2,
+  "obs_tpc_rise_pct": 29.9
+ },
+ "cld": {
+  "nodes": 18,
+  "links": 27,
+  "links_by_status": {
+   "estimated": 7,
+   "model": 5,
+   "cited": 8,
+   "assumed": 7
+  },
+  "loops": {
+   "B1": "B",
+   "B2": "B",
+   "B3": "B",
+   "B4": "B",
+   "R1": "R",
+   "R2": "R",
+   "R3": "R"
+  },
+  "unnamed_loops": 0
+ },
+ "scenarios": {
+  "start": "2026-10-05",
+  "horizon_days": 182,
+  "draws": 2000,
+  "diverted_share_now": 0.741,
+  "diverted_share_date": "2026-10-04",
+  "ladder": {
+   "control": {
+    "p_level1": 0.9675,
+    "p_level2": 0.414,
+    "p_level3": 0.0,
+    "p_level2_attributable": 0.0,
+    "p_level3_attributable": 0.0,
+    "days_to_level2_p50": ""
+   },
+   "gulf": {
+    "p_level1": 0.9765,
+    "p_level2": 0.4275,
+    "p_level3": 0.0,
+    "p_level2_attributable": 0.0135,
+    "p_level3_attributable": 0.0,
+    "days_to_level2_p50": 79.0
+   },
+   "strait": {
+    "p_level1": 0.9965,
+    "p_level2": 0.8215,
+    "p_level3": 0.014,
+    "p_level2_attributable": 0.4115,
+    "p_level3_attributable": 0.014,
+    "days_to_level2_p50": 11.0
+   },
+   "reopen": {
+    "p_level1": 0.8595,
+    "p_level2": 0.1195,
+    "p_level3": 0.0,
+    "p_level2_attributable": 0.0,
+    "p_level3_attributable": 0.0,
+    "days_to_level2_p50": ""
+   }
+  },
+  "gulf_cape_cost_change_usd_per_teu": [
+   61.175,
+   99.164,
+   137.84
+  ],
+  "strait_waiting_cost_usd_m": [
+   7.779,
+   47.596,
+   221.057
+  ],
+  "strait_waiting_ship_days": [
+   120.705,
+   738.492,
+   3429.906
+  ],
+  "reopen_suez_minus_cape_usd_per_teu": [
+   -27.054,
+   10.19,
+   65.292
+  ],
+  "reopen_p_suez_cheaper": 0.3665,
+  "exact_check_min_agreement": 0.9942
+ },
+ "extraction": {
+  "passages": 19,
+  "reference_links": 45,
+  "variables": 17,
+  "models": {
+   "gemma3_4b": {
+    "model": "gemma3:4b",
+    "precision": 0.5263,
+    "precision_ci95": "0.38-0.68",
+    "recall": 0.4444,
+    "recall_ci95": "0.33-0.55",
+    "f1": 0.4819,
+    "polarity_agreement": 0.9,
+    "predicted_links": 38,
+    "tp": 20,
+    "quote_verbatim_share": 0.947,
+    "median_seconds_per_passage": 9.0,
+    "failed_passages": 0
+   },
+   "llama3_2_3b": {
+    "model": "llama3.2:3b",
+    "precision": 0.1562,
+    "precision_ci95": "0.06-0.32",
+    "recall": 0.3333,
+    "recall_ci95": "0.16-0.46",
+    "f1": 0.2128,
+    "polarity_agreement": 1.0,
+    "predicted_links": 96,
+    "tp": 15,
+    "quote_verbatim_share": 0.99,
+    "median_seconds_per_passage": 9.5,
+    "failed_passages": 2
+   },
+   "qwen3_5_4b": {
+    "model": "qwen3.5:4b",
+    "precision": 0.5952,
+    "precision_ci95": "0.45-0.70",
+    "recall": 0.5556,
+    "recall_ci95": "0.42-0.67",
+    "f1": 0.5747,
+    "polarity_agreement": 1.0,
+    "predicted_links": 42,
+    "tp": 25,
+    "quote_verbatim_share": 0.976,
+    "median_seconds_per_passage": 20.8,
+    "failed_passages": 0
+   }
+  },
+  "repeat": {
+   "qwen3_5_4b": {
+    "shared": 41,
+    "union": 43
+   }
+  }
+ },
+ "provenance": {
+  "files": 10,
+  "REAL": 70,
+  "ASSUMPTION": 52,
+  "ILLUSTRATIVE": 0,
+  "SYNTHETIC": 0
+ }
+}

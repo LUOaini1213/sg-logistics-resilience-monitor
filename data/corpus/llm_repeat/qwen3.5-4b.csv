@@ -1,0 +1,43 @@
+passage_id,cause,effect,polarity,in_codebook,quote_verbatim,quote_words,quote_truncated,quote_stored
+u2-01,red_sea_disruption,diversion,+,True,True,13,False,Attacks on vessels in the Red Sea prompted most shipping lines to reroute
+u2-01,shipping_capacity,capacity_demand,+,True,True,14,False,ships transiting the Suez and Panama Canals had to be diverted onto longer routes
+u2-02,red_sea_disruption,diversion,+,True,True,4,False,rerouting vessels around Africa
+u2-02,diversion,distance_time,+,True,True,6,False,adds distance and extends transit times
+u2-02,diversion,capacity_demand,+,True,True,8,False,increases global vessel demand by 3 per cent
+u2-02,diversion,shipping_capacity,-,True,True,4,False,altered global ship capacity
+u2-02,diversion,freight_rates,+,True,True,3,False,supported charter markets
+u2-02,diversion,operating_costs,+,True,True,2,False,higher costs
+u2-02,diversion,port_congestion,+,True,True,7,False,"triggering market inefficiencies, such as port congestion"
+u2-03,schedule_reliability,operating_costs,-,True,True,5,False,Off-schedule arrivals... cause logistical issues
+u2-03,diversion,shipping_capacity,+,True,True,11,False,ships being diverted around the Cape of Good Hope... increased loads
+u2-03,distance_time,operating_costs,+,True,True,13,False,"Longer routes also hike up costs for crew wages, chartering, insurance and fuel"
+u2-04,diversion,vessel_speed,+,True,True,6,False,Rerouting has increased ship sailing speeds
+u2-04,vessel_speed,fuel_emissions,+,True,True,8,False,This generates additional fuel consumption and carbon emissions
+u2-05,red_sea_disruption,capacity_demand,+,True,True,8,False,due to disruptions in shipping routes boosting demand
+u2-05,diversion,capacity_demand,+,True,True,11,False,"Once vessel rerouting slows down, overcapacity issues are likely to return"
+u3-01,red_sea_disruption,freight_rates,+,True,True,12,False,disruptions in the Red Sea ... caused container shipping rates to rise
+u3-02,red_sea_disruption,freight_rates,+,True,True,11,False,disruptions in the Red Sea ... caused freight rates to increase
+u3-02,diversion,distance_time,+,True,True,8,False,Ships had to be diverted onto longer routes
+u3-02,diversion,shipping_capacity,-,True,True,6,False,reducing the availability of shipping capacity
+u3-02,distance_time,capacity_demand,+,True,True,16,True,demand for additional capacity increased by around 12 per cent to accommodate for these
+u3-02,diversion,vessel_speed,+,True,True,10,False,these diversions led to a need for increased vessel speeds
+u3-03,red_sea_disruption,port_congestion,+,True,True,11,False,Disruptions in the Red Sea ... exacerbated congestion at major ports
+u3-03,red_sea_disruption,freight_rates,+,True,True,8,False,exacerbated congestion ... increasing charges and freight rates
+u3-03,port_congestion,freight_rates,+,True,True,17,True,port congestion meant that vessel capacity ... were waiting ... contributed to the increase
+u3-04,red_sea_disruption,charter_rates,+,True,True,13,False,responded slowly to the disruptions in the Red Sea but began to surge
+u3-04,diversion,charter_rates,+,True,True,11,False,driven by higher demand for larger charter vessels (needed for rerouting)
+u3-05,red_sea_disruption,freight_rates,+,True,True,13,False,"disruptions to the Suez Canal, the Red Sea ... significantly impacted freight rates"
+u3-05,freight_rates,consumer_prices,+,True,True,10,False,this could lead to a rise in global consumer prices
+m1-01,diversion,schedule_reliability,-,True,True,14,False,The diversion of vessels ... has disrupted vessel arrival schedules ... with off-schedule arrivals
+m1-02,container_volume,port_congestion,+,True,False,19,True,The increase in container volumes handled in Singapore have resulted in longer vessels' wait
+m1-03,container_volume,containers_per_call,+,True,True,10,False,The number of containers handled per vessel has also increased.
+m1-04,port_capacity,container_volume,+,True,True,15,True,PSA has since added more manpower and container handling capacity to help alleviate the
+m2-01,port_capacity,port_congestion,-,True,True,20,True,The average wait time for container berths at port has been reduced to less
+t1-01,red_sea_disruption,diversion,+,True,True,10,False,The Red Sea crisis has led to vessels being diverted
+t1-01,diversion,distance_time,+,True,True,11,False,diverted to the longer route around the Cape of Good Hope
+t1-01,diversion,schedule_reliability,-,True,True,12,False,"As a result, ports around the world are experiencing more off-schedule arrivals"
+t1-02,container_volume,port_congestion,+,True,True,11,False,demands and complexity of container handling at our port have increased
+t1-02,port_congestion,schedule_reliability,-,True,True,12,False,lengthened the time container vessels stay in our port... leading to congestion
+t1-03,port_capacity,container_volume,+,True,True,12,False,PSA has ramped up its handling capacity ... to meet anticipated demand
+t1-04,red_sea_disruption,container_volume,+,True,True,7,False,compounded by an increase in container volumes
+t1-04,front_loading,container_volume,+,True,True,5,False,companies bring forward export schedules

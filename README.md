@@ -12,6 +12,11 @@ rates; this is a reproducible snapshot of data fetched 13 October 2026, not a li
 
 **Dashboard:** https://luoaini1213.github.io/sg-logistics-resilience-monitor/
 
+**Maritime scenarios.** A causal loop diagram, a stock-and-flow model calibrated to the 2023-24 Red Sea
+diversion, a Suez-versus-Cape voyage-cost model, seeded forward scenarios read through the activation
+ladder, a small language-model extraction benchmark and a working paper: see
+[Maritime scenarios](#maritime-scenarios-loops-costs-and-forward-scenarios).
+
 What it covers:
 
 - **17 indicators.** Shipping routes, Singapore's port and airport, two Malaysian ports and one global
@@ -243,6 +248,70 @@ closes, congestion reaches Singapore, and then a collision restricts the Singapo
 - the activation ladder, with an indicator-to-question map for partners ([`triggers.md`](exercise/triggers.md));
 - a two-page [after-action template](exercise/after_action_template.md).
 
+## Maritime scenarios: loops, costs and forward scenarios
+
+A second layer asks how the 2023-24 Red Sea diversion travelled to Singapore, what the long way round
+costs a carrier, and what the ladder would show for the next disruption. It rebuilds offline with the
+rest (`python run_all.py`, outputs in [`outputs/maritime/`](outputs/maritime/)) and is written up in a
+working paper ([`paper/working_paper.pdf`](paper/working_paper.pdf)).
+
+- **Causal loop diagram** ([`cld.svg`](outputs/maritime/figures/cld.svg), `src/lsr/maritime/cld.py`).
+  27 signed links between 18 variables, each tagged by its evidence: 7 estimated by the stock-and-flow
+  fit, 5 implied by the voyage-cost model, 8 cited from published sources but not estimated here, and
+  7 assumed. Seven feedback loops; only the port-response loop (B1) is estimated end to end.
+- **Stock-and-flow model** (`sd.py`, `calibrate.py`, with the package's own RK4 integrator). Seven
+  stocks, calibrated block by block to PortWatch container transits of Bab el-Mandeb and the Cape and
+  Singapore container calls (weekly), Sea-Intelligence global schedule reliability and MPA TEU per call
+  (monthly), July 2023 to December 2024 ([`sd_fit.svg`](outputs/maritime/figures/sd_fit.svg)).
+  - Fit (R²): Bab el-Mandeb 0.96, Cape 0.91, schedule reliability 0.93, Singapore calls 0.66,
+    TEU per call 0.82.
+  - The profiled onset is 14 December 2023 (95% range 30 November to 16 December); the event list
+    documents 15 December. 74% of the pre-crisis Bab el-Mandeb container traffic diverted, and the
+    diverted ships reached the Cape about 13 days later.
+  - Reliability fell with no measurable delay: the capacity-absorption delay sits at the bottom of its
+    search range and the profile rejects more than 10 days. Singapore's bunching built and faded with a
+    time constant of 166 days (95% interval 131 to 201). The smooth model reaches a 13.3% fall in calls
+    where the data show 22.2%.
+  - Estimates, intervals and which parameters are assumed: [`sd_parameters.csv`](outputs/maritime/sd_parameters.csv).
+- **Voyage economics** (`voyage.py`). A 14,000 TEU ship on a Shanghai-Singapore-Rotterdam-Hamburg-Antwerp
+  loop: the Cape round voyage takes 78.51 days against 66.75 via Suez, needs 1.68 more ships for a weekly
+  service and burns 1,902 t more fuel. Suez is cheaper only below a war-risk premium of
+  **0.302% of hull value per transit**; at the 1% reported for the southern Red Sea in July 2026 the
+  Cape is cheaper by 99.68 USD per TEU. The bunker price, the length of the Cape detour and the Cape
+  speed move the break-even most ([`voyage_tornado.svg`](outputs/maritime/figures/voyage_tornado.svg)).
+- **Forward scenarios** (`scenarios.py`): 2,000 seeded draws each over 26 weeks from 5 October 2026,
+  through the selected detector and the ladder, with the same noise as a noise-only control so that
+  increments are attributable ([`scenario_ladder.csv`](outputs/maritime/scenario_ladder.csv)).
+  - Singapore Strait incident: an Alert caused by the incident in 41% of draws, a median 11 days after
+    it; waiting ships cost a median 48 million USD.
+  - Gulf escalation with a second fuel shock: a median 99 USD per TEU more on the Cape loop (5-95%:
+    61 to 138), but an Alert caused by it in only 1.4% of draws, because the monitor has no price
+    indicator.
+  - Red Sea reopening: no alarm caused by it (the route detectors look one way); Suez is cheaper than
+    the Cape in 37% of draws.
+  - Noise alone reaches Alert in 41% of draws, and the noise model's per-indicator false-alarm rates
+    differ from the real ones ([`scenario_noise_check.csv`](outputs/maritime/scenario_noise_check.csv)).
+- **Language-model extraction** (`extraction.py`, `scripts/run_llm_extraction.py`). 19 passages
+  from UNCTAD's *Review of Maritime Transport 2024*, two MPA statements and an MOT parliamentary reply, a
+  17-variable codebook ([`codebook.md`](data/corpus/codebook.md)) and 45 reference links.
+  The reference labels were produced with the codebook by the author's tooling, not by independent human
+  annotators, so the scores measure agreement with one reading. Run locally through Ollama
+  (temperature 0, fixed seed, JSON-schema output), `qwen3.5:4b` reached precision 0.60
+  (95% interval 0.45-0.70) and recall 0.56 (0.42-0.67); `llama3.2:3b`
+  0.16 and 0.33; `gemma3:4b` 0.53 and 0.44
+  ([`extraction_scores.csv`](outputs/maritime/extraction_scores.csv)). Two runs of `qwen3.5:4b` with the same
+  settings shared 41 of 43 distinct links, so the runs are close to but not exactly
+  repeatable. The models are not called by the build or CI; their outputs are committed. The texts' terms do not allow
+  republishing them, so the repository keeps only hashes, anchor phrases and quotes of at most 14 words.
+- **Workshop pack** ([`workshop/`](workshop/)): an industry interview guide and a half-day workshop
+  agenda built around the diagram. A one-page research-proposal outline is in
+  [`paper/research_proposal_outline.md`](paper/research_proposal_outline.md).
+
+**Provenance.** Every hand-entered input is labelled REAL (with URL and access date), ASSUMPTION,
+ILLUSTRATIVE or SYNTHETIC: 70 REAL and 52 ASSUMPTION rows across 10 files, none ILLUSTRATIVE or SYNTHETIC ([`data/PROVENANCE.md`](data/PROVENANCE.md), which also lists
+what could not be verified, such as a dated charter rate for this ship size, its net tonnage and hull
+value, and the Suez tiers-on-deck surcharge).
+
 ## Reproduce
 
 Python 3.11 (the CI version). The pinned numpy 1.24.3 and pandas 2.0.3 publish no wheels for Python 3.12 or
@@ -250,9 +319,19 @@ later, so `pip install` fails there.
 
 ```
 pip install -r requirements.txt
-python run_all.py            # rebuilds outputs/ and docs/index.html from data/raw (about 1-2 minutes)
+python run_all.py            # rebuilds outputs/, docs/index.html and paper/working_paper.md (about 3-5 minutes)
 python -m pytest -q tests
-python tests/mutate.py       # mutation check
+python tests/mutate.py       # mutation check of the monitor
+python tests/mutate_maritime.py   # mutation check of the maritime modules
+```
+
+Optional steps that need extra tools or the network (`pip install -r requirements-extra.txt`):
+
+```
+python scripts/compute_distances.py      # sea distances with searoute (offline)
+python scripts/fetch_corpus.py           # downloads the corpus texts into a git-ignored cache
+python scripts/run_llm_extraction.py qwen3.5:4b llama3.2:3b gemma3:4b   # needs Ollama on localhost
+python scripts/build_paper.py            # paper PDF with pandoc and headless Chromium
 ```
 
 **Tests.** The suite checks the detector against hand-computed series, the bookkeeping of the backtest
@@ -278,16 +357,40 @@ The first full run caught 30 of 31 and exited with an error
 from a Singapore outcome alarm alone, without an Alert. It survived because the ladder test never covered a
 day with an outcome alarm and no route alarm. That case was added, and the current run catches 32 of 32
 ([`outputs/mutation_run.txt`](outputs/mutation_run.txt)). CI runs the tests, the mutation check, and a full rebuild
-that must reproduce every committed file in `outputs/` and `docs/index.html` exactly.
+that must reproduce every committed file in `outputs/`, `docs/index.html` and `paper/working_paper.md`
+exactly.
+
+**Maritime layer.** Its tests check the voyage costs against a three-port loop worked by hand and the
+Suez Canal Authority bands summed by hand, the RK4 integrator against analytic step responses and its
+fourth-order convergence, the calibration on data generated from known parameters, the scenario alarm
+logic and ladder against `detect.detect` and `backtest.posture`, Monte Carlo determinism under the fixed
+seed, the extraction scoring on hand-made sets, the provenance labels, and the numbers in this README,
+the paper and the workshop pack against `outputs/maritime/summary.json`. `tests/mutate_maritime.py` plants
+43 bugs in the maritime modules, each run against the tests of the module it changes, after a no-op
+control that must survive. The first full run caught all of them; while the mutants were being written,
+three were found to have no test that could catch them (a provenance check accepting unlabelled rows,
+the autocorrelation inflation dropped, the onset interval ignoring it), and those tests were added
+before that run. The current run catches 43 of 43
+([`outputs/mutation_maritime_run.txt`](outputs/mutation_maritime_run.txt)). The language models, the corpus
+download, `searoute` and the PDF build are not run by CI; their committed outputs are checked instead
+(hashes of the passages, the codebook and the paper's Markdown source).
 
 ## Repository layout
 
 ```
 data/raw/          downloaded source files (see Data)
 data/events.csv    labelled disruptions with sources
+data/inputs/       hand-entered, provenance-labelled inputs of the maritime layer
+data/corpus/       extraction corpus metadata, codebook, reference links, model runs (no passage text)
+data/PROVENANCE.md labels and what could not be verified
 src/lsr/           fetch, indicators, detector, backtest, report, dashboard
+src/lsr/maritime/  causal loop diagram, stock-and-flow model, voyage costs, scenarios, extraction scoring
+scripts/           distances, corpus download, local-model extraction, paper PDF (not run by CI)
 outputs/           backtest tables, alarm list, daily posture, summary.json
+outputs/maritime/  maritime results, figures and summary.json
+paper/             working paper (template, generated Markdown, PDF) and proposal outline
 docs/index.html    dashboard (GitHub Pages)
 exercise/          tabletop exercise pack
-tests/             tests and mutation harness
+workshop/          industry interview guide and half-day workshop agenda
+tests/             tests and mutation harnesses
 ```

@@ -1,0 +1,4 @@
+from_port,to_port,suez_nm,cape_nm,extra_nm,label,source,url,accessed
+Shanghai,Rotterdam,10514.0,13833.9,3319.9,REAL,searoute 1.6.0; port positions in ports.csv (ASSUMPTION),https://pypi.org/project/searoute/1.6.0/,2026-11-15
+Yantian,Rotterdam,9818.9,13153.6,3334.7,REAL,searoute 1.6.0; port positions in ports.csv (ASSUMPTION),https://pypi.org/project/searoute/1.6.0/,2026-11-15
+Singapore,Rotterdam,8364.7,11852.9,3488.2,REAL,searoute 1.6.0; port positions in ports.csv (ASSUMPTION),https://pypi.org/project/searoute/1.6.0/,2026-11-15

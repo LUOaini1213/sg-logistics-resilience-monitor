@@ -2,3 +2,7 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .venv/
+# downloaded texts for the extraction corpus (terms do not allow republishing them)
+data/corpus/cache/
+# intermediate HTML of the paper build
+paper/build/

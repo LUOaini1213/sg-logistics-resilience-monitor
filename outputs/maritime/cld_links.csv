@@ -1,0 +1,28 @@
+from,to,from_label,to_label,polarity,status,delay,evidence
+risk,diversion,Red Sea security risk,Cape diversion share,+,estimated,False,Routing block: diverted share and onset fitted to PortWatch transits (outputs/maritime/sd_parameters.csv)
+risk,warrisk,Red Sea security risk,War-risk premium,+,cited,False,"Reuters via Insurance Journal, 30 Jul 2026: southern Red Sea premiums rose to 1-2% from 0.3%"
+warrisk,diversion,War-risk premium,Cape diversion share,+,model,False,Voyage model: above the break-even premium the Cape loop is cheaper (outputs/maritime/summary.json)
+diversion,distance,Cape diversion share,Voyage distance and time,+,cited,False,"searoute distances (data/inputs/voyage_legs.csv); Notteboom et al. (2024): +4,575 nm Shanghai-Rotterdam"
+distance,absorbed,Voyage distance and time,Capacity absorbed by longer routes,+,cited,False,"UNCTAD, Review of Maritime Transport 2024, Chapter II, citing Clarksons: Cape diversions raise container-ship demand by 12% (June 2024)"
+absorbed,capacity,Capacity absorbed by longer routes,Effective fleet capacity,-,cited,False,Notteboom et al. (2024): at least two ships must be added to a weekly Asia-North Europe loop
+capacity,reliability,Effective fleet capacity,Schedule reliability,+,estimated,False,"Reliability block: beta (share of late arrivals per unit of absorbed capacity), reduced form"
+reliability,bunching,Schedule reliability,Bunching and berth waits in Singapore,-,estimated,False,Singapore block: bunching builds over tau_q days; MPA statement of 30 May 2024 (data/events.csv)
+bunching,port,Bunching and berth waits in Singapore,"Port capacity response (berths, yard)",+,estimated,False,Singapore block: adaptation stock K; MPA (4 Sep 2024) reports waits under a day after more berths and yard
+port,bunching,"Port capacity response (berths, yard)",Bunching and berth waits in Singapore,-,estimated,False,Singapore block: adaptation removes the bunching pressure (adapt = 1 assumed)
+bunching,teu_call,Bunching and berth waits in Singapore,TEU per call (Singapore),+,estimated,False,"Singapore block: theta_t, MPA TEU per PortWatch call"
+bunching,calls,Bunching and berth waits in Singapore,Container-ship calls (Singapore),-,estimated,False,"Singapore block: theta_c, PortWatch Singapore container-ship calls"
+bunching,capacity,Bunching and berth waits in Singapore,Effective fleet capacity,-,cited,False,"UNCTAD, Review of Maritime Transport 2024, Chapter III, citing Linerlytica: by mid-June 2024 congestion held 2.5 million TEU (8.4% of the fleet) at anchorages; not estimated here"
+reliability,frontload,Schedule reliability,Shippers' early ordering,-,assumed,False,Shippers order earlier when transit times are unreliable; not verified
+frontload,capacity,Shippers' early ordering,Effective fleet capacity,-,assumed,False,Early orders add demand on the same ships; not verified
+capacity,rates,Effective fleet capacity,Freight rates,-,cited,False,"UNCTAD, Review of Maritime Transport 2024, Chapter III: diversions reduced 'the availability of shipping capacity' and rates rose; no freight-rate series in the repository, so not estimated"
+rates,blank,Freight rates,Blank sailings,-,assumed,False,Carriers cancel sailings when rates fall; not verified here
+blank,capacity,Blank sailings,Effective fleet capacity,-,assumed,False,Cancelled sailings remove capacity; not verified here
+rates,speed,Freight rates,Vessel speed,+,assumed,False,Higher rates make the extra fuel of sailing faster worth paying; not verified
+speed,capacity,Vessel speed,Effective fleet capacity,+,model,False,"Round-voyage time = distance / speed (voyage model); UNCTAD, Review of Maritime Transport 2024, Chapter II: ships of 17,000 TEU and more sailed 5% faster in Q1 2024"
+rates,newbuild,Freight rates,Newbuild deliveries,+,assumed,False,High earnings encourage orders; deliveries follow after years; not verified
+newbuild,capacity,Newbuild deliveries,Effective fleet capacity,+,cited,True,"UNCTAD, Review of Maritime Transport 2024, Chapter II: container-ship capacity grew by nearly 8% in 2023"
+distance,costs,Voyage distance and time,Carrier operating costs,+,model,False,Voyage model: the Cape loop burns more fuel and needs more ship-days
+speed,costs,Vessel speed,Carrier operating costs,+,model,False,Voyage model: main-engine fuel per day rises with speed^3
+bunker,costs,Bunker price,Carrier operating costs,+,model,False,Voyage model: fuel cost = fuel burnt x bunker price
+bunker,speed,Bunker price,Vessel speed,-,assumed,False,Dearer fuel favours slower steaming; not verified here
+costs,rates,Carrier operating costs,Freight rates,+,cited,False,"UNCTAD, Review of Maritime Transport 2024, Chapter II: additional costs 'translate into higher freight rates'"

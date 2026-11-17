@@ -1,10 +1,11 @@
-"""Rebuild every output from data/raw. Use --fetch to re-download the raw data first."""
+"""Rebuild every output from data/raw and data/inputs. Use --fetch to re-download the raw data first."""
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
 
 from lsr import fetch, report  # noqa: E402
+from lsr.maritime import report as maritime_report  # noqa: E402
 
 if __name__ == "__main__":
     if "--fetch" in sys.argv:
@@ -14,3 +15,5 @@ if __name__ == "__main__":
     print("dev:", s["dev"])
     print("holdout:", s["holdout"])
     print("posture:", s["posture_as_of"], s["posture_label"], s["posture_active"])
+    m = maritime_report.main()
+    print("maritime:", ", ".join(sorted(m)))

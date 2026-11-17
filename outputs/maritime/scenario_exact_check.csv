@@ -1,0 +1,7 @@
+scenario,indicator,draws,breach_day_agreement,median_abs_z_difference
+control,cp_malacca,20,1.0,0.398
+control,sg_calls_container,20,1.0,0.075
+strait,cp_malacca,20,0.9942,0.398
+strait,sg_calls_container,20,0.9992,0.074
+reopen,cp_bab,20,0.9995,0.165
+reopen,sg_calls_container,20,1.0,0.076

@@ -1,0 +1,22 @@
+parameter,label,unit,base,low,high,breakeven_pct_low,breakeven_pct_high,breakeven_swing_pct,cape_minus_suez_usd_per_teu_low,cape_minus_suez_usd_per_teu_high
+bunker_usd_t,REAL,USD/t,890.0,574.5,1119.5,0.102,0.448,0.345,-128.25,-78.89
+cape_distance_factor,ASSUMPTION,-,1.0,1.0,1.38,0.302,0.623,0.321,-99.68,-53.83
+speed_cape_kn,ASSUMPTION,kn,17.0,16.0,18.0,0.18,0.449,0.269,-117.21,-78.74
+hull_value_usd,ASSUMPTION,USD,150000000.0,100000000.0,200000000.0,0.453,0.227,0.227,-52.06,-147.3
+charter_usd_day,ASSUMPTION,USD/day,60000.0,40000.0,90000.0,0.224,0.42,0.196,-110.88,-82.88
+speed_suez_kn,ASSUMPTION,kn,16.0,15.0,17.0,0.375,0.21,0.164,-89.34,-112.81
+scnt,ASSUMPTION,SCNT,150000.0,130000.0,170000.0,0.361,0.243,0.118,-91.23,-108.13
+suez_rebate,REAL,-,0.0,0.0,0.15,0.302,0.381,0.079,-99.68,-88.36
+speed_exponent,ASSUMPTION,-,3.0,2.5,3.5,0.338,0.266,0.072,-94.64,-104.93
+canal_days_per_transit,ASSUMPTION,days,1.0,0.5,2.0,0.324,0.259,0.064,-96.61,-105.82
+suez_surcharge,REAL,-,0.12,0.0,0.12,0.366,0.302,0.063,-90.63,-99.68
+eua_eur_t,REAL,EUR/t CO2,89.69,62.19,91.34,0.273,0.304,0.031,-103.8,-99.43
+ets_phase_in,REAL,-,1.0,0.7,1.0,0.274,0.302,0.028,-103.72,-99.68
+aux_fuel_sea_tpd,ASSUMPTION,t/day,5.0,3.0,8.0,0.293,0.317,0.024,-101.05,-97.61
+fuel_lcv_kj_kg,REAL,kJ/kg,40200.0,40200.0,41200.0,0.302,0.287,0.015,-99.68,-101.89
+aux_fuel_port_tpd,ASSUMPTION,t/day,5.0,3.0,8.0,0.303,0.3,0.003,-99.51,-99.93
+cf_t_co2_per_t,REAL,t CO2/t fuel,3.114,3.114,3.151,0.302,0.303,0.001,-99.68,-99.52
+port_days_per_call,ASSUMPTION,days,1.0,0.75,1.5,0.302,0.302,0.0,-99.68,-99.68
+utilisation_back,ASSUMPTION,-,0.6,0.45,0.75,0.302,0.302,0.0,-110.75,-90.62
+utilisation_head,ASSUMPTION,-,0.9,0.8,0.98,0.302,0.302,0.0,-106.8,-94.63
+war_risk_pct,REAL,% of hull value per transit,1.0,0.3,2.0,0.302,0.302,0.0,0.32,-242.53

@@ -1,0 +1,7 @@
+# Optional tools that are NOT needed for the offline build, the tests or CI.
+# scripts/compute_distances.py (sea distances)
+searoute==1.6.0
+# scripts/fetch_corpus.py (PDF text)
+pymupdf==1.24.10
+# scripts/build_paper.py (HTML to PDF; then `python -m playwright install chromium`; pandoc must be on PATH)
+playwright==1.62.0

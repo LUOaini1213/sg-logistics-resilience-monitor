@@ -90,18 +90,18 @@ def fetch_portwatch() -> None:
     cp = pd.concat([_arcgis_all("Daily_Chokepoints_Data", f"portid='{k}'",
                                 "date,portid,portname,n_container,n_tanker,n_cargo,n_total,"
                                 "capacity_container,capacity") for k in CHOKEPOINTS])
-    cp.sort_values(["portid", "date"]).to_csv(RAW / "portwatch_chokepoints_daily.csv", index=False)
+    cp.sort_values(["portid", "date"]).to_csv(RAW / "portwatch_chokepoints_daily.csv", index=False, lineterminator="\n")
     pt = pd.concat([_arcgis_all("Daily_Ports_Data", f"portid='{k}'",
                                 "date,portid,portname,portcalls_container,portcalls_tanker,portcalls_cargo,"
                                 "portcalls,import_container,export_container,import,export") for k in PORTS])
-    pt.sort_values(["portid", "date"]).to_csv(RAW / "portwatch_ports_daily.csv", index=False)
+    pt.sort_values(["portid", "date"]).to_csv(RAW / "portwatch_ports_daily.csv", index=False, lineterminator="\n")
 
 
 def fetch_datagov() -> None:
     for name, rid in DATAGOV.items():
         d = json.loads(_get(f"https://data.gov.sg/api/action/datastore_search?resource_id={rid}&limit=5000"))
         df = pd.DataFrame(d["result"]["records"]).drop(columns="_id")
-        df.to_csv(RAW / f"{name}.csv", index=False)
+        df.to_csv(RAW / f"{name}.csv", index=False, lineterminator="\n")
 
 
 def fetch_singstat_air() -> None:
@@ -112,7 +112,7 @@ def fetch_singstat_air() -> None:
         if r["seriesNo"] in ("4", "4.1", "4.2"):
             for c in r["columns"]:
                 rows.append({"series": r["rowText"], "month": c["key"], "value": c["value"]})
-    pd.DataFrame(rows).to_csv(RAW / "singstat_M650031_air_cargo.csv", index=False)
+    pd.DataFrame(rows).to_csv(RAW / "singstat_M650031_air_cargo.csv", index=False, lineterminator="\n")
 
 
 def fetch_gscpi() -> None:
@@ -127,7 +127,7 @@ def main() -> None:
     fetch_singstat_air()
     fetch_gscpi()
     stamp = {"fetched_at": time.strftime("%Y-%m-%dT%H:%M:%S%z")}
-    (RAW / "FETCHED.json").write_text(json.dumps(stamp, indent=1))
+    (RAW / "FETCHED.json").write_text(json.dumps(stamp, indent=1), newline="\n")
     print("ok", stamp)
 
 

@@ -1,0 +1,46 @@
+passage_id,cause,effect,polarity,evidence,note
+u2-01,red_sea_disruption,diversion,+,Attacks on vessels in the Red Sea prompted most shipping lines to reroute,
+u2-02,diversion,distance_time,+,Rerouting vessels around Africa adds distance and extends transit times,
+u2-02,diversion,capacity_demand,+,Diverting tonnage around the Cape of Good Hope increases global vessel demand,
+u2-02,capacity_demand,charter_rates,+,The additional demand and increased ton-miles have ... supported charter markets,Rule 6: two causes
+u2-02,distance_time,charter_rates,+,The additional demand and increased ton-miles have ... supported charter markets,Rule 6: two causes
+u2-02,diversion,port_congestion,+,"rerouting ships onto longer routes is triggering market inefficiencies, such as port congestion",
+u2-02,diversion,operating_costs,+,rerouting ships onto longer routes is triggering ... higher costs,
+u2-02,red_sea_disruption,diversion,+,Rerouting vessels around the Cape ... due to the disruption in the Red Sea,
+u2-03,diversion,port_congestion,+,"bottlenecks at the Port of Singapore, caused by ships being diverted around the Cape",
+u2-03,distance_time,operating_costs,+,"Longer routes also hike up costs for crew wages, chartering, insurance and fuel",
+u2-03,operating_costs,freight_rates,+,these additional costs translate into higher freight rates,
+u2-04,diversion,vessel_speed,+,Rerouting has increased ship sailing speeds,
+u2-04,vessel_speed,fuel_emissions,+,This generates additional fuel consumption and carbon emissions,"""This"" refers to the higher speeds"
+u2-05,red_sea_disruption,capacity_demand,+,due to disruptions in shipping routes boosting demand,
+u2-05,capacity_demand,shipping_capacity,-,"Concerns over excess capacity ... have eased for now, due to ... boosting demand",
+u2-05,diversion,shipping_capacity,-,"Once vessel rerouting slows down, overcapacity issues are likely to return",Rule 7: expected effect
+u3-01,red_sea_disruption,freight_rates,+,disruptions in the Red Sea ... caused container shipping rates to rise,
+u3-02,red_sea_disruption,freight_rates,+,disruptions in the Red Sea ... caused freight rates to increase and fluctuate,
+u3-02,diversion,shipping_capacity,-,"diverted onto longer routes, reducing the availability of shipping capacity",
+u3-02,diversion,distance_time,+,"With vessels being diverted away from the Red Sea, ships ... took longer routes",
+u3-02,distance_time,capacity_demand,+,demand for additional capacity increased ... to accommodate for these increased distances,
+u3-02,diversion,vessel_speed,+,these diversions led to a need for increased vessel speeds,
+u3-03,red_sea_disruption,port_congestion,+,Disruptions in the Red Sea and the Suez Canal exacerbated congestion at major ports,
+u3-03,port_congestion,freight_rates,+,"congestion at major ports ... increasing charges and freight rates",
+u3-03,port_congestion,shipping_capacity,-,port congestion meant that vessel capacity of 2.5 million TEU were waiting at anchorages,Capacity waiting at anchor is not available
+u3-03,shipping_capacity,freight_rates,-,2.5 million TEU were waiting ... contributed to the increase in freight rates,
+u3-04,red_sea_disruption,charter_rates,+,Charter rates ... responded slowly to the disruptions in the Red Sea ... began to surge,
+u3-04,capacity_demand,charter_rates,+,driven by higher demand for larger charter vessels,
+u3-04,diversion,capacity_demand,+,higher demand for larger charter vessels (needed for rerouting),
+u3-05,red_sea_disruption,consumer_prices,+,this could lead to a rise in global consumer prices,"""this"" refers to the disruptions' impact; the freight-rate effect has no stated direction (rule 9)"
+m1-01,diversion,schedule_reliability,-,The diversion of vessels around the Cape ... has disrupted vessel arrival schedules,
+m1-01,diversion,port_congestion,+,has caused a “vessels bunching” effect,
+m1-02,schedule_reliability,port_congestion,-,container vessels arriving off-schedule ... have resulted in longer vessels’ wait time,
+m1-02,container_volume,port_congestion,+,increased container volumes handled in Singapore have resulted in longer vessels’ wait time,
+m1-03,schedule_reliability,container_volume,-,discharging more containers in Singapore as they forgo subsequent voyages to catch up,Lines unload more to recover delayed schedules
+m1-04,port_capacity,port_congestion,-,added more manpower and container handling capacity to help alleviate the situation,Rule 7
+m2-01,port_capacity,port_congestion,-,These improvements are due to measures ... commissioning new berths at Tuas Port,
+t1-01,red_sea_disruption,diversion,+,The Red Sea crisis has led to vessels being diverted,
+t1-01,diversion,schedule_reliability,-,"As a result, ports around the world are experiencing more off-schedule arrivals",
+t1-01,schedule_reliability,port_congestion,-,"arriving within a short window, compounding the issue by causing a “vessel bunching” effect",
+t1-02,container_volume,port_congestion,+,These have lengthened the time container vessels stay in our port,"""These"" refers to the higher handling demands"
+t1-03,port_capacity,port_congestion,-,to address the congestion. We have reactivated some of the berths,Rule 7
+t1-03,container_volume,port_capacity,+,ramped up its handling capacity ... to meet anticipated demand,
+t1-04,front_loading,container_volume,+,an increase in container volumes as companies bring forward export schedules,
+t1-04,container_volume,port_congestion,+,The situation could also be compounded by an increase in container volumes,Rule 7
